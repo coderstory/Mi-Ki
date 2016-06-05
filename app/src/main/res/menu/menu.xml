@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/hotboot"
+        android:title="热重启"
+        android:visible="true" />
+    <item
+        android:id="@+id/reboot"
+        android:title="重启"
+        android:visible="true" />
+</menu>  

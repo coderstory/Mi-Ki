@@ -1,0 +1,5 @@
+com.coderstory.toolkit.XposedModule.CorePatch
+com.coderstory.toolkit.XposedModule.NoUpdate
+com.coderstory.toolkit.XposedModule.RemoveAds
+com.coderstory.toolkit.XposedModule.RemoveSearchBar
+com.coderstory.toolkit.XposedModule.ThemePather

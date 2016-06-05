@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.coderstory.toolkit.MainActivity">
+
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MIUI主题破解 "
+        android:id="@+id/ThemePatcher"
+        android:checked="false"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:contextClickable="false" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="移除下拉菜单搜索框"
+        android:id="@+id/RemoveSearchBar"
+        android:layout_marginTop="29dp"
+        android:checked="false"
+        android:clickable="true"
+        android:layout_below="@+id/ThemePatcher"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="移除部分内置app的广告"
+        android:id="@+id/RemoveAds"
+        android:layout_below="@+id/RemoveSearchBar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp"
+        android:checked="false"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Android核心校验破解"
+        android:id="@+id/CorePatcher"
+        android:checked="false"
+        android:layout_below="@+id/RemoveAds"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="屏蔽MIUI更新检测"
+        android:id="@+id/NoUpdate"
+        android:layout_below="@+id/CorePatcher"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp"
+        android:checked="false"
+        android:layout_alignParentEnd="true" />
+
+    <View
+        android:layout_height="1px"
+        android:layout_width="match_parent"
+        android:background="#dc484b4b"
+        android:layout_above="@+id/textView2"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/view" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="油炸包子作品 "
+        android:id="@+id/textView"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个人博客:blog.coderstory.cn"
+        android:id="@+id/textView2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="6dp" />
+
+
+</RelativeLayout>

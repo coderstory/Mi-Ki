@@ -30,7 +30,6 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
         }
         XposedBridge.log("删系统广告");
         if (paramLoadPackageParam.packageName.equals("com.android.providers.downloads.ui"))
-
         {
             try {
                 XposedHelpers.findAndHookMethod("com.android.providers.downloads.ui.recommend.config.ADConfig", paramLoadPackageParam.classLoader, "OSSupportAD", new XC_MethodHook() {

@@ -2,15 +2,20 @@ package com.coderstory.toolkit;
 
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -61,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
         SwitchBtn.setChecked(SetValue);
         initControl(SwitchBtn, "ThemePatcher");
 
+
+        SetValue = prefs.getBoolean("switchIcon", false);
+        SwitchBtn = (Switch) mainActivity.findViewById(R.id.switchIcon);
+        SwitchBtn.setChecked(SetValue);
+        initControl(SwitchBtn, "switchIcon");
+
     }
 
     private void initControl(Switch SwitchBtn, final String key) {
@@ -69,6 +80,13 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editor.putBoolean(key, isChecked);
                 editor.apply();
+                if (key.equals("switchIcon")) {
+                    if (isChecked) {
+                        HideIcon();
+                    } else {
+                        showIcon();
+                    }
+                }
             }
         });
     }
@@ -127,5 +145,33 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).create();
         builder.show();
+    }
+
+    private void HideIcon() {
+        ComponentName localComponentName = new ComponentName(this, getClass().getName() + "-Alias");
+        PackageManager localPackageManager = getPackageManager();
+        localPackageManager.getComponentEnabledSetting(localComponentName);
+        PackageManager packageManager = getPackageManager();
+        ComponentName componentName = new ComponentName(this, getClass().getName() + "-Alias");
+        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+    }
+
+    private void showIcon() {
+
+
+        ComponentName localComponentName = new ComponentName(this, getClass().getName() + "-Alias");
+        PackageManager localPackageManager = getPackageManager();
+        localPackageManager.getComponentEnabledSetting(localComponentName);
+        PackageManager packageManager = getPackageManager();
+        ComponentName componentName = new ComponentName(this, getClass().getName() + "-Alias");
+        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
+                PackageManager.DONT_KILL_APP);
+    }
+    public  void opneUrl(View view){
+        //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
+        Intent intent=new Intent( Intent.ACTION_VIEW);
+        intent.setData(Uri.parse( "http://blog.coderstory.cn"));
+        startActivity(intent);
     }
 }

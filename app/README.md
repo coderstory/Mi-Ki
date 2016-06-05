@@ -10,3 +10,4 @@ Error:(1, 0) Plugin with id 'com.android.application' not found
   Android Plugin Version设置为2.1.0
   Android Plugin Repository 设置为 jcenter
   Default Library Repository设置为jcenter
+

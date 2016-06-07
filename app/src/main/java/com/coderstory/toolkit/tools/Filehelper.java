@@ -1,6 +1,7 @@
 package com.coderstory.toolkit.tools;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,12 +12,13 @@ import java.io.InputStreamReader;
 public class Filehelper {
     public  String getFromAssets(String fileName, Context context){
         try {
-            InputStreamReader inputReader = new InputStreamReader( context.getAssets().open(fileName) );
+            Log.d("tookit", "getFromAssets: "+fileName);
+            InputStreamReader inputReader = new InputStreamReader( context.getAssets().open(fileName),"utf-8" );
             BufferedReader bufReader = new BufferedReader(inputReader);
             String line="";
             String Result="";
             while((line = bufReader.readLine()) != null)
-                Result += line;
+                Result += line+"\n";
             return Result;
         } catch (Exception e) {
             e.printStackTrace();

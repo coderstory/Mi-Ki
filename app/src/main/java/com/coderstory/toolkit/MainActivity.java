@@ -1,6 +1,7 @@
 package com.coderstory.toolkit;
 
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,8 +10,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,16 +21,20 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.coderstory.toolkit.tools.hosts;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor editor;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setNavigationBarColor(getResources().getColor( R.color.colorPrimary));
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();
         loadSettings(this);
@@ -72,20 +78,34 @@ public class MainActivity extends AppCompatActivity {
         SwitchBtn.setChecked(SetValue);
         initControl(SwitchBtn, "switchIcon");
 
+        SetValue = prefs.getBoolean("RemoveAdshosts", false);
+        SwitchBtn = (Switch) mainActivity.findViewById(R.id.RemoveAdshosts);
+        SwitchBtn.setChecked(SetValue);
+        initControl(SwitchBtn, "RemoveAdshosts");
+
     }
 
     private void initControl(Switch SwitchBtn, final String key) {
+
         SwitchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editor.putBoolean(key, isChecked);
                 editor.apply();
-                if (key.equals("switchIcon")) {
-                    if (isChecked) {
-                        HideIcon();
-                    } else {
-                        showIcon();
-                    }
+                switch (key) {
+                    case "switchIcon":
+                        if (isChecked) {
+                            HideIcon();
+                        } else {
+                            showIcon();
+                        }
+                        break;
+                    case "RemoveAdshosts":
+                        changeHosts();
+                        break;
+                    case "NoUpdate":
+                        changeHosts();
+                        break;
                 }
             }
         });
@@ -168,10 +188,28 @@ public class MainActivity extends AppCompatActivity {
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
                 PackageManager.DONT_KILL_APP);
     }
-    public  void opneUrl(View view){
+
+    public void opneUrl(View view) {
         //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
-        Intent intent=new Intent( Intent.ACTION_VIEW);
-        intent.setData(Uri.parse( "http://blog.coderstory.cn"));
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://blog.coderstory.cn"));
         startActivity(intent);
+    }
+
+    private void changeHosts() {
+        boolean NoUpdate = prefs.getBoolean("NoUpdate", false);
+        boolean RemoveAds = prefs.getBoolean("RemoveAds", false);
+        String Type = "hosts_NONE";
+        if (!NoUpdate && !RemoveAds) {
+            Type = "hosts_NONE";
+        } else if (!NoUpdate && RemoveAds) {
+            Type = "hosts_NOAD";
+        } else if (NoUpdate && !RemoveAds) {
+            Type = "hosts_NOUP";
+        } else {
+            Type = "hosts_NOAD_NOUP";
+        }
+        hosts h = new hosts(MainActivity.this, Type);
+        h.execute();
     }
 }

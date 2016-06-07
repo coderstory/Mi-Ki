@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public abstract class SuHelper {
@@ -112,7 +113,7 @@ public abstract class SuHelper {
         return retval;
     }
 
-    protected abstract ArrayList<String> getCommandsToExecute();
+    protected abstract ArrayList<String> getCommandsToExecute() throws UnsupportedEncodingException;
 }
 
 

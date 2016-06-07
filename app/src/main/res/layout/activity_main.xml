@@ -16,7 +16,7 @@
         android:text="MIUI主题破解 "
         android:id="@+id/ThemePatcher"
         android:checked="false"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="移除下拉菜单搜索框"
         android:id="@+id/RemoveSearchBar"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="28dp"
         android:checked="false"
         android:clickable="true"
         android:layout_below="@+id/ThemePatcher"
@@ -38,11 +38,22 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="移除部分内置app的广告"
+        android:text="移除部分内置app的广告（XP模块）"
         android:id="@+id/RemoveAds"
         android:layout_below="@+id/RemoveSearchBar"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="28dp"
+        android:checked="false"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="移除部分内置app的广告（Hosts方式）"
+        android:id="@+id/RemoveAdshosts"
+        android:layout_below="@+id/RemoveAds"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="28dp"
         android:checked="false"
         android:layout_alignParentEnd="true" />
 
@@ -52,9 +63,9 @@
         android:text="Android核心校验破解"
         android:id="@+id/CorePatcher"
         android:checked="false"
-        android:layout_below="@+id/RemoveAds"
+        android:layout_below="@+id/RemoveAdshosts"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="28dp"
         android:layout_alignParentEnd="true" />
 
     <Switch
@@ -64,36 +75,9 @@
         android:id="@+id/NoUpdate"
         android:layout_below="@+id/CorePatcher"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="28dp"
         android:checked="false"
         android:layout_alignParentEnd="true" />
-
-    <View
-        android:layout_height="1px"
-        android:layout_width="match_parent"
-        android:background="#dc484b4b"
-        android:layout_above="@+id/textView2"
-        android:layout_marginBottom="50dp"
-        android:id="@+id/view" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="油炸包子作品 "
-        android:id="@+id/textView"
-        android:layout_above="@+id/textView2"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="16dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="个人博客:blog.coderstory.cn"
-        android:id="@+id/textView2"
-        android:onClick="opneUrl"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="6dp" />
-
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,7 +88,6 @@
         android:layout_marginTop="28dp"
         android:layout_alignParentEnd="true"
         android:checked="false" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,6 +95,35 @@
         android:id="@+id/textView3"
         android:layout_above="@+id/view"
         android:layout_alignParentStart="true" />
+    <View
+        android:layout_height="1px"
+        android:layout_width="match_parent"
+        android:background="#dc484b4b"
+        android:layout_above="@+id/textView2"
+        android:layout_marginBottom="45dp"
+        android:id="@+id/view" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="油炸包子作品 "
+        android:id="@+id/textView"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个人博客:blog.coderstory.cn"
+        android:id="@+id/textView2"
+        android:onClick="opneUrl"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp" />
+
+
+
+
 
 
 </RelativeLayout>

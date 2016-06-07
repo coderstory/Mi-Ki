@@ -16,7 +16,7 @@
         android:text="MIUI主题破解 "
         android:id="@+id/ThemePatcher"
         android:checked="false"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="移除下拉菜单搜索框"
         android:id="@+id/RemoveSearchBar"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:checked="false"
         android:clickable="true"
         android:layout_below="@+id/ThemePatcher"
@@ -38,22 +38,22 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="移除部分内置app的广告（XP模块）"
+        android:text="屏蔽MIUI广告（XP模块）"
         android:id="@+id/RemoveAds"
         android:layout_below="@+id/RemoveSearchBar"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:checked="false"
         android:layout_alignParentEnd="true" />
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="移除部分内置app的广告（Hosts方式）"
+        android:text="屏蔽广告（Hosts方式 需ROOT）"
         android:id="@+id/RemoveAdshosts"
         android:layout_below="@+id/RemoveAds"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:checked="false"
         android:layout_alignParentEnd="true" />
 
@@ -65,17 +65,17 @@
         android:checked="false"
         android:layout_below="@+id/RemoveAdshosts"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:layout_alignParentEnd="true" />
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="屏蔽MIUI更新检测"
+        android:text="屏蔽MIUI更新检测(需ROOT)"
         android:id="@+id/NoUpdate"
         android:layout_below="@+id/CorePatcher"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:checked="false"
         android:layout_alignParentEnd="true" />
     <Switch
@@ -85,7 +85,7 @@
         android:id="@+id/switchIcon"
         android:layout_below="@+id/NoUpdate"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:layout_alignParentEnd="true"
         android:checked="false" />
     <TextView
@@ -100,7 +100,7 @@
         android:layout_width="match_parent"
         android:background="#dc484b4b"
         android:layout_above="@+id/textView2"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="40dp"
         android:id="@+id/view" />
 
     <TextView
@@ -110,7 +110,7 @@
         android:id="@+id/textView"
         android:layout_above="@+id/textView2"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="14dp" />
+        android:layout_marginBottom="11dp" />
 
     <TextView
         android:layout_width="wrap_content"

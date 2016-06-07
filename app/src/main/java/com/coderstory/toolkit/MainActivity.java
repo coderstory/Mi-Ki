@@ -1,8 +1,9 @@
 package com.coderstory.toolkit;
 
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,8 +11,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.coderstory.toolkit.tools.hosts;
 
@@ -29,15 +33,21 @@ public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor editor;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setNavigationBarColor(getResources().getColor( R.color.colorPrimary));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(getResources().getColor( R.color.colorPrimary));
+    }
+
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();
         loadSettings(this);
+        if (!prefs.getBoolean("getRoot", false)) {
+            showTips("echo 1", "软件运行需要ROOT权限，点击确定开始授权.", this);
+
+        }
     }
 
     /*load user preferences
@@ -101,10 +111,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case "RemoveAdshosts":
-                        changeHosts();
+                       // changeHosts();
+                        new MyTask().execute();
                         break;
                     case "NoUpdate":
-                        changeHosts();
+                       // changeHosts();
+                        new MyTask().execute();
                         break;
                 }
             }
@@ -146,6 +158,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        if ("echo 1".equals(commandText)){
+                            editor.putBoolean("getRoot", true);
+                            editor.apply();
+                        }
+
                         String cmd = commandText;
                         try {
                             Runtime.getRuntime().exec(new String[]{"su", "-c", cmd});
@@ -160,6 +177,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 取消当前对话框
+                        if ("echo 1".equals(commandText)){
+                            System.exit(0);
+                        }
                         dialog.cancel();
 
                     }
@@ -210,6 +230,65 @@ public class MainActivity extends AppCompatActivity {
             Type = "hosts_NOAD_NOUP";
         }
         hosts h = new hosts(MainActivity.this, Type);
-        h.execute();
+      if (  !h.execute()){
+          Toast.makeText(MainActivity.this,"未获取Root权限",Toast.LENGTH_SHORT).show();
+          Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
+          SwitchBtn.setChecked(false);
+      }
+    }
+
+    class MyTask extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            setProgressBarIndeterminateVisibility(true);
+            showProgress();
+        }
+
+        @Override
+        protected void onPostExecute(String param) {
+          //  showData();
+            setProgressBarIndeterminateVisibility(false);
+           // adapter.notifyDataSetChanged();
+            closeProgress();
+        }
+
+        @Override
+        protected void onCancelled() {
+            // TODO Auto-generated method stub
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            // TODO Auto-generated method stub
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            Looper.prepare();
+          //  initData();
+            changeHosts();
+            return null;
+        }
+    }
+
+    private Dialog dialog;
+    protected void showProgress() {
+        if(dialog == null) {
+//		    dialog.setContentView(R.layout.progress_dialog);
+            //    dialog.getWindow().setAttributes(params);
+            dialog = ProgressDialog.show(this,"温馨提示", "正在处理中...");
+            dialog.show();
+        }
+    }
+    //
+    protected void closeProgress() {
+
+        if(dialog != null) {
+            dialog.cancel();
+            dialog = null;
+        }
     }
 }

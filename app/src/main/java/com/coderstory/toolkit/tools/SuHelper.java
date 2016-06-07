@@ -48,6 +48,7 @@ public abstract class SuHelper {
                     os.writeBytes("exit\n");
                     os.flush();
                 }
+
             }
         } catch (Exception e) {
             // Can't get root !

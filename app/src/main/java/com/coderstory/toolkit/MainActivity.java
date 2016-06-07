@@ -28,6 +28,8 @@ import android.widget.Toast;
 import com.coderstory.toolkit.tools.hosts;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
@@ -38,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setNavigationBarColor(getResources().getColor( R.color.colorPrimary));
-    }
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
+        }
 
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();
@@ -93,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
         SwitchBtn.setChecked(SetValue);
         initControl(SwitchBtn, "RemoveAdshosts");
 
+
+        SetValue = prefs.getBoolean("GoogleHosts", false);
+        SwitchBtn = (Switch) mainActivity.findViewById(R.id.GoogleHosts);
+        SwitchBtn.setChecked(SetValue);
+        initControl(SwitchBtn, "GoogleHosts");
+
     }
 
     private void initControl(Switch SwitchBtn, final String key) {
@@ -111,11 +119,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case "RemoveAdshosts":
-                       // changeHosts();
+                        // changeHosts();
                         new MyTask().execute();
                         break;
                     case "NoUpdate":
-                       // changeHosts();
+                        // changeHosts();
+                        new MyTask().execute();
+                        break;
+                    case "GoogleHosts":
+                        // changeHosts();
                         new MyTask().execute();
                         break;
                 }
@@ -158,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        if ("echo 1".equals(commandText)){
+                        if ("echo 1".equals(commandText)) {
                             editor.putBoolean("getRoot", true);
                             editor.apply();
                         }
@@ -177,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 取消当前对话框
-                        if ("echo 1".equals(commandText)){
+                        if ("echo 1".equals(commandText)) {
                             System.exit(0);
                         }
                         dialog.cancel();
@@ -217,24 +229,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeHosts() {
-        boolean NoUpdate = prefs.getBoolean("NoUpdate", false);
-        boolean RemoveAds = prefs.getBoolean("RemoveAds", false);
-        String Type = "hosts_NONE";
-        if (!NoUpdate && !RemoveAds) {
-            Type = "hosts_NONE";
-        } else if (!NoUpdate && RemoveAds) {
-            Type = "hosts_NOAD";
-        } else if (NoUpdate && !RemoveAds) {
-            Type = "hosts_NOUP";
+        boolean NoUpdate = prefs.getBoolean("NoUpdate", false); //1
+       // boolean RemoveAds = prefs.getBoolean("RemoveAds", false); //2
+        boolean GoogleHosts = prefs.getBoolean("GoogleHosts", false); //4
+        boolean RemoveAdshosts = prefs.getBoolean("RemoveAdshosts", false); //4
+        Map<String, String> setMap = new HashMap<String, String>();
+        if (NoUpdate) {
+            setMap.put("NoUpdate", "True");
         } else {
-            Type = "hosts_NOAD_NOUP";
+            setMap.put("NoUpdate", "False");
         }
-        hosts h = new hosts(MainActivity.this, Type);
-      if (  !h.execute()){
-          Toast.makeText(MainActivity.this,"未获取Root权限",Toast.LENGTH_SHORT).show();
-          Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
-          SwitchBtn.setChecked(false);
-      }
+        //if (RemoveAds) {
+        //    setMap.put("RemoveAds", "True");
+        //} else {
+        //    setMap.put("RemoveAds", "False");
+       // }
+        if (GoogleHosts) {
+            setMap.put("GoogleHosts", "True");
+        } else {
+            setMap.put("GoogleHosts", "False");
+        }
+        if (RemoveAdshosts) {
+            setMap.put("RemoveAdshosts", "True");
+        } else {
+            setMap.put("RemoveAdshosts", "False");
+        }
+
+
+        hosts h = new hosts(MainActivity.this, setMap);
+        if (!h.execute()) {
+            Toast.makeText(MainActivity.this, "未获取Root权限", Toast.LENGTH_SHORT).show();
+            Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
+            SwitchBtn.setChecked(false);
+        }
     }
 
     class MyTask extends AsyncTask<String, Integer, String> {
@@ -247,9 +274,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String param) {
-          //  showData();
+            //  showData();
             setProgressBarIndeterminateVisibility(false);
-           // adapter.notifyDataSetChanged();
+            // adapter.notifyDataSetChanged();
             closeProgress();
         }
 
@@ -268,25 +295,27 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             Looper.prepare();
-          //  initData();
+            //  initData();
             changeHosts();
             return null;
         }
     }
 
     private Dialog dialog;
+
     protected void showProgress() {
-        if(dialog == null) {
+        if (dialog == null) {
 //		    dialog.setContentView(R.layout.progress_dialog);
             //    dialog.getWindow().setAttributes(params);
-            dialog = ProgressDialog.show(this,"温馨提示", "正在处理中...");
+            dialog = ProgressDialog.show(this, "温馨提示", "正在处理中...");
             dialog.show();
         }
     }
+
     //
     protected void closeProgress() {
 
-        if(dialog != null) {
+        if (dialog != null) {
             dialog.cancel();
             dialog = null;
         }

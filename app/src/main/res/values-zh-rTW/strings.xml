@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Mi Kit</string>
+    <string name="Tips_Title">温馨提示</string>
+    <string name="Tips_Processing">正在处理中...</string>
+    <string name="Tips_No_Root">未获取Root权限</string>
+    <string name="Btn_Cancel">取消</string>
+    <string name="Btn_Sure">确定</string>
+    <string name="Tips_Title_Error">错误</string>
+    <string name="Tips_Reboot">你确定要重启吗？</string>
+    <string name="Tips_HotBoot">你确定要快速重启吗？(本功能需要busybox支持)</string>
+    <string name="Tips_Need_Root">软件运行需要ROOT权限，点击确定开始授权.</string>
+    <string name="Label_MyBlog">作者的個人博客:blog.coderstory.cn</string>
+    <string name="Label_MyName">作者：油炸包子</string>
+    <string name="Label_About">關於</string>
+    <string name="Label_Hidden_Icon">隱藏圖示</string>
+    <string name="Label_Google_Access">谷歌Hosts(能实现访问一些谷歌服务)</string>
+    <string name="Label_No_MIUI_Update">遮蔽MIUI更新偵測(需ROOT)</string>
+    <string name="Label_Core_Patch">Android 核心破解</string>
+    <string name="Label_NO_AD">遮蔽廣告(Hosts模式 需ROOT)</string>
+    <string name="Label_NO_MIUI_AD">遮蔽MIUI廣告(Xposed模組)</string>
+    <string name="Label_NO_SearchBar">移除下拉式選單搜尋框</string>
+    <string name="Label_Theme_Patch">MIUI主題破解</string>
+    <string name="Menu_HotBoot">热重启</string>
+    <string name="Menu_Reboot">重启</string>
+</resources>

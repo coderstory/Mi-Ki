@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         editor = prefs.edit();
         loadSettings(this);
         if (!prefs.getBoolean("getRoot", false)) {
-            showTips("echo 1", "软件运行需要ROOT权限，点击确定开始授权.", this);
+            showTips("echo 1", getString(R.string.Tips_Need_Root), this);
 
         }
     }
@@ -150,10 +150,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item_id) {
             case R.id.hotboot:
-                showTips("killall system_server", "你确定要快速重启吗？(本功能需要busybox支持)", this);
+                showTips("killall system_server", getString(R.string.Tips_HotBoot), this);
                 break;
             case R.id.reboot:
-                showTips("reboot", "你确定要重启吗？", this);
+                showTips("reboot", getString(R.string.Tips_Reboot), this);
                 break;
             default:
                 return false;
@@ -164,9 +164,9 @@ public class MainActivity extends AppCompatActivity {
     /*实现弹窗确定执行某条命令*/
     public static void showTips(final String commandText, String messageText, final Context mContext) {
         AlertDialog builder = new AlertDialog.Builder(mContext)
-                .setTitle("提示")
+                .setTitle(R.string.Tips_Title)
                 .setMessage(messageText)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -180,12 +180,12 @@ public class MainActivity extends AppCompatActivity {
                             Runtime.getRuntime().exec(new String[]{"su", "-c", cmd});
                         } catch (IOException e) {
                             Log.d("su", e.getMessage());
-                            new AlertDialog.Builder(mContext).setTitle("错误").setMessage(
-                                    e.getMessage()).setPositiveButton("确定", null).show();
+                            new AlertDialog.Builder(mContext).setTitle(R.string.Tips_Title_Error).setMessage(
+                                    e.getMessage()).setPositiveButton(R.string.Btn_Sure, null).show();
                         }
                     }
                 })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // 取消当前对话框
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
 
         hosts h = new hosts(MainActivity.this, setMap);
         if (!h.execute()) {
-            Toast.makeText(MainActivity.this, "未获取Root权限", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.Tips_No_Root, Toast.LENGTH_SHORT).show();
             Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
             SwitchBtn.setChecked(false);
         }
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
         if (dialog == null) {
 //		    dialog.setContentView(R.layout.progress_dialog);
             //    dialog.getWindow().setAttributes(params);
-            dialog = ProgressDialog.show(this, "温馨提示", "正在处理中...");
+            dialog = ProgressDialog.show(this, getString(R.string.Tips_Title), getString(R.string.Tips_Processing));
             dialog.show();
         }
     }

@@ -1,4 +1,29 @@
 <resources>
     <string name="app_name">Mi Kit</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="Tips_Title">温馨提示</string>
+    <string name="Tips_Processing">正在处理中...</string>
+    <string name="Tips_No_Root">未获取Root权限</string>
+    <string name="Btn_Cancel">取消</string>
+    <string name="Btn_Sure">确定</string>
+    <string name="Tips_Title_Error">错误</string>
+    <string name="Tips_Reboot">你确定要重启吗？</string>
+    <string name="Tips_HotBoot">你确定要快速重启吗？(本功能需要busybox支持)</string>
+    <string name="Tips_Need_Root">软件运行需要ROOT权限，点击确定开始授权.</string>
+    <string name="Label_MyBlog">我的博客:blog.coderstory.cn</string>
+    <string name="Label_Hidden_Icon">隐藏应用图标</string>
+    <string name="Label_Google_Access">谷歌Hosts(能实现访问一些谷歌服务)</string>
+    <string name="Label_No_MIUI_Update">屏蔽MIUI更新检测(需ROOT)</string>
+    <string name="Label_Core_Patch">Android核心校验破解</string>
+    <string name="Label_NO_AD">屏蔽广告（Hosts方式 需ROOT）</string>
+    <string name="Label_NO_MIUI_AD">屏蔽MIUI广告（XP模块）</string>
+    <string name="Label_NO_SearchBar">移除下拉菜单搜索框</string>
+    <string name="Label_Theme_Patch">MIUI主题破解</string>
+    <string name="Menu_HotBoot">快速重启</string>
+    <string name="Menu_Reboot">重启</string>
+    <string name="label_Other_Settings">通用设置</string>
+    <string name="Label_Common_Settings">通用设置</string>
+    <string name="Label_MIUI_Settings">MIUI相关</string>
+    <string name="Label_About">关于</string>
+    <string name="Label_MyName">作者:油炸包子</string>
+    <string name="Label_Version">版本:1.0 测试版</string>
 </resources>

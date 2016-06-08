@@ -22,6 +22,8 @@ public class ThemePather implements IXposedHookLoadPackage {
 
     private static void drmManager() throws NoSuchFieldException {
         XposedBridge.log("DRM破解");
+        patchCodeTwo("miui.drm.DrmManager", "isLegal", String.class, File.class, XC_MethodReplacement.returnConstant(Boolean.valueOf(true)));
+        patchCodeTwo("miui.drm.DrmManager", "isLegal", File.class, File.class, XC_MethodReplacement.returnConstant(Boolean.valueOf(true)));
         patchCodeTwo("miui.drm.DrmManager", "isLegal", Context.class, String.class, "miui.drm.DrmManager$RightObject", XC_MethodReplacement.returnConstant(true));
         patchCodeTwo("miui.drm.DrmManager", "isLegal", Context.class, File.class, File.class, XC_MethodReplacement.returnConstant(true));
         patchCodeTwo("miui.drm.DrmManager", "isLegal", Context.class, String.class, File.class, XC_MethodReplacement.returnConstant(true));

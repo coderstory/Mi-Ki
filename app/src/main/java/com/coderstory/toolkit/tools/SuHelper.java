@@ -1,11 +1,13 @@
 package com.coderstory.toolkit.tools;
 
 /**
+ * 指向su命令的帮助类
  * Created by cc on 2016/6/7.
  */
+
 import android.util.Log;
+
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,42 +16,41 @@ import java.util.ArrayList;
 
 public abstract class SuHelper {
     public static boolean canRunRootCommands() {
-        boolean retval = false;
+        boolean retval;
         Process suProcess;
 
         try {
             suProcess = Runtime.getRuntime().exec("su");
 
             DataOutputStream os = new DataOutputStream(suProcess.getOutputStream());
-            DataInputStream osRes = new DataInputStream(suProcess.getInputStream());
+           // DataInputStream osRes = new DataInputStream(suProcess.getInputStream());//过时的方法
+            BufferedReader osRes=new BufferedReader(new InputStreamReader(suProcess.getInputStream()));
+            // Getting the id of the current user to check if this is root
+            os.writeBytes("id\n");
+            os.flush();
 
-            if (null != os && null != osRes) {
-                // Getting the id of the current user to check if this is root
-                os.writeBytes("id\n");
-                os.flush();
-
-                String currUid = osRes.readLine();
-                boolean exitSu = false;
-                if (null == currUid) {
-                    retval = false;
-                    exitSu = false;
-                    Log.d("ROOT", "Can't get root access or denied by user");
-                } else if (true == currUid.contains("uid=0")) {
-                    retval = true;
-                    exitSu = true;
-                    Log.d("ROOT", "Root access granted");
-                } else {
-                    retval = false;
-                    exitSu = true;
-                    Log.d("ROOT", "Root access rejected: " + currUid);
-                }
-
-                if (exitSu) {
-                    os.writeBytes("exit\n");
-                    os.flush();
-                }
-
+            String currUid = osRes.readLine();
+            boolean exitSu;
+            if (null == currUid) {
+                retval = false;
+                exitSu = false;
+                Log.d("ROOT", "Can't get root access or denied by user");
+            } else if (currUid.contains("uid=0")) {
+                retval = true;
+                exitSu = true;
+                Log.d("ROOT", "Root access granted");
+            } else {
+                retval = false;
+                exitSu = true;
+                Log.d("ROOT", "Root access rejected: " + currUid);
             }
+
+            if (exitSu) {
+                os.writeBytes("exit\n");
+                os.flush();
+            }
+
+
         } catch (Exception e) {
             // Can't get root !
             // Probably broken pipe exception on trying to write to output
@@ -85,7 +86,7 @@ public abstract class SuHelper {
                         process.getInputStream()));
                 int read;
                 char[] buffer = new char[4096];
-                StringBuffer output = new StringBuffer();
+                StringBuilder output = new StringBuilder();
                 while ((read = reader.read(buffer)) > 0) {
                     output.append(buffer, 0, read);
                 }
@@ -93,21 +94,15 @@ public abstract class SuHelper {
 
                 try {
                     int suProcessRetval = process.waitFor();
-                    if (255 != suProcessRetval) {
-                        retval = true;
-                    } else {
-                        retval = false;
-                    }
-                    System.out.println("BBBB: "+output.toString()) ;
+                    retval = 255 != suProcessRetval;
+                    System.out.println("BBBB: " + output.toString());
                 } catch (Exception ex) {
                     //Log.e("Error executing root action", ex);
                 }
             }
         } catch (IOException ex) {
             Log.w("ROOT", "Can't get root access", ex);
-        } catch (SecurityException ex) {
-            Log.w("ROOT", "Can't get root access", ex);
-        } catch (Exception ex) {
+        }  catch (Exception ex) {
             Log.w("ROOT", "Error executing internal operation", ex);
         }
 

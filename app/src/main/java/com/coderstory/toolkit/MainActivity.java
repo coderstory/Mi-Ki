@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -40,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
+            getWindow().setNavigationBarColor(ContextCompat.getColor(MainActivity.this,R.color.colorPrimary));
         }
 
-        prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
-        editor = prefs.edit();
+        prefs = getSharedPreferences("UserSettings", Context.MODE_PRIVATE);
+      //  editor = prefs.edit();
         loadSettings(this);
         if (!prefs.getBoolean("getRoot", false)) {
             showTips("echo 1", getString(R.string.Tips_Need_Root), this);
@@ -52,57 +53,72 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*load user preferences
+    /*初始化每一个布局上的按钮的状态并绑定事件
      */
     private void loadSettings(MainActivity mainActivity) {
 
         Boolean SetValue;
         Switch SwitchBtn;
 
+        //移除搜索框
         SetValue = prefs.getBoolean("RemoveSearchBar", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.RemoveSearchBar);
-        SwitchBtn.setChecked(SetValue);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
         initControl(SwitchBtn, "RemoveSearchBar");
-
+        //核心破解
         SetValue = prefs.getBoolean("CorePatcher", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.CorePatcher);
-        SwitchBtn.setChecked(SetValue);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
         initControl(SwitchBtn, "CorePatcher");
-
+        //禁止miui检测更新
         SetValue = prefs.getBoolean("NoUpdate", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.NoUpdate);
-        SwitchBtn.setChecked(SetValue);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
         initControl(SwitchBtn, "NoUpdate");
-
+        //hosts去广告
         SetValue = prefs.getBoolean("RemoveAds", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.RemoveAds);
-        SwitchBtn.setChecked(SetValue);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
         initControl(SwitchBtn, "RemoveAds");
-
+        //主题破解
         SetValue = prefs.getBoolean("ThemePatcher", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.ThemePatcher);
-        SwitchBtn.setChecked(SetValue);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
         initControl(SwitchBtn, "ThemePatcher");
-
-
+        //隐藏图标
         SetValue = prefs.getBoolean("switchIcon", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.switchIcon);
-        SwitchBtn.setChecked(SetValue);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
         initControl(SwitchBtn, "switchIcon");
-
         SetValue = prefs.getBoolean("RemoveAdshosts", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.RemoveAdshosts);
-        SwitchBtn.setChecked(SetValue);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
         initControl(SwitchBtn, "RemoveAdshosts");
-
-
+        //谷歌hosts
         SetValue = prefs.getBoolean("GoogleHosts", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.GoogleHosts);
-        SwitchBtn.setChecked(SetValue);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
         initControl(SwitchBtn, "GoogleHosts");
 
     }
 
+    //初始化每个按钮的事件
     private void initControl(Switch SwitchBtn, final String key) {
 
         SwitchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -110,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editor.putBoolean(key, isChecked);
                 editor.apply();
+
                 switch (key) {
                     case "switchIcon":
                         if (isChecked) {
@@ -175,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
                             editor.apply();
                         }
 
-                        String cmd = commandText;
+                       // String cmd = commandText;
                         try {
-                            Runtime.getRuntime().exec(new String[]{"su", "-c", cmd});
+                            Runtime.getRuntime().exec(new String[]{"su", "-c", commandText});
                         } catch (IOException e) {
                             Log.d("su", e.getMessage());
                             new AlertDialog.Builder(mContext).setTitle(R.string.Tips_Title_Error).setMessage(
@@ -199,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
+    //隐藏图标
     private void HideIcon() {
         ComponentName localComponentName = new ComponentName(this, getClass().getName() + "-Alias");
         PackageManager localPackageManager = getPackageManager();
@@ -209,9 +227,8 @@ public class MainActivity extends AppCompatActivity {
                 PackageManager.DONT_KILL_APP);
     }
 
+    //显示图标
     private void showIcon() {
-
-
         ComponentName localComponentName = new ComponentName(this, getClass().getName() + "-Alias");
         PackageManager localPackageManager = getPackageManager();
         localPackageManager.getComponentEnabledSetting(localComponentName);
@@ -221,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
                 PackageManager.DONT_KILL_APP);
     }
 
+    //打开我的博客
     public void opneUrl(View view) {
         //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -228,22 +246,18 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //修改hosts的方法
     private void changeHosts() {
         boolean NoUpdate = prefs.getBoolean("NoUpdate", false); //1
-       // boolean RemoveAds = prefs.getBoolean("RemoveAds", false); //2
+        // boolean RemoveAds = prefs.getBoolean("RemoveAds", false); //2
         boolean GoogleHosts = prefs.getBoolean("GoogleHosts", false); //4
         boolean RemoveAdshosts = prefs.getBoolean("RemoveAdshosts", false); //4
-        Map<String, String> setMap = new HashMap<String, String>();
+        Map<String, String> setMap = new HashMap<>();
         if (NoUpdate) {
             setMap.put("NoUpdate", "True");
         } else {
             setMap.put("NoUpdate", "False");
         }
-        //if (RemoveAds) {
-        //    setMap.put("RemoveAds", "True");
-        //} else {
-        //    setMap.put("RemoveAds", "False");
-       // }
         if (GoogleHosts) {
             setMap.put("GoogleHosts", "True");
         } else {
@@ -255,17 +269,18 @@ public class MainActivity extends AppCompatActivity {
             setMap.put("RemoveAdshosts", "False");
         }
 
-
         hosts h = new hosts(MainActivity.this, setMap);
         if (!h.execute()) {
             Toast.makeText(MainActivity.this, R.string.Tips_No_Root, Toast.LENGTH_SHORT).show();
             Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
-            SwitchBtn.setChecked(false);
+            if (SwitchBtn != null) {
+                SwitchBtn.setChecked(false);
+            }
         }
     }
 
+    //因为hosts修改比较慢 所以改成异步的
     class MyTask extends AsyncTask<String, Integer, String> {
-
         @Override
         protected void onPreExecute() {
             setProgressBarIndeterminateVisibility(true);
@@ -312,7 +327,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //
     protected void closeProgress() {
 
         if (dialog != null) {

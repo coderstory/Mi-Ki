@@ -4,17 +4,16 @@ import android.content.Context;
 
 import java.util.Map;
 
-import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 /**
+ * 移除miui内置广告
  * Created by CoderStory on 2016/6/4.
  */
 public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage {
@@ -22,7 +21,7 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
 
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
             throws Throwable {
-        XSharedPreferences prefs = new XSharedPreferences("com.coderstory.toolkit", "UserSettings");
+        XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
         prefs.makeWorldReadable();
         prefs.reload();
         if (!prefs.getBoolean("RemoveAds", false)) {
@@ -35,7 +34,7 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                 XposedHelpers.findAndHookMethod("com.android.providers.downloads.ui.recommend.config.ADConfig", paramLoadPackageParam.classLoader, "OSSupportAD", new XC_MethodHook() {
                     protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                             throws Throwable {
-                        paramAnonymousMethodHookParam.setResult(Boolean.valueOf(false));
+                        paramAnonymousMethodHookParam.setResult(false);
                     }
                 });
                 return;
@@ -49,7 +48,7 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                 XposedHelpers.findAndHookMethod("com.miui.weather2.tools.ToolUtils", paramLoadPackageParam.classLoader, "checkCommericalStatue", Context.class, new XC_MethodHook() {
                     protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                             throws Throwable {
-                        paramAnonymousMethodHookParam.setResult(Boolean.valueOf(false));
+                        paramAnonymousMethodHookParam.setResult(false);
                     }
                 });
                 return;
@@ -80,7 +79,6 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                         paramAnonymousMethodHookParam.setResult("");
                     }
                 });
-                return;
             } catch (Throwable p4) {
                 XposedBridge.log(p4);
             }

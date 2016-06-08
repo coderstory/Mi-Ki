@@ -7,24 +7,22 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
+ * 和hosts相关的操作
  * Created by cc on 2016/6/7.
  */
 public class hosts extends SuHelper {
-    private Context context = null;
-    Map<String,String> Typec;
+
+    private Context context = null; //Context
+    Map<String,String> Typec; //hosts的用户配置
 
     public hosts(Context c, Map<String,String> type) {
         this.context = c;
         this.Typec = type;
     }
-
-   // boolean NoUpdate = prefs.getBoolean("NoUpdate", false); //1
-   // boolean RemoveAds = prefs.getBoolean("RemoveAds", false); //2
-   // boolean GoogleHosts = prefs.getBoolean("GoogleHosts", false); //4
-    //setMap.put("RemoveAdshosts", "False");
+    //构造命令组
     @Override
     protected ArrayList<String> getCommandsToExecute() throws UnsupportedEncodingException {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         list.add("mount -o rw,remount /system");
         Filehelper fh = new Filehelper();
         String content=fh.getFromAssets("none", context);

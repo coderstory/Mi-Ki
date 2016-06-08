@@ -1,5 +1,4 @@
-com.coderstory.toolkit.XposedModule.CorePatch
-com.coderstory.toolkit.XposedModule.NoUpdate
-com.coderstory.toolkit.XposedModule.RemoveAds
-com.coderstory.toolkit.XposedModule.RemoveSearchBar
-com.coderstory.toolkit.XposedModule.ThemePather
+com.coderstory.miui_toolkit.XposedModule.CorePatch
+com.coderstory.miui_toolkit.XposedModule.RemoveAds
+com.coderstory.miui_toolkit.XposedModule.RemoveSearchBar
+com.coderstory.miui_toolkit.XposedModule.ThemePather

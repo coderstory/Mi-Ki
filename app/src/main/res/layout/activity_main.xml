@@ -1,233 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:id="@+id/scrollView2" >
-
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="1200px"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:layout_height="1200px">
+            android:paddingTop="@dimen/activity_vertical_margin">
 
             <TextView
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_MIUI_Settings"
-
-                android:id="@+id/textView4"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true" />
-
-            <View
-                android:layout_height="1px"
-                android:layout_width="match_parent"
-                android:background="#dc484b4b"
-                android:layout_marginTop="5dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/Label_MIUI_Settings" />
 
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView4"
-                android:id="@+id/line2" />
+                android:layout_marginTop="5dp"
+                android:background="#dc484b4b" />
 
             <Switch
+                android:id="@+id/ThemePatcher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_Theme_Patch"
-                android:id="@+id/ThemePatcher"
-                android:checked="false"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_below="@+id/line2"
                 android:layout_marginTop="50dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
+                android:checked="false"
                 android:clickable="true"
-                android:contextClickable="false" />
+                android:contextClickable="false"
+                android:text="@string/Label_Theme_Patch" />
 
             <Switch
+                android:id="@+id/RemoveSearchBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_NO_SearchBar"
-                android:id="@+id/RemoveSearchBar"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/ThemePatcher"
                 android:layout_marginTop="20dp"
                 android:checked="false"
                 android:clickable="true"
-                android:layout_below="@+id/ThemePatcher"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true" />
+                android:text="@string/Label_NO_SearchBar" />
 
             <Switch
+                android:id="@+id/RemoveAds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_NO_MIUI_AD"
-                android:id="@+id/RemoveAds"
-                android:layout_below="@+id/RemoveSearchBar"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/RemoveSearchBar"
                 android:layout_marginTop="18dp"
                 android:checked="false"
-                android:layout_alignParentEnd="true" />
+                android:text="@string/Label_NO_MIUI_AD" />
 
             <Switch
+                android:id="@+id/NoUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_No_MIUI_Update"
-                android:id="@+id/NoUpdate"
-                android:layout_below="@+id/RemoveAds"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/RemoveAds"
                 android:layout_marginTop="20dp"
                 android:checked="false"
-                android:layout_alignParentEnd="true" />
+                android:text="@string/Label_No_MIUI_Update" />
 
             <TextView
+                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_Common_Settings"
-                android:layout_marginTop="30dp"
-                android:id="@+id/textView5"
-                android:layout_below="@+id/NoUpdate"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/NoUpdate"
+                android:layout_marginTop="30dp"
+                android:text="@string/Label_Common_Settings" />
+
             <View
-                android:layout_height="1px"
+                android:id="@+id/view4"
                 android:layout_width="match_parent"
-                android:background="#dc484b4b"
-                android:layout_marginTop="5dp"
+                android:layout_height="1px"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView5"
                 android:layout_marginBottom="10dp"
-                android:id="@+id/view4" />
-
-
-
+                android:layout_marginTop="5dp"
+                android:background="#dc676969" />
 
             <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Label_Core_Patch"
                 android:id="@+id/CorePatcher"
-                android:checked="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/view4"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
-                android:layout_alignParentEnd="true" />
+                android:checked="false"
+                android:text="@string/Label_Core_Patch" />
 
             <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Label_NO_AD"
                 android:id="@+id/RemoveAdshosts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/CorePatcher"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp"
                 android:checked="false"
-                android:layout_alignParentEnd="true" />
+                android:text="@string/Label_NO_AD" />
+
             <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Label_Google_Access"
                 android:id="@+id/GoogleHosts"
-                android:layout_below="@+id/RemoveAdshosts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/RemoveAdshosts"
                 android:layout_marginTop="20dp"
                 android:checked="false"
-                android:layout_alignParentEnd="true" />
+                android:text="@string/Label_Google_Access" />
 
 
             <TextView
+                android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_Other_Settings"
-                android:layout_marginTop="20dp"
-                android:id="@+id/textView6"
-                android:layout_below="@+id/GoogleHosts"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true" />
-            <View
-                android:layout_height="1px"
-                android:layout_width="match_parent"
-                android:background="#dc484b4b"
-                android:layout_marginTop="5dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/GoogleHosts"
+                android:layout_marginTop="20dp"
+                android:text="@string/label_Other_Settings" />
 
+            <View
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView6"
-                android:id="@+id/line5" />
+
+                android:layout_marginTop="5dp"
+                android:background="#dc484b4b" />
 
             <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Label_Hidden_Icon"
                 android:id="@+id/switchIcon"
-                android:layout_below="@+id/textView6"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="25dp"
-                android:layout_alignParentEnd="true"
-                android:checked="false" />
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_About"
-                android:layout_marginTop="30dp"
-                android:id="@+id/textView3"
-                android:layout_below="@+id/switchIcon"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView6"
+                android:layout_marginTop="25dp"
+                android:checked="false"
+                android:text="@string/Label_Hidden_Icon" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/switchIcon"
+                android:layout_marginTop="30dp"
+                android:text="@string/Label_About" />
+
             <View
-                android:layout_height="1px"
+                android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:background="#dc484b4b"
-                android:layout_marginTop="5dp"
+                android:layout_height="1px"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView3"
                 android:layout_marginBottom="10dp"
-                android:id="@+id/view" />
+                android:layout_marginTop="5dp"
+                android:background="#dc484b4b" />
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_MyName"
-                android:id="@+id/textView"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/view"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                 />
+                android:layout_below="@+id/view"
+                android:layout_marginTop="10dp"
+                android:text="@string/Label_MyName" />
+
             <TextView
+                android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_Version"
-                android:id="@+id/textView8"
-                android:onClick="opneUrl"
-                android:layout_marginTop="10dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView"
-                />
+                android:layout_marginTop="10dp"
+                android:onClick="opneUrl"
+                android:text="@string/Label_Version" />
+
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Label_MyBlog"
-                android:id="@+id/textView2"
-                android:onClick="opneUrl"
-                android:layout_marginTop="10dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView8"
-                />
+                android:layout_marginTop="10dp"
+                android:onClick="opneUrl"
+                android:text="@string/Label_MyBlog" />
 
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView2"
+                android:layout_marginTop="10dp"
+                android:text="@string/Lable_Reboot_Apply" />
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

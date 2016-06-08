@@ -1,4 +1,4 @@
-package com.coderstory.toolkit;
+package com.coderstory.miui_toolkit;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

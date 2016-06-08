@@ -1,11 +1,9 @@
-package com.coderstory.toolkit.XposedModule;
-
+package com.coderstory.miui_toolkit.XposedModule;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Base64;
-import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -15,8 +13,8 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
+
 /**
- * android核心破解
  * Created by CoderStory on 2016/6/4.
  */
 public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage {
@@ -31,82 +29,60 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
         XposedHelpers.findClass("android.content.pm.PackageParser", null);
         XposedHelpers.findClass("java.util.jar.JarVerifier$VerifierEntry", null);
 
-        try {
-            XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.org.conscrypt.OpenSSLSignature", null), "engineVerify", new XC_MethodHook() {
-                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    prefs.reload();
-                    if (!prefs.getBoolean("CorePatcher", false)) {
-                        Log.d("tookit", "CorePatcher closeed!!! ");
-                        return;
-                    }
+        XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.org.conscrypt.OpenSSLSignature", null), "engineVerify", new XC_MethodHook() {
+            protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+                    throws Throwable {
+                prefs.reload();
+                if (!prefs.getBoolean("CorePatcher", false)) {
+                    return;
+                }
+                paramAnonymousMethodHookParam.setResult(true);
+            }
+        });
+
+        XposedHelpers.findAndHookMethod("java.security.MessageDigest", null, "isEqual", byte[].class, byte[].class, new XC_MethodHook() {
+            protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
+                    throws Throwable {
+                prefs.reload();
+                if (!prefs.getBoolean("CorePatcher", false)) {
+                    return;
+                }
+                paramAnonymousMethodHookParam.setResult(true);
+            }
+        });
+
+        XposedHelpers.findAndHookMethod("java.security.Signature", null, "verify", byte[].class, new XC_MethodHook() {
+            protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
+                    throws Throwable {
+                prefs.reload();
+                if (!prefs.getBoolean("CorePatcher", false)) {
+                    return;
+                }
+                if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) && (Integer.valueOf(XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state")) == 3)) {
                     paramAnonymousMethodHookParam.setResult(true);
                 }
-            });
-        }
-        catch (Exception e) {
-            XposedBridge.log(e.getMessage());
-        }
+            }
+        });
 
-        try {
-            XposedHelpers.findAndHookMethod("java.security.MessageDigest", null, "isEqual", byte[].class, byte[].class, new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    prefs.reload();
-                    if (!prefs.getBoolean("CorePatcher", false)) {
-                        return;
-                    }
+        XposedHelpers.findAndHookMethod("java.security.Signature", null, "verify", byte[].class, Integer.TYPE, Integer.TYPE, new XC_MethodHook() {
+            protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
+                    throws Throwable {
+                prefs.reload();
+                if (!prefs.getBoolean("CorePatcher", false)) {
+                    return;
+                }
+                if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) && (Integer.valueOf(XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state")) == 3)) {
                     paramAnonymousMethodHookParam.setResult(true);
                 }
-            });
-        }
-        catch (Exception e) {
-            XposedBridge.log(e.getMessage());
-        }
-
-        try {
-            XposedHelpers.findAndHookMethod("java.security.Signature", null, "verify", byte[].class, new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    prefs.reload();
-                    if (!prefs.getBoolean("CorePatcher", false)) {
-                        return;
-                    }
-                    if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) && (XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state") == 3)) {
-                        paramAnonymousMethodHookParam.setResult(true);
-                    }
-                }
-            });
-        }
-        catch (Exception e) {
-            XposedBridge.log(e.getMessage());
-        }
-        try {
-            XposedHelpers.findAndHookMethod("java.security.Signature", null, "verify", byte[].class, Integer.TYPE, Integer.TYPE, new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    prefs.reload();
-                    if (!prefs.getBoolean("CorePatcher", false)) {
-                        return;
-                    }
-                    if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) && (XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state")== 3)) {
-                        paramAnonymousMethodHookParam.setResult(true);
-                    }
-                }
-            });
-        }  catch (Exception e) {
-            XposedBridge.log(e.getMessage());
-        }
-
+            }
+        });
     }
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
             throws Throwable {
-        final XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
+        final XSharedPreferences prefs = new XSharedPreferences("com.coderstory.toolkit", "UserSettings");
         prefs.makeWorldReadable();
-
-
         if (("android".equals(paramLoadPackageParam.packageName)) && (paramLoadPackageParam.processName.equals("android"))) {
 
             Class localClass = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", paramLoadPackageParam.classLoader);
@@ -131,13 +107,13 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                     android.content.pm.Signature[] arrayOfSignature2;
                     int i;
                     int m;
-                    String ll;
+                    String tmpStr;
                     try {
                         localObject = PMcontext.getPackageManager().getPackageInfo("android", PackageManager.GET_SIGNATURES);
                         if (localObject.signatures[0] == null) {
                             return;
                         }
-                        ll = Base64.encodeToString(localObject.signatures[0].toByteArray(), 0).replaceAll("\n", "");
+                        tmpStr = Base64.encodeToString(localObject.signatures[0].toByteArray(), 0).replaceAll("\n", "");
                         k = 0;
                         j = 0;
                         android.content.pm.Signature[] arrayOfSignature1 = (android.content.pm.Signature[]) paramAnonymousMethodHookParam.args[0];
@@ -153,7 +129,7 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                                     if (k >= m) {
                                         break;
                                     }
-                                    if (Base64.encodeToString(arrayOfSignature1[k].toByteArray(), 0).replaceAll("\n", "").equals(ll)) {
+                                    if (Base64.encodeToString(arrayOfSignature1[k].toByteArray(), 0).replaceAll("\n", "").equals(tmpStr)) {
                                         j = 1;
                                     }
                                     k += 1;
@@ -175,7 +151,7 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                                 if (j >= m) {
                                     break;
                                 }
-                                if (Base64.encodeToString(arrayOfSignature2[j].toByteArray(), 0).replaceAll("\n", "").equals(ll)) {
+                                if (Base64.encodeToString(arrayOfSignature2[j].toByteArray(), 0).replaceAll("\n", "").equals(tmpStr)) {
                                     i = 1;
                                 }
                                 j += 1;
@@ -195,11 +171,11 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                     if (!prefs.getBoolean("CorePatcher", false)) {
                         return;
                     }
-
-                        int j = ((Integer) paramAnonymousMethodHookParam.args[2]);
-                        if ((j & 0x80) == 0) {
-                            paramAnonymousMethodHookParam.args[2] = j | 0x80;
-                        }
+                    int i = 2;
+                    int j = (Integer) paramAnonymousMethodHookParam.args[i];
+                    if ((j & 0x80) == 0) {
+                        paramAnonymousMethodHookParam.args[i] = j | 0x80;
+                    }
                 }
             });
         }
@@ -211,13 +187,5 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                 }
             });
         }
-
     }
 }
-
-
-
-
-
-
-

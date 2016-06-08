@@ -1,4 +1,4 @@
-package com.coderstory.toolkit.tools;
+package com.coderstory.miui_toolkit.tools;
 
 /**
  * 指向su命令的帮助类
@@ -18,7 +18,6 @@ public abstract class SuHelper {
     public static boolean canRunRootCommands() {
         boolean retval;
         Process suProcess;
-
         try {
             suProcess = Runtime.getRuntime().exec("su");
 

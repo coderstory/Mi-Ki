@@ -1,4 +1,4 @@
-package com.coderstory.toolkit;
+package com.coderstory.miui_toolkit;
 
 
 import android.app.AlertDialog;
@@ -26,7 +26,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.coderstory.toolkit.tools.hosts;
+import com.coderstory.miui_toolkit.tools.hosts;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setNavigationBarColor(ContextCompat.getColor(MainActivity.this,R.color.colorPrimary));
+            getWindow().setNavigationBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
         }
 
-        prefs = getSharedPreferences("UserSettings", Context.MODE_PRIVATE);
-      //  editor = prefs.edit();
+        prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
+        editor = prefs.edit();
         loadSettings(this);
         if (!prefs.getBoolean("getRoot", false)) {
             showTips("echo 1", getString(R.string.Tips_Need_Root), this);
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                             editor.apply();
                         }
 
-                       // String cmd = commandText;
+                        // String cmd = commandText;
                         try {
                             Runtime.getRuntime().exec(new String[]{"su", "-c", commandText});
                         } catch (IOException e) {

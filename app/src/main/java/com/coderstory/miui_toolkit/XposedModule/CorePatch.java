@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Base64;
-
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
@@ -19,7 +18,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
  */
 public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage {
     private Context PMcontext = null;
-    private Context ctx = null;
+ //   private Context ctx = null;
 
     public void initZygote(IXposedHookZygoteInit.StartupParam paramStartupParam)
             throws Throwable {
@@ -58,7 +57,7 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                 if (!prefs.getBoolean("CorePatcher", false)) {
                     return;
                 }
-                if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) && (Integer.valueOf(XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state")) == 3)) {
+                if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) &&( XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state") == 3)) {
                     paramAnonymousMethodHookParam.setResult(true);
                 }
             }
@@ -71,7 +70,7 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                 if (!prefs.getBoolean("CorePatcher", false)) {
                     return;
                 }
-                if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) && (Integer.valueOf(XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state")) == 3)) {
+                if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) && (XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state") == 3)) {
                     paramAnonymousMethodHookParam.setResult(true);
                 }
             }

@@ -88,12 +88,21 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "RemoveAds");
-        //主题破解
+        //主题破解 miui7
         SetValue = prefs.getBoolean("ThemePatcher", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.ThemePatcher);
         if (SwitchBtn != null) {
             SwitchBtn.setChecked(SetValue);
         }
+
+        //主题破解 miui8
+        SetValue = prefs.getBoolean("ThemePatcher2", false);
+        SwitchBtn = (Switch) mainActivity.findViewById(R.id.ThemePatcher2);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
+
+
         initControl(SwitchBtn, "ThemePatcher");
         //隐藏图标
         SetValue = prefs.getBoolean("switchIcon", false);

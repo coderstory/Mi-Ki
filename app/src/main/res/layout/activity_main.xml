@@ -51,12 +51,27 @@
                 android:text="@string/Label_Theme_Patch" />
 
             <Switch
+                android:id="@+id/ThemePatcher2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_below="@+id/ThemePatcher"
+                android:layout_marginTop="90dp"
+                android:checked="false"
+                android:clickable="true"
+                android:contextClickable="false"
+                android:text="MIUI主题和谐(MIUI8模式)" />
+
+
+            <Switch
                 android:id="@+id/RemoveSearchBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/ThemePatcher"
+                android:layout_below="@+id/ThemePatcher2"
                 android:layout_marginTop="20dp"
                 android:checked="false"
                 android:clickable="true"

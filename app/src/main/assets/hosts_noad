@@ -2,7 +2,7 @@
 # f*.market.xiaomi.com 是商店的app下载服务器
 #127.0.0.1 f1.market.xiaomi.com
 127.0.0.1 info.sec.miui.com
-127.0.0.1 live.zdworkscdn.com
+#127.0.0.1 live.zdworkscdn.com
 
 #小米音乐的搜索api
 #127.0.0.1 music.search.xiaomi.net
@@ -12,10 +12,10 @@
 127.0.0.1 mlog.search.xiaomi.net
 127.0.0.1 sousuo.xm.sjzhushou.com
 127.0.0.1 monitor.uu.qq.com
-127.0.0.1 img.zdworkscdn.com
+#127.0.0.1 img.zdworkscdn.com
 127.0.0.1 mdap.alipaylog.com
 127.0.0.1 adinfo.ra1.xlmc.sec.miui.com
-127.0.0.1 7xt0pj.com1.z0.glb.clouddn.com
+#127.0.0.1 7xt0pj.com1.z0.glb.clouddn.com
 127.0.0.1 m.bss.pandora.xiaomi.com
 #127.0.0.1 f2.market.mi-img.com
 #127.0.0.1 file.market.xiaomi.com
@@ -48,12 +48,12 @@
 
 #127.0.0.1 mvideo.duokanbox.com
 127.0.0.1 sestat.baidu.com
-127.0.0.1 7xlyy7.com1.z0.glb.clouddn.com
-127.0.0.1 gw.alicdn.com
+#127.0.0.1 7xlyy7.com1.z0.glb.clouddn.com
+#127.0.0.1 gw.alicdn.com
 127.0.0.1 api.device.xiaomi.net
 127.0.0.1 nsclick.baidu.com
 127.0.0.1 sa3.tuisong.baidu.com
-127.0.0.1 pic.xcarimg.com
+#127.0.0.1 pic.xcarimg.com
 127.0.0.1 c.hiphotos.baidu.com
 127.0.0.1 tb.hiphotos.baidu.com
 127.0.0.1 connect.rom.miui.com
@@ -64,11 +64,11 @@
 127.0.0.1 api.ra1.xlmc.sandai.net
 #127.0.0.1 developer.open-api-auth.xunlei.com
 127.0.0.1 api.ra2.xlmc.sec.miui.com
-127.0.0.1 pgl.yoyo.org
-127.0.0.1 q.qlogo.cn
+#127.0.0.1 pgl.yoyo.org
+#127.0.0.1 q.qlogo.cn
 127.0.0.1 c.id.mi.com
 127.0.0.1 test.ad.xiaomi.com
-127.0.0.1 tb1.bdstatic.com
+#127.0.0.1 tb1.bdstatic.com
 127.0.0.1 update.avlyun.sec.miui.com
 127.0.0.1 pdc.micloud.xiaomi.net
 127.0.0.1 api.tuisong.baidu.com
@@ -86,7 +86,7 @@
 127.0.0.1 mibind.chat.gslb.mi-idc.com
 127.0.0.1 boscdn.bpc.baidu.com
 127.0.0.1 i3.go2yd.com
-127.0.0.1 hm.baidu.com
+#127.0.0.1 hm.baidu.com
 127.0.0.1 zhwnlapi.etouch.cn
 127.0.0.1 app01.nodes.gslb.mi-idc.com
 127.0.0.1 applog.uc.cn

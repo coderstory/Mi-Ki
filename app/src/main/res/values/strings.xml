@@ -17,7 +17,7 @@
     <string name="Label_NO_AD">屏蔽广告（Hosts方式 需ROOT）</string>
     <string name="Label_NO_MIUI_AD">屏蔽部分MIUI广告（XP模块）</string>
     <string name="Label_NO_SearchBar">移除下拉菜单搜索框</string>
-    <string name="Label_Theme_Patch">MIUI主题破解</string>
+    <string name="Label_Theme_Patch">MIUI主题和谐</string>
     <string name="Menu_HotBoot">快速重启</string>
     <string name="Menu_Reboot">重启</string>
     <string name="label_Other_Settings">通用设置</string>
@@ -26,5 +26,5 @@
     <string name="Label_About">关于</string>
     <string name="Label_MyName">作者:油炸包子</string>
     <string name="Label_Version">版本:1.0 测试版</string>
-    <string name="Lable_Reboot_Apply">注意:\n1. 相关设置重启生效!\n2. MIUI下载管理如无法去除图片广告,\n请尝试删除下载管理和下载管理存储的应用数据</string>
+    <string name="Lable_Reboot_Apply">注意:\n1. 相关设置重启生效!\n2. MIUI下载管理如无法去除图片广告,\n请尝试删除下载管理和下载管理存储的应用数据\n3.部分国产UI可能无法降级安装APP</string>
 </resources>

@@ -16,7 +16,6 @@ public class RemoveSearchBar implements IXposedHookInitPackageResources {
         XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
         prefs.makeWorldReadable();
         prefs.reload();
-        //XposedBridge.log("count===" + String.valueOf(prefs.getAll().size()));
         if (!prefs.getBoolean("RemoveSearchBar", false)) {
             return;
         }

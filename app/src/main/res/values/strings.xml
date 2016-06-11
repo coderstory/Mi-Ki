@@ -8,7 +8,7 @@
     <string name="Tips_Title_Error">错误</string>
     <string name="Tips_Reboot">你确定要重启吗？</string>
     <string name="Tips_HotBoot">你确定要快速重启吗？(本功能需要busybox支持)</string>
-    <string name="Tips_Need_Root">软件运行需要ROOT权限，点击确定开始授权.</string>
+    <string name="Tips_Need_Root">软件运行需要ROOT权限，\n点击确定开始授权.\n\n警告：本应用千万别覆盖升级！！</string>
     <string name="Label_MyBlog">我的博客:blog.coderstory.cn</string>
     <string name="Label_Hidden_Icon">隐藏应用图标</string>
     <string name="Label_Google_Access">谷歌Hosts(能实现访问一些谷歌服务)</string>

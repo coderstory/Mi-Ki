@@ -94,22 +94,21 @@ public class MainActivity extends AppCompatActivity {
         if (SwitchBtn != null) {
             SwitchBtn.setChecked(SetValue);
         }
-
+        initControl(SwitchBtn, "ThemePatcher");
         //主题破解 miui8
         SetValue = prefs.getBoolean("ThemePatcher2", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.ThemePatcher2);
         if (SwitchBtn != null) {
             SwitchBtn.setChecked(SetValue);
         }
-
-
-        initControl(SwitchBtn, "ThemePatcher");
+        initControl(SwitchBtn, "ThemePatcher2");
         //隐藏图标
         SetValue = prefs.getBoolean("switchIcon", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.switchIcon);
         if (SwitchBtn != null) {
             SwitchBtn.setChecked(SetValue);
         }
+        //hosts去广告
         initControl(SwitchBtn, "switchIcon");
         SetValue = prefs.getBoolean("RemoveAdshosts", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.RemoveAdshosts);

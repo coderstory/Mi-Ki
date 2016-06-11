@@ -22,4 +22,10 @@
     <string name="Label_Theme_Patch">MIUI主題破解</string>
     <string name="Menu_HotBoot">热重启</string>
     <string name="Menu_Reboot">重启</string>
+    <string name="label_Other_Settings">通用设置</string>
+    <string name="Label_Common_Settings">通用设置</string>
+    <string name="Label_MIUI_Settings">MIUI相关</string>
+
+    <string name="Label_Version">版本:1.2 测试版</string>
+    <string name="Lable_Reboot_Apply">注意:\n1. 相关设置重启生效!\n2. MIUI下载管理如无法去除图片广告,\n请尝试删除下载管理和下载管理存储的应用数据\n3.部分国产UI可能无法降级安装APP</string>
 </resources>

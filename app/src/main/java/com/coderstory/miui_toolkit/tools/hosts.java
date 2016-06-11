@@ -30,15 +30,15 @@ public class hosts extends SuHelper {
 
         if (Typec.get("NoUpdate").equals("True")){
              content=fh.getFromAssets("hosts_noup", context);
-            list.add("echo '"+content+"' >> /system/etc/hosts");//清空
+            list.add("echo '"+content+"' >> /system/etc/hosts");//禁止检测更新
         }
         if (Typec.get("RemoveAdshosts").equals("True")){
             content=fh.getFromAssets("hosts_noad", context);
-            list.add("echo '"+content+"' >> /system/etc/hosts");//清空
+            list.add("echo '"+content+"' >> /system/etc/hosts");//移除广告
         }
         if (Typec.get("GoogleHosts").equals("True")){
             content=fh.getFromAssets("google", context);
-            list.add("echo '"+content+"' >> /system/etc/hosts");//清空
+            list.add("echo '"+content+"' >> /system/etc/hosts");//谷歌hosts
         }
         return list;
     }

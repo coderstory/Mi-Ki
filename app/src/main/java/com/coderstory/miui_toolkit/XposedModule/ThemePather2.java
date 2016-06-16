@@ -30,15 +30,25 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         if (lpparam.packageName.equals("miui.drm")) {
             //判断是有权限使用
             XposedHelpers.findAndHookMethod("miui.drm.DrmManager", lpparam.classLoader, "isPermanentRights", XC_MethodReplacement.returnConstant(true));
+
             //验证单个主题的方法
+            XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiver", lpparam.classLoader, "validateTheme", XC_MethodReplacement.returnConstant(true));
             XposedHelpers.findAndHookMethod("miui.content.res.ThemeRuntimeManager.ThemeReceiver", lpparam.classLoader, "validateTheme", XC_MethodReplacement.returnConstant(true));
+
             //替换主题还原的方法
+            XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiverr", lpparam.classLoader, "restoreDefault", new XC_MethodReplacement() {
+                @Override
+                protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                    return null;
+                }
+            });
             XposedHelpers.findAndHookMethod("miui.content.res.ThemeRuntimeManager", lpparam.classLoader, "restoreDefault", new XC_MethodReplacement() {
                 @Override
                 protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
                     return null;
                 }
             });
+
             //DRM验证主题的入口点;
             XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiver", lpparam.classLoader, "onReceive", new XC_MethodReplacement() {
                 @Override
@@ -46,6 +56,14 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
                     return null;
                 }
             });
+
+            XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiver", lpparam.classLoader, "onReceive", new XC_MethodReplacement() {
+                @Override
+                protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                    return null;
+                }
+            });
+
         }
         if (lpparam.packageName.equals("com.android.thememanager")) {
             //是否试用 可以不改

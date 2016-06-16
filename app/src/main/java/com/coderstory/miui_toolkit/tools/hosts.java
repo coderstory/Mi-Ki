@@ -40,6 +40,10 @@ public class hosts extends SuHelper {
             content=fh.getFromAssets("google", context);
             list.add("echo '"+content+"' >> /system/etc/hosts");//谷歌hosts
         }
+        if (Typec.get("NoStore").equals("True")){
+            content=fh.getFromAssets("hosts_nostore", context);
+            list.add("echo '"+content+"' >> /system/etc/hosts"); //屏蔽商店 音乐 视频
+        }
         return list;
     }
 }

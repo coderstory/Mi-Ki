@@ -99,13 +99,25 @@
                 android:checked="false"
                 android:text="@string/Label_No_MIUI_Update" />
 
+            <Switch
+                android:id="@+id/NoStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/NoUpdate"
+                android:layout_marginTop="20dp"
+                android:checked="false"
+                android:text="屏蔽商店,音乐和视频(hosts方法)" />
+
+
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/NoUpdate"
+                android:layout_below="@+id/NoStore"
                 android:layout_marginTop="30dp"
                 android:text="@string/Label_Common_Settings" />
 

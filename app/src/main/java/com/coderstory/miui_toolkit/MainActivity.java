@@ -116,13 +116,21 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "RemoveAdshosts");
-        //谷歌hosts
+        //谷歌hosts  NoStore
         SetValue = prefs.getBoolean("GoogleHosts", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.GoogleHosts);
         if (SwitchBtn != null) {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "GoogleHosts");
+
+        //屏蔽商店 音乐 视频
+        SetValue = prefs.getBoolean("NoStore", false);
+        SwitchBtn = (Switch) mainActivity.findViewById(R.id.NoStore);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
+        initControl(SwitchBtn, "NoStore");
 
     }
 
@@ -152,6 +160,10 @@ public class MainActivity extends AppCompatActivity {
                         new MyTask().execute();
                         break;
                     case "GoogleHosts":
+                        // changeHosts();
+                        new MyTask().execute();
+                        break;
+                    case "NoStore":
                         // changeHosts();
                         new MyTask().execute();
                         break;
@@ -260,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
         // boolean RemoveAds = prefs.getBoolean("RemoveAds", false); //2
         boolean GoogleHosts = prefs.getBoolean("GoogleHosts", false); //4
         boolean RemoveAdshosts = prefs.getBoolean("RemoveAdshosts", false); //4
+        boolean NoStore=prefs.getBoolean("NoStore", false); //4
         Map<String, String> setMap = new HashMap<>();
         if (NoUpdate) {
             setMap.put("NoUpdate", "True");
@@ -273,8 +286,14 @@ public class MainActivity extends AppCompatActivity {
         }
         if (RemoveAdshosts) {
             setMap.put("RemoveAdshosts", "True");
-        } else {
+        }  else {
             setMap.put("RemoveAdshosts", "False");
+        }
+
+        if (NoStore) {
+            setMap.put("NoStore", "True");
+        }  else {
+            setMap.put("NoStore", "False");
         }
 
         hosts h = new hosts(MainActivity.this, setMap);

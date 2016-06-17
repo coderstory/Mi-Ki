@@ -110,6 +110,18 @@
                 android:checked="false"
                 android:text="屏蔽商店,音乐和视频(hosts方法)" />
 
+            <Switch
+                android:id="@+id/root"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/NoStore"
+                android:layout_marginTop="20dp"
+                android:checked="false"
+                android:text="去除Root 25秒等待" />
+
+
 
             <TextView
                 android:id="@+id/textView5"
@@ -117,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/NoStore"
+                android:layout_below="@+id/root"
                 android:layout_marginTop="30dp"
                 android:text="@string/Label_Common_Settings" />
 

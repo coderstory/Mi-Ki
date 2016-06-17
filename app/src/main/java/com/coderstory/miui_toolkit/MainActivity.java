@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
         }
@@ -131,6 +132,16 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "NoStore");
+
+
+        //root 25秒等待
+        SetValue = prefs.getBoolean("root", false);
+        SwitchBtn = (Switch) mainActivity.findViewById(R.id.root);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
+        initControl(SwitchBtn, "root");
+
 
     }
 
@@ -308,12 +319,13 @@ public class MainActivity extends AppCompatActivity {
 
     //因为hosts修改比较慢 所以改成异步的
     class MyTask extends AsyncTask<String, Integer, String> {
+        //开始
         @Override
         protected void onPreExecute() {
             setProgressBarIndeterminateVisibility(true);
             showProgress();
         }
-
+        //后台操作完毕后的操作
         @Override
         protected void onPostExecute(String param) {
             //  showData();
@@ -321,19 +333,19 @@ public class MainActivity extends AppCompatActivity {
             // adapter.notifyDataSetChanged();
             closeProgress();
         }
-
+        //取消操作
         @Override
         protected void onCancelled() {
             // TODO Auto-generated method stub
             super.onCancelled();
         }
-
+        //更新进度
         @Override
         protected void onProgressUpdate(Integer... values) {
             // TODO Auto-generated method stub
             super.onProgressUpdate(values);
         }
-
+        //后台的操作
         @Override
         protected String doInBackground(String... params) {
             Looper.prepare();
@@ -343,8 +355,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //弹窗
     private Dialog dialog;
 
+    //显示进度条
     protected void showProgress() {
         if (dialog == null) {
 //		    dialog.setContentView(R.layout.progress_dialog);
@@ -354,6 +368,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //关闭进度条
     protected void closeProgress() {
 
         if (dialog != null) {

@@ -40,6 +40,7 @@ public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteIni
         if (!prefs.getBoolean("ThemePatcher", false)) {
             return;
         }
+        XposedBridge.log("miui7主题破解开始");
         mClassLoader = paramLoadPackageParam.classLoader;
         DRM();
         thmemHook(paramLoadPackageParam);
@@ -51,6 +52,7 @@ public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteIni
             zhifu();
             yanzheng();
             tongzhi();
+            XposedBridge.log("miui7主题破解完成");
         }
     }
 

@@ -26,14 +26,16 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         if (!prefs.getBoolean("ThemePatcher2", false)) {
             return;
         }
-        XposedBridge.log("miui8主题破解");
-        if (lpparam.packageName.equals("miui.drm")) {
+
+
+       // if (lpparam.packageName.equals("miui.drm") || lpparam.packageName.equals("com.miui.system")) {
+            XposedBridge.log("开始DRm破解");
             //判断是有权限使用
             XposedHelpers.findAndHookMethod("miui.drm.DrmManager", lpparam.classLoader, "isPermanentRights", XC_MethodReplacement.returnConstant(true));
 
             //验证单个主题的方法
             XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiver", lpparam.classLoader, "validateTheme", XC_MethodReplacement.returnConstant(true));
-            XposedHelpers.findAndHookMethod("miui.content.res.ThemeRuntimeManager.ThemeReceiver", lpparam.classLoader, "validateTheme", XC_MethodReplacement.returnConstant(true));
+          XposedHelpers.findAndHookMethod("miui.content.res.ThemeRuntimeManager.ThemeReceiver", lpparam.classLoader, "validateTheme", XC_MethodReplacement.returnConstant(true));
 
             //替换主题还原的方法
             XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiverr", lpparam.classLoader, "restoreDefault", new XC_MethodReplacement() {
@@ -57,14 +59,10 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
                 }
             });
 
-            XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiver", lpparam.classLoader, "onReceive", new XC_MethodReplacement() {
-                @Override
-                protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
-                    return null;
-                }
-            });
 
-        }
+            XposedBridge.log("miui8主题破解完成1");
+
+     //  }
         if (lpparam.packageName.equals("com.android.thememanager")) {
             //是否试用 可以不改
             XposedHelpers.findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader, "isTrialable", XC_MethodReplacement.returnConstant(false));
@@ -74,7 +72,7 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
             XposedHelpers.findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader, "isAuthorizedResource", XC_MethodReplacement.returnConstant(true));
             //判断是有权限使用
             XposedHelpers.findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader, "isPermanentRights", XC_MethodReplacement.returnConstant(true));
-
+            XposedBridge.log("miui8主题破解完成2");
         }
     }
 }

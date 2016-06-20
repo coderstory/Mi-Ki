@@ -26,8 +26,10 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         if (!prefs.getBoolean("ThemePatcher2", false)) {
             return;
         }
+        XposedBridge.log("Loaded app: " + lpparam.packageName);
         XposedBridge.log("miui8主题破解");
-        if (lpparam.packageName.equals("miui.drm") || lpparam.packageName.equals("com.miui.system")) {
+        if (lpparam.packageName.equals("miui.drm") || lpparam.packageName.equals("com.miui.system")|| lpparam.packageName.equals("miui.system")) {
+
             //判断是有权限使用
             XposedHelpers.findAndHookMethod("miui.drm.DrmManager", lpparam.classLoader, "isPermanentRights", XC_MethodReplacement.returnConstant(true));
 
@@ -35,7 +37,15 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
             XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiver", lpparam.classLoader, "validateTheme", XC_MethodReplacement.returnConstant(true));
             XposedHelpers.findAndHookMethod("miui.content.res.ThemeRuntimeManager.ThemeReceiver", lpparam.classLoader, "validateTheme", XC_MethodReplacement.returnConstant(true));
 
+
             //替换主题还原的方法
+            XposedHelpers.findAndHookMethod("miui.content.res.ThemeRuntimeManager", lpparam.classLoader, "restoreDefault", new XC_MethodReplacement() {
+                @Override
+                protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                    return null;
+                }
+            });
+
             XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiverr", lpparam.classLoader, "restoreDefault", new XC_MethodReplacement() {
                 @Override
                 protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
@@ -49,6 +59,7 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
                 }
             });
 
+
             //DRM验证主题的入口点;
             XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiver", lpparam.classLoader, "onReceive", new XC_MethodReplacement() {
                 @Override
@@ -57,12 +68,6 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
                 }
             });
 
-            XposedHelpers.findAndHookMethod("miui.drm.ThemeReceiver", lpparam.classLoader, "onReceive", new XC_MethodReplacement() {
-                @Override
-                protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
-                    return null;
-                }
-            });
 
         }
         if (lpparam.packageName.equals("com.android.thememanager")) {

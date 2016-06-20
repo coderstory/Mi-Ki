@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -49,8 +47,18 @@ public class MainActivity extends AppCompatActivity {
         loadSettings(this);
         if (!prefs.getBoolean("getRoot", false)) {
             showTips("echo 1", getString(R.string.Tips_Need_Root), this);
+        }
+        if (!checkXp(false)) {
+           // Toast.makeText(MainActivity.this, "xp未启用", Toast.LENGTH_LONG).show();
+        } else {
+           // Toast.makeText(MainActivity.this, "xp已启用", Toast.LENGTH_LONG).show();
 
         }
+
+    }
+
+    public boolean checkXp(boolean c) {
+        return c;
     }
 
     /*初始化每一个布局上的按钮的状态并绑定事件
@@ -132,6 +140,15 @@ public class MainActivity extends AppCompatActivity {
         }
         initControl(SwitchBtn, "NoStore");
 
+        //root 25秒等待
+        SetValue = prefs.getBoolean("root", false);
+        SwitchBtn = (Switch) mainActivity.findViewById(R.id.root);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
+        initControl(SwitchBtn, "root");
+
+
     }
 
     //初始化每个按钮的事件
@@ -192,6 +209,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.reboot:
                 showTips("reboot", getString(R.string.Tips_Reboot), this);
                 break;
+            case R.id.faq:
+                Intent intent = new Intent(this, FAQActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.about:
+                Intent intent2 = new Intent(this, AboutActivity.class);
+                startActivity(intent2);
             default:
                 return false;
         }
@@ -258,13 +282,6 @@ public class MainActivity extends AppCompatActivity {
                 PackageManager.DONT_KILL_APP);
     }
 
-    //打开我的博客
-    public void opneUrl(View view) {
-        //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("http://blog.coderstory.cn"));
-        startActivity(intent);
-    }
 
     //修改hosts的方法
     private void changeHosts() {
@@ -272,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         // boolean RemoveAds = prefs.getBoolean("RemoveAds", false); //2
         boolean GoogleHosts = prefs.getBoolean("GoogleHosts", false); //4
         boolean RemoveAdshosts = prefs.getBoolean("RemoveAdshosts", false); //4
-        boolean NoStore=prefs.getBoolean("NoStore", false); //4
+        boolean NoStore = prefs.getBoolean("NoStore", false); //4
         Map<String, String> setMap = new HashMap<>();
         if (NoUpdate) {
             setMap.put("NoUpdate", "True");
@@ -286,13 +303,13 @@ public class MainActivity extends AppCompatActivity {
         }
         if (RemoveAdshosts) {
             setMap.put("RemoveAdshosts", "True");
-        }  else {
+        } else {
             setMap.put("RemoveAdshosts", "False");
         }
 
         if (NoStore) {
             setMap.put("NoStore", "True");
-        }  else {
+        } else {
             setMap.put("NoStore", "False");
         }
 

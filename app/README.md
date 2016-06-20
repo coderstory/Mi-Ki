@@ -13,9 +13,9 @@ Error:(1, 0) Plugin with id 'com.android.application' not found
 
 将Gradle version 设置为2.10
 
-  Android Plugin Version设置为2.1.0
+Android Plugin Version设置为2.1.0
   
-  Android Plugin Repository 设置为 jcenter
+Android Plugin Repository 设置为 jcenter
   
-  Default Library Repository设置为jcenter
+Default Library Repository设置为jcenter
 

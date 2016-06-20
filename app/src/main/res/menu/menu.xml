@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/reboot"
+        android:title="@string/Menu_Reboot"
+        android:visible="true" />
     <item
         android:id="@+id/hotboot"
         android:title="@string/Menu_HotBoot"
         android:visible="true" />
     <item
-        android:id="@+id/reboot"
-        android:title="@string/Menu_Reboot"
+        android:id="@+id/faq"
+        android:title="应用说明和FAQ"
+        android:visible="true" />
+    <item
+        android:id="@+id/about"
+        android:title="关于"
         android:visible="true" />
 </menu>  

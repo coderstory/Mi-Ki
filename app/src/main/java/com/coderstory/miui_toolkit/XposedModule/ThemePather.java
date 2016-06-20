@@ -2,8 +2,10 @@ package com.coderstory.miui_toolkit.XposedModule;
 
 
 import android.content.Context;
+
 import java.io.File;
 import java.io.InputStream;
+
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
@@ -15,29 +17,32 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteInit {
     private static ClassLoader mClassLoader;
+
     //patch函数
     private static void patchCodeTwo(String paramString1, String paramString2, Object... paramVarArgs) {
         try {
             XposedHelpers.findAndHookMethod(Class.forName(paramString1), paramString2, paramVarArgs);
             return;
         } catch (ClassNotFoundException paramString3) {
-            log(" Class "+paramString1+"not found! Skipping...");
+            log(" Class " + paramString1 + "not found! Skipping...");
             return;
         } catch (NoSuchMethodError paramString4) {
-            log(" Method "+paramString2+"found! Skipping...");
+            log(" Method " + paramString2 + "found! Skipping...");
         }
     }
+
     //log记录
     private static void log(String paramString) {
         XposedBridge.log("assistant  " + paramString);
     }
+
     //主函数
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
             throws Throwable {
         XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
         prefs.makeWorldReadable();
         prefs.reload();
-        if (!prefs.getBoolean("ThemePatcher", false)) {
+        if (!prefs.getBoolean("ThemePatcher", false) && !prefs.getBoolean("ThemePatcher2", false)) {
             return;
         }
         XposedBridge.log("miui7主题破解开始");
@@ -45,9 +50,9 @@ public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteIni
         DRM();
         thmemHook(paramLoadPackageParam);
     }
+
     //主题-入口
-    private static void thmemHook(XC_LoadPackage.LoadPackageParam paramLoadPackageParam)
-    {
+    private static void thmemHook(XC_LoadPackage.LoadPackageParam paramLoadPackageParam) {
         if (paramLoadPackageParam.packageName.equals("com.android.thememanager")) {
             zhifu();
             yanzheng();
@@ -59,14 +64,20 @@ public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteIni
     //主题-DRM验证
     private static void DRM() {
 
-        patchCodeTwo("miui.drm.DrmManager", "isLegal", new Object[]{Context.class, String.class, "miui.drm.DrmManager$RightObject", XC_MethodReplacement.returnConstant(Boolean.valueOf(true))});
+        XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
+        prefs.makeWorldReadable();
+        prefs.reload();
+        if (prefs.getBoolean("ThemePatcher", false)) {
+            patchCodeTwo("miui.drm.DrmManager", "isLegal", new Object[]{Context.class, String.class, "miui.drm.DrmManager$RightObject", XC_MethodReplacement.returnConstant(Boolean.valueOf(true))});
+            patchCodeTwo("miui.drm.DrmManager", "isLegal", new Object[]{Context.class, String.class, File.class, XC_MethodReplacement.returnConstant(Boolean.valueOf(true))});
+        }
         patchCodeTwo("miui.drm.DrmManager", "isLegal", new Object[]{Context.class, File.class, File.class, XC_MethodReplacement.returnConstant(Boolean.valueOf(true))});
-        patchCodeTwo("miui.drm.DrmManager", "isLegal", new Object[]{Context.class, String.class, File.class, XC_MethodReplacement.returnConstant(Boolean.valueOf(true))});
         patchCodeTwo("miui.drm.DrmManager", "isPermanentRights", new Object[]{"miui.drm.DrmManager$RightObject", XC_MethodReplacement.returnConstant(Boolean.valueOf(true))});
         patchCodeTwo("miui.drm.DrmManager", "isPermanentRights", new Object[]{File.class, XC_MethodReplacement.returnConstant(Boolean.valueOf(true))});
         patchCodeTwo("miui.drm.DrmManager", "isLegal", new Object[]{File.class, File.class, XC_MethodReplacement.returnConstant(Boolean.valueOf(true))});
         patchCodeTwo("miui.drm.DrmManager", "isLegal", new Object[]{String.class, File.class, XC_MethodReplacement.returnConstant(Boolean.valueOf(true))});
     }
+
     //主题-本地验证
     private static void yanzheng() {
         try {
@@ -116,6 +127,7 @@ public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteIni
             return;
         }
     }
+
     //主题-设置为已购买
     private static void tongzhi() {
         try {
@@ -164,6 +176,7 @@ public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteIni
             return;
         }
     }
+
     //主题-在线验证
     private static void zhifu() {
         try {
@@ -198,6 +211,7 @@ public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteIni
         }
 
     }
+
     public void initZygote(IXposedHookZygoteInit.StartupParam paramStartupParam) throws Throwable {
-     }
+    }
 }

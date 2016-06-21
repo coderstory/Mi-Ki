@@ -516,7 +516,10 @@
 127.0.0.1 ads.gamelink.com
 127.0.0.1 ads.globo.com
 127.0.0.1 ads.golfweek.com
-127.0.0.1 weatherapi.market.xiaomi.com
+
+#天气查询api
+#127.0.0.1 weatherapi.market.xiaomi.com
+
 127.0.0.1 ads.hosting.vcmedia.vn
 127.0.0.1 ads.id-t.com
 127.0.0.1 ads.indeed.com

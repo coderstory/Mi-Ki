@@ -1,92 +1,42 @@
 
-# f*.market.xiaomi.com 是商店的app下载服务器
-#127.0.0.1 f1.market.xiaomi.com
 127.0.0.1 info.sec.miui.com
-#127.0.0.1 live.zdworkscdn.com
-
-#小米音乐的搜索api
-#127.0.0.1 music.search.xiaomi.net
-
-#127.0.0.1 bss.pandora.xiaomi.com
 127.0.0.1 adv.sec.miui.com
 127.0.0.1 mlog.search.xiaomi.net
 127.0.0.1 sousuo.xm.sjzhushou.com
 127.0.0.1 monitor.uu.qq.com
-#127.0.0.1 img.zdworkscdn.com
 127.0.0.1 mdap.alipaylog.com
 127.0.0.1 adinfo.ra1.xlmc.sec.miui.com
-#127.0.0.1 7xt0pj.com1.z0.glb.clouddn.com
 127.0.0.1 m.bss.pandora.xiaomi.com
-#127.0.0.1 f2.market.mi-img.com
-#127.0.0.1 file.market.xiaomi.com
 127.0.0.1 fclick.baidu.com
-#127.0.0.1 f3.market.xiaomi.com
-
-#miui系统的更新服务器
-#127.0.0.1 update.miui.com
-
 127.0.0.1 tracking.miui.com
 127.0.0.1 image.box.xiaomi.com
 127.0.0.1 sec.resource.xiaomi.net
 127.0.0.1 calopenupdate.comm.miui.com
-
-#小米视频
-#127.0.0.1 video.xiaomi.com
-
 127.0.0.1 api.ad.xiaomi.com
 127.0.0.1 sdkconfig.ad.xiaomi.com
 127.0.0.1 hm.xiaomi.com
-#127.0.0.1 app.market.xiaomi.com
-127.0.0.1 d.url.cn
-#127.0.0.1 7xnusr.com1.z0.glb.clouddn.com
-#127.0.0.1 f5.market.xiaomi.com
-#127.0.0.1 7xltxi.com1.z0.glb.clouddn.com
-#127.0.0.1 7xl9af.com1.z0.glb.clouddn.com
-
-#小米视频的图片缓存
-#127.0.0.1 image.cdn.mvideo.xiaomi.com
-
-#127.0.0.1 mvideo.duokanbox.com
 127.0.0.1 sestat.baidu.com
-#127.0.0.1 7xlyy7.com1.z0.glb.clouddn.com
-#127.0.0.1 gw.alicdn.com
 127.0.0.1 api.device.xiaomi.net
 127.0.0.1 nsclick.baidu.com
 127.0.0.1 sa3.tuisong.baidu.com
-#127.0.0.1 pic.xcarimg.com
-#127.0.0.1 c.hiphotos.baidu.com
-#127.0.0.1 tb.hiphotos.baidu.com
 127.0.0.1 connect.rom.miui.com
 127.0.0.1 logupdate.avlyun.sec.miui.com
 127.0.0.1 resolver.msg.xiaomi.net
 127.0.0.1 m.sjzhushou.com
 127.0.0.1 data.mistat.xiaomi.com
 127.0.0.1 api.ra1.xlmc.sandai.net
-#127.0.0.1 developer.open-api-auth.xunlei.com
 127.0.0.1 api.ra2.xlmc.sec.miui.com
-#127.0.0.1 pgl.yoyo.org
-#127.0.0.1 q.qlogo.cn
 127.0.0.1 c.id.mi.com
 127.0.0.1 test.ad.xiaomi.com
-#127.0.0.1 tb1.bdstatic.com
 127.0.0.1 update.avlyun.sec.miui.com
 127.0.0.1 pdc.micloud.xiaomi.net
 127.0.0.1 api.tuisong.baidu.com
-
-#流量校验会用到这个api
-#127.0.0.1 api.miui.security.xiaomi.com
-
 127.0.0.1 yun.rili.cn
 127.0.0.1 api.comm.miui.com
-#127.0.0.1 f3.mi-stat.gslb.mi-idc.com
 127.0.0.1 beha.ksmobile.com
 127.0.0.1 info.analysis.kp.sec.miui.com
 127.0.0.1 app02.nodes.gslb.mi-idc.com
 127.0.0.1 m.down.sandai.net
-127.0.0.1 mibind.chat.gslb.mi-idc.com
-#127.0.0.1 boscdn.bpc.baidu.com
-#127.0.0.1 i3.go2yd.com
-#127.0.0.1 hm.baidu.com
 127.0.0.1 zhwnlapi.etouch.cn
 127.0.0.1 app01.nodes.gslb.mi-idc.com
 127.0.0.1 applog.uc.cn
@@ -99,12 +49,8 @@
 127.0.0.1 api.sec.miui.com
 127.0.0.1 resolver.gslb.mi-idc.com
 127.0.0.1 data.sec.miui.com
-
-#miui的全局搜索
 127.0.0.1 global.search.xiaomi.net
-
 127.0.0.1 new.api.ad.xiaomi.com
-#国内的广告联盟或者广告服务器域名
 127.0.0.1 pingma.qq.com
 127.0.0.1 alog.umeng.co
 127.0.0.1 alog.umeng.com
@@ -271,7 +217,6 @@
 127.0.0.1 server1.adpolestar.net
 127.0.0.1 advstat.xunlei.com
 127.0.0.1 mpv.sandai.net
-#国外的广告联盟
 127.0.0.1 api.admob.com
 127.0.0.1 mm.admob.com
 127.0.0.1 r.admob.com

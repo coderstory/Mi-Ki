@@ -13,6 +13,9 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
  * Created by CoderStory on 2016/6/10.
  */
 public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPackage {
+
+
+
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
     }
@@ -27,7 +30,7 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
             return;
         }
         XposedBridge.log("Loaded app: " + lpparam.packageName);
-        XposedBridge.log("miui8主题破解");
+        XposedBridge.log("miui8主题破解1");
         if (lpparam.packageName.equals("miui.drm") || lpparam.packageName.equals("com.miui.system")|| lpparam.packageName.equals("miui.system")) {
 
             //判断是有权限使用

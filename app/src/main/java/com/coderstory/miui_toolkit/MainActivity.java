@@ -48,17 +48,20 @@ public class MainActivity extends AppCompatActivity {
         if (!prefs.getBoolean("getRoot", false)) {
             showTips("echo 1", getString(R.string.Tips_Need_Root), this);
         }
-        if (!checkXp(false)) {
+
+        if (getActivatedModuleVersion()==-1) {
+            Log.d("TTT", "onCreate: aaaa");
            // Toast.makeText(MainActivity.this, "xp未启用", Toast.LENGTH_LONG).show();
         } else {
+            Log.d("TTT", "onCreate: bbbb");
            // Toast.makeText(MainActivity.this, "xp已启用", Toast.LENGTH_LONG).show();
-
         }
 
     }
 
-    public boolean checkXp(boolean c) {
-        return c;
+    private int getActivatedModuleVersion()
+    {
+        return -1;
     }
 
     /*初始化每一个布局上的按钮的状态并绑定事件
@@ -103,13 +106,21 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "ThemePatcher");
-        //主题破解 miui8
+        //主题破解 miui8 1
         SetValue = prefs.getBoolean("ThemePatcher2", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.ThemePatcher2);
         if (SwitchBtn != null) {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "ThemePatcher2");
+        //主题破解 miui8 1
+        SetValue = prefs.getBoolean("ThemePatcher3", false);
+        SwitchBtn = (Switch) mainActivity.findViewById(R.id.ThemePatcher3);
+        if (SwitchBtn != null) {
+            SwitchBtn.setChecked(SetValue);
+        }
+        initControl(SwitchBtn, "ThemePatcher3");
+
         //隐藏图标
         SetValue = prefs.getBoolean("switchIcon", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.switchIcon);
@@ -204,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item_id) {
             case R.id.hotboot:
-                showTips("killall system_server", getString(R.string.Tips_HotBoot), this);
+                showTips("busybox killall system_server", getString(R.string.Tips_HotBoot), this);
                 break;
             case R.id.reboot:
                 showTips("reboot", getString(R.string.Tips_Reboot), this);

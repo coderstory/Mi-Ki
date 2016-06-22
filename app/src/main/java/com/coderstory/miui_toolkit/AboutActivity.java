@@ -21,4 +21,11 @@ public class AboutActivity extends AppCompatActivity {
         intent.setData(Uri.parse("http://blog.coderstory.cn"));
         startActivity(intent);
     }
+    //打开支付宝
+    public void alipay(View view) {
+        //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://qr.alipay.com/aex087445gnaa6gawjaohe8"));
+        startActivity(intent);
+    }
 }

@@ -15,7 +15,7 @@ package com.coderstory.miui_toolkit.XposedModule;
 /**
  * Created by cc on 2016/6/22.
  */
-public class ThmemPather3 implements IXposedHookZygoteInit, IXposedHookLoadPackage {
+public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPackage {
 
     public static Object getDrmResultSUCCESS() {
         try {

@@ -85,7 +85,7 @@
 127.0.0.1 m.down.sandai.net
 127.0.0.1 mibind.chat.gslb.mi-idc.com
 #127.0.0.1 boscdn.bpc.baidu.com
-127.0.0.1 i3.go2yd.com
+#127.0.0.1 i3.go2yd.com
 #127.0.0.1 hm.baidu.com
 127.0.0.1 zhwnlapi.etouch.cn
 127.0.0.1 app01.nodes.gslb.mi-idc.com
@@ -762,7 +762,7 @@
 127.0.0.1 qss-client.qq.com
 127.0.0.1 rd.intl.doubleclick.net
 127.0.0.1 re.taobao.com
-127.0.0.1 redirect.simba.taobao.com
+#127.0.0.1 redirect.simba.taobao.com
 127.0.0.1 rh.qq.com
 127.0.0.1 rich.qq.com
 127.0.0.1 rmcdn.2mdn.net
@@ -772,7 +772,7 @@
 127.0.0.1 s.admob.com
 127.0.0.1 s.baidu.com
 127.0.0.1 s.click.alimama.com
-127.0.0.1 s.click.taobao.com
+#127.0.0.1 s.click.taobao.com
 127.0.0.1 s1.2mdn.net
 127.0.0.1 s2.video.doubleclick.net
 127.0.0.1 s8.taobao.com

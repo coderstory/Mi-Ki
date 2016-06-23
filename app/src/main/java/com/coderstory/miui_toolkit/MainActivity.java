@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,20 +49,28 @@ public class MainActivity extends AppCompatActivity {
         if (!prefs.getBoolean("getRoot", false)) {
             showTips("echo 1", getString(R.string.Tips_Need_Root), this);
         }
-
-        if (getActivatedModuleVersion()==-1) {
-            Log.d("TTT", "onCreate: aaaa");
-           // Toast.makeText(MainActivity.this, "xp未启用", Toast.LENGTH_LONG).show();
-        } else {
-            Log.d("TTT", "onCreate: bbbb");
-           // Toast.makeText(MainActivity.this, "xp已启用", Toast.LENGTH_LONG).show();
+        if (!prefs.getBoolean("IsFirst", false)) {
+            AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.Tips_Title)
+                    .setMessage("您是第一次打开本软件，是否查询软件说明以及使用帮助？")
+                    .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            editor.putBoolean("IsFirst", true);
+                            editor.apply();
+                            Intent intent = new Intent();
+                            intent.setClass(MainActivity.this,FAQActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    }).create();
+            builder.show();
         }
-
-    }
-
-    private int getActivatedModuleVersion()
-    {
-        return -1;
     }
 
     /*初始化每一个布局上的按钮的状态并绑定事件

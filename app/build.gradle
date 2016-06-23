@@ -4,24 +4,27 @@ def releaseTime() {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.0'
 
     defaultConfig {
         applicationId "com.coderstory.miui_toolkit"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 6
-        versionName '1.4'
+        versionCode 7
+        versionName '1.4.5'
+        jackOptions {
+            enabled true
+        }
     }
     buildTypes {
         release {
-            minifyEnabled true
+           // minifyEnabled false
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+           // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled true
+         //   minifyEnabled true
         }
     }
     android.applicationVariants.all { variant ->
@@ -34,6 +37,13 @@ android {
         }
     }
     productFlavors {
+    }
+    dexOptions {
+        incremental true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

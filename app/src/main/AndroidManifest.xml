@@ -33,7 +33,7 @@
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="你想让我说什么？" />
+            android:value="感谢雷布斯" />
         <meta-data
             android:name="xposedminversion"
             android:value="53" />

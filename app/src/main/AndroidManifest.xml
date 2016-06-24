@@ -13,18 +13,15 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
             </intent-filter>
         </activity>
-
         <activity-alias
             android:name=".MainActivity-Alias"
             android:enabled="true"
             android:targetActivity=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
@@ -38,8 +35,14 @@
             android:name="xposedminversion"
             android:value="53" />
 
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".FAQActivity"></activity>
+        <activity android:name=".AboutActivity"
+            android:label="关于 Mi Kit"
+            >
+        </activity>
+        <activity android:name=".FAQActivity"
+            android:label="应用说明和FQA"
+            >
+        </activity>
     </application>
 
 </manifest>

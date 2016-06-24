@@ -224,7 +224,37 @@
                 android:checked="false"
                 android:text="@string/Label_Hidden_Icon" />
 
+            <TextView
+                android:id="@+id/textView88"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/switchIcon"
+                android:layout_marginTop="25dp"
+                android:text="关于" />
+            <View
+                android:id="@+id/view7"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView88"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="5dp"
+                android:background="#dc676969" />
 
+            <TextView
+                android:id="@+id/textView889"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/view7"
+                android:layout_marginBottom="20dp"
+                android:text="关于应用"
+                android:onClick="openAbout"
+                android:textColor="#000000" />
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

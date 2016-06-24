@@ -21,8 +21,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coderstory.miui_toolkit.tools.hosts;
@@ -169,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
         initControl(SwitchBtn, "root");
 
 
+
     }
 
     //初始化每个按钮的事件
@@ -278,6 +281,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).create();
         builder.show();
+    }
+    public  void  openAbout(View v){
+        Intent intent=new Intent(this,AboutActivity.class);
+        startActivity(intent);
     }
 
     //隐藏图标

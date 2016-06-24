@@ -1564,17 +1564,41 @@ public class ViewDragHelper {
     }
 
     private int getEdgeTouched(int x, int y) {
+//        int result = 0;
+//
+//        if (x < mParentView.getLeft() + mEdgeSize)
+//            result = EDGE_LEFT;
+//        if (y < mParentView.getTop() + mEdgeSize)
+//            result = EDGE_TOP;
+//        if (x > mParentView.getRight() - mEdgeSize)
+//            result = EDGE_RIGHT;
+//        if (y > mParentView.getBottom() - mEdgeSize)
+//            result = EDGE_BOTTOM;
+//
+//        return result;
         int result = 0;
-
-        if (x < mParentView.getLeft() + mEdgeSize)
-            result = EDGE_LEFT;
-        if (y < mParentView.getTop() + mEdgeSize)
-            result = EDGE_TOP;
-        if (x > mParentView.getRight() - mEdgeSize)
-            result = EDGE_RIGHT;
-        if (y > mParentView.getBottom() - mEdgeSize)
-            result = EDGE_BOTTOM;
-
+        if (touch_flag) {
+            result = flag;
+        } else {
+            if (x < mParentView.getLeft() + mEdgeSize)
+                result = EDGE_LEFT;
+            if (y < mParentView.getTop() + mEdgeSize)
+                result = EDGE_TOP;
+            if (x > mParentView.getRight() - mEdgeSize)
+                result = EDGE_RIGHT;
+            if (y > mParentView.getBottom() - mEdgeSize)
+                result = EDGE_BOTTOM;
+        }
         return result;
     }
+
+    private boolean touch_flag;
+    private int flag;
+
+    public void setTouchedFullScreen(boolean touch_flag,int flag) {
+        this.touch_flag = touch_flag;
+        this.flag = flag;
+    }
+
+
 }

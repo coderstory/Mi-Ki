@@ -33,5 +33,5 @@
 
     <string name="Label_Version">版本:1.2 测试版</string>
 
-
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>

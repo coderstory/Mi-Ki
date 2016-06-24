@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.coderstory.miui_toolkit">
-    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>-->
-    <!--<uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />-->
-    <application
 
+    <!-- <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> -->
+    <!-- <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" /> -->
+    <application
         android:allowBackup="true"
         android:icon="@mipmap/three"
         android:label="@string/app_name"
@@ -16,15 +16,25 @@
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
             </intent-filter>
         </activity>
-        <activity-alias
-            android:name=".MainActivity-Alias"
-            android:enabled="true"
-            android:targetActivity=".MainActivity">
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity-alias
+            android:name=".SplashActivity-Alias"
+            android:enabled="true"
+            android:targetActivity=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
+
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
@@ -35,14 +45,13 @@
             android:name="xposedminversion"
             android:value="53" />
 
-        <activity android:name=".AboutActivity"
-            android:label="关于 Mi Kit"
-            >
-        </activity>
-        <activity android:name=".FAQActivity"
-            android:label="应用说明和FQA"
-            >
-        </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="关于 Mi Kit"></activity>
+        <activity
+            android:name=".FAQActivity"
+            android:label="应用说明和FQA"></activity>
+
     </application>
 
 </manifest>

@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import java.io.File;
+
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -25,6 +27,7 @@ public class AboutActivity extends SwipeBackActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("http://blog.coderstory.cn"));
         startActivity(intent);
+
     }
     //打开支付宝
     public void alipay(View view) {
@@ -33,4 +36,5 @@ public class AboutActivity extends SwipeBackActivity {
         intent.setData(Uri.parse("https://qr.alipay.com/aex087445gnaa6gawjaohe8"));
         startActivity(intent);
     }
+
 }

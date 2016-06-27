@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,11 +23,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.coderstory.miui_toolkit.tools.hosts;
+import com.coderstory.miui_toolkit.tools.HostsHelper;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     }).create();
             builder.show();
         }
+
     }
 
     /*初始化每一个布局上的按钮的状态并绑定事件
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         Boolean SetValue;
         Switch SwitchBtn;
+
 
         //移除搜索框
         SetValue = prefs.getBoolean("RemoveSearchBar", false);
@@ -169,20 +170,14 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "root");
-
-
-
     }
-
     //初始化每个按钮的事件
     private void initControl(Switch SwitchBtn, final String key) {
-
         SwitchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editor.putBoolean(key, isChecked);
                 editor.apply();
-
                 switch (key) {
                     case "switchIcon":
                         if (isChecked) {
@@ -211,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // TODO Auto-generated method stub
@@ -219,12 +213,10 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
         int item_id = item.getItemId();
-
         switch (item_id) {
             case R.id.hotboot:
                 showTips("busybox killall system_server", getString(R.string.Tips_HotBoot), this);
@@ -244,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
     /*实现弹窗确定执行某条命令*/
     public static void showTips(final String commandText, String messageText, final Context mContext) {
         AlertDialog builder = new AlertDialog.Builder(mContext)
@@ -253,12 +244,10 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         if ("echo 1".equals(commandText)) {
                             editor.putBoolean("getRoot", true);
                             editor.apply();
                         }
-
                         // String cmd = commandText;
                         try {
                             Runtime.getRuntime().exec(new String[]{"su", "-c", commandText});
@@ -277,7 +266,6 @@ public class MainActivity extends AppCompatActivity {
                             System.exit(0);
                         }
                         dialog.cancel();
-
                     }
                 }).create();
         builder.show();
@@ -286,30 +274,26 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(this,AboutActivity.class);
         startActivity(intent);
     }
-
     //隐藏图标
     private void HideIcon() {
-        ComponentName localComponentName = new ComponentName(this, getClass().getName() + "-Alias");
+        ComponentName localComponentName = new ComponentName(this,"com.coderstory.miui_toolkit.SplashActivity");
         PackageManager localPackageManager = getPackageManager();
         localPackageManager.getComponentEnabledSetting(localComponentName);
         PackageManager packageManager = getPackageManager();
-        ComponentName componentName = new ComponentName(this, getClass().getName() + "-Alias");
+        ComponentName componentName = new ComponentName(this, "com.coderstory.miui_toolkit.SplashActivity");
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
     }
-
     //显示图标
     private void showIcon() {
-        ComponentName localComponentName = new ComponentName(this, getClass().getName() + "-Alias");
+        ComponentName localComponentName = new ComponentName(this, "com.coderstory.miui_toolkit.SplashActivity");
         PackageManager localPackageManager = getPackageManager();
         localPackageManager.getComponentEnabledSetting(localComponentName);
         PackageManager packageManager = getPackageManager();
-        ComponentName componentName = new ComponentName(this, getClass().getName() + "-Alias");
+        ComponentName componentName = new ComponentName(this, "com.coderstory.miui_toolkit.SplashActivity");
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
                 PackageManager.DONT_KILL_APP);
     }
-
-
     //修改hosts的方法
     private void changeHosts() {
         boolean NoUpdate = prefs.getBoolean("NoUpdate", false); //1
@@ -333,14 +317,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             setMap.put("RemoveAdshosts", "False");
         }
-
         if (NoStore) {
             setMap.put("NoStore", "True");
         } else {
             setMap.put("NoStore", "False");
         }
-
-        hosts h = new hosts(MainActivity.this, setMap);
+        HostsHelper h = new HostsHelper(MainActivity.this, setMap);
         if (!h.execute()) {
             Toast.makeText(MainActivity.this, R.string.Tips_No_Root, Toast.LENGTH_SHORT).show();
             Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
@@ -349,7 +331,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
     //因为hosts修改比较慢 所以改成异步的
     class MyTask extends AsyncTask<String, Integer, String> {
         @Override
@@ -357,7 +338,6 @@ public class MainActivity extends AppCompatActivity {
             setProgressBarIndeterminateVisibility(true);
             showProgress();
         }
-
         @Override
         protected void onPostExecute(String param) {
             //  showData();
@@ -365,19 +345,16 @@ public class MainActivity extends AppCompatActivity {
             // adapter.notifyDataSetChanged();
             closeProgress();
         }
-
         @Override
         protected void onCancelled() {
             // TODO Auto-generated method stub
             super.onCancelled();
         }
-
         @Override
         protected void onProgressUpdate(Integer... values) {
             // TODO Auto-generated method stub
             super.onProgressUpdate(values);
         }
-
         @Override
         protected String doInBackground(String... params) {
             Looper.prepare();
@@ -386,9 +363,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-
     private Dialog dialog;
-
     protected void showProgress() {
         if (dialog == null) {
 //		    dialog.setContentView(R.layout.progress_dialog);
@@ -397,9 +372,7 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
         }
     }
-
     protected void closeProgress() {
-
         if (dialog != null) {
             dialog.cancel();
             dialog = null;

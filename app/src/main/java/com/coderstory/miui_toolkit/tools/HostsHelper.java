@@ -26,23 +26,23 @@ public class HostsHelper extends SuHelper {
         list.add("mount -o rw,remount /system");
         FileHelper fh = new FileHelper();
         String content=fh.getFromAssets("none", mContext);
-        list.add("echo '"+content+"' > /system/etc/HostsHelper");//清空
+        list.add("echo '"+content+"' > /system/etc/Hosts");//清空
 
         if (HostsConfig.get("NoUpdate").equals("True")){
              content=fh.getFromAssets("hosts_noup", mContext);
-            list.add("echo '"+content+"' >> /system/etc/HostsHelper");//禁止检测更新
+            list.add("echo '"+content+"' >> /system/etc/Hosts");//禁止检测更新
         }
         if (HostsConfig.get("RemoveAdshosts").equals("True")){
             content=fh.getFromAssets("hosts_noad", mContext);
-            list.add("echo '"+content+"' >> /system/etc/HostsHelper");//移除广告
+            list.add("echo '"+content+"' >> /system/etc/Hosts");//移除广告
         }
         if (HostsConfig.get("GoogleHosts").equals("True")){
             content=fh.getFromAssets("google", mContext);
-            list.add("echo '"+content+"' >> /system/etc/HostsHelper");//谷歌hosts
+            list.add("echo '"+content+"' >> /system/etc/Hosts");//谷歌hosts
         }
         if (HostsConfig.get("NoStore").equals("True")){
             content=fh.getFromAssets("hosts_nostore", mContext);
-            list.add("echo '"+content+"' >> /system/etc/HostsHelper"); //屏蔽商店 音乐 视频
+            list.add("echo '"+content+"' >> /system/etc/Hosts"); //屏蔽商店 音乐 视频
         }
         return list;
     }

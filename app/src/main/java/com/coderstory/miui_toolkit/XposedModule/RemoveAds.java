@@ -3,7 +3,6 @@ package com.coderstory.miui_toolkit.XposedModule;
 import android.content.Context;
 
 import java.util.Map;
-
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
@@ -27,7 +26,7 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
         if (!prefs.getBoolean("RemoveAds", false)) {
             return;
         }
-        XposedBridge.log("删系统广告");
+       // XposedBridge.log("删系统广告");
         if (paramLoadPackageParam.packageName.equals("com.android.providers.downloads.ui"))
         {
             try {

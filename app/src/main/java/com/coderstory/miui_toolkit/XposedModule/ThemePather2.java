@@ -4,7 +4,6 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -29,8 +28,8 @@ public class ThemePather2 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         if (!prefs.getBoolean("ThemePatcher2", false)) {
             return;
         }
-        XposedBridge.log("Loaded app: " + lpparam.packageName);
-        XposedBridge.log("miui8主题破解1");
+        //XposedBridge.log("Loaded app: " + lpparam.packageName);
+        //XposedBridge.log("miui8主题破解1");
         if (lpparam.packageName.equals("miui.drm") || lpparam.packageName.equals("com.miui.system")|| lpparam.packageName.equals("miui.system")) {
 
             //判断是有权限使用

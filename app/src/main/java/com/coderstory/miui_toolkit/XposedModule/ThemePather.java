@@ -5,7 +5,6 @@ import android.content.Context;
 
 import java.io.File;
 import java.io.InputStream;
-
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
@@ -45,7 +44,7 @@ public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteIni
         if (!prefs.getBoolean("ThemePatcher", false) && !prefs.getBoolean("ThemePatcher2", false)) {
             return;
         }
-        XposedBridge.log("miui7主题破解开始");
+        //XposedBridge.log("miui7主题破解开始");
         mClassLoader = paramLoadPackageParam.classLoader;
         DRM();
         thmemHook(paramLoadPackageParam);
@@ -57,7 +56,7 @@ public class ThemePather implements IXposedHookLoadPackage, IXposedHookZygoteIni
             zhifu();
             yanzheng();
             tongzhi();
-            XposedBridge.log("miui7主题破解完成");
+            //XposedBridge.log("miui7主题破解完成");
         }
     }
 

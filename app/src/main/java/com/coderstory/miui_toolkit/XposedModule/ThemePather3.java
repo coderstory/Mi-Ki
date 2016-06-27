@@ -1,16 +1,13 @@
 package com.coderstory.miui_toolkit.XposedModule;
 
-        import android.content.Context;
-
-        import java.io.File;
-
-        import de.robv.android.xposed.IXposedHookLoadPackage;
-        import de.robv.android.xposed.IXposedHookZygoteInit;
-        import de.robv.android.xposed.XC_MethodReplacement;
-        import de.robv.android.xposed.XSharedPreferences;
-        import de.robv.android.xposed.XposedBridge;
-        import de.robv.android.xposed.XposedHelpers;
-        import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import android.content.Context;
+import java.io.File;
+import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.IXposedHookZygoteInit;
+import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 /**
  * Created by cc on 2016/6/22.
@@ -35,7 +32,7 @@ public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPacka
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
-        if(!startupParam.startsSystemServer) {
+        if (!startupParam.startsSystemServer) {
             return;
         }
         XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
@@ -56,8 +53,8 @@ public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         if (!prefs.getBoolean("ThemePatcher3", false)) {
             return;
         }
-        XposedBridge.log("Loaded app: " + lpparam.packageName);
-        XposedBridge.log("miui8主题破解2");
+        //  XposedBridge.log("Loaded app: " + lpparam.packageName);
+        //  XposedBridge.log("miui8主题破解2");
         if (lpparam.packageName.equals("miui.drm") || lpparam.packageName.equals("com.miui.system") || lpparam.packageName.equals("miui.system")) {
             MIUI_DRM();
         }
@@ -74,23 +71,23 @@ public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         }
     }
 
-    public  void MIUI_DRM()
-    {
-        findAndHookMethod("miui.drm.DrmManager", "isLegal", new Object[] {Context.class, File.class, File.class,XC_MethodReplacement.returnConstant(getDrmResultSUCCESS())});
-        findAndHookMethod("miui.drm.DrmManager", "isLegal", new Object[] {Context.class, String.class, File.class,XC_MethodReplacement.returnConstant(getDrmResultSUCCESS())});
-        findAndHookMethod("miui.drm.DrmManager", "isLegal", new Object[] {Context.class, String.class, "miui.drm.DrmManager$RightObject",XC_MethodReplacement.returnConstant(getDrmResultSUCCESS())});
-        findAndHookMethod("miui.drm.DrmManager", "isPermanentRights", new Object[] {File.class,XC_MethodReplacement.returnConstant(true)});
-        findAndHookMethod("miui.drm.DrmManager", "isLegal", new Object[] {"miui.drm.DrmManager$RightObject",XC_MethodReplacement.returnConstant(true)});
+    public void MIUI_DRM() {
+        findAndHookMethod("miui.drm.DrmManager", "isLegal", new Object[]{Context.class, File.class, File.class, XC_MethodReplacement.returnConstant(getDrmResultSUCCESS())});
+        findAndHookMethod("miui.drm.DrmManager", "isLegal", new Object[]{Context.class, String.class, File.class, XC_MethodReplacement.returnConstant(getDrmResultSUCCESS())});
+        findAndHookMethod("miui.drm.DrmManager", "isLegal", new Object[]{Context.class, String.class, "miui.drm.DrmManager$RightObject", XC_MethodReplacement.returnConstant(getDrmResultSUCCESS())});
+        findAndHookMethod("miui.drm.DrmManager", "isPermanentRights", new Object[]{File.class, XC_MethodReplacement.returnConstant(true)});
+        findAndHookMethod("miui.drm.DrmManager", "isLegal", new Object[]{"miui.drm.DrmManager$RightObject", XC_MethodReplacement.returnConstant(true)});
     }
+
     private static void findAndHookMethod(String p1, String p2, Object[] p3) {
         try {
             XposedHelpers.findAndHookMethod(Class.forName(p1), p2, p3);
             return;
-        } catch(ClassNotFoundException localString1) {
+        } catch (ClassNotFoundException localString1) {
             return;
-        } catch(NoSuchMethodError localString2) {
+        } catch (NoSuchMethodError localString2) {
             return;
-        } catch(Throwable localString3) {
+        } catch (Throwable localString3) {
 
         }
     }

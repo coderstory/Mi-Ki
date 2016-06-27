@@ -1,9 +1,9 @@
 package com.coderstory.miui_toolkit;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 
-import java.io.File;
+
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;

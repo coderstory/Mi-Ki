@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.widget.Button;
 import android.widget.TextView;
-
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -55,7 +54,7 @@ public class miuiRoot implements IXposedHookInitPackageResources, IXposedHookLoa
                 }
             }
         });
-        //这个方法是修改每次点击确定时显示不同的警告文字的
+        //这个方法是修改每次点击确定时显示不同的警告文字的 在miui8上找不到方法 可能不存在 或者已经改名
         XposedHelpers.findAndHookMethod("com.miui.permcenter.root.c", loadPackageParam.classLoader, "handleMessage", Message.class, new XC_MethodReplacement()
         {
             protected Object replaceHookedMethod(MethodHookParam paramAnonymousMethodHookParam)

@@ -2,7 +2,6 @@ package com.coderstory.miui_toolkit.XposedModule;
 
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 
 /**
@@ -21,7 +20,7 @@ public class RemoveSearchBar implements IXposedHookInitPackageResources {
         }
 
         if (paramInitPackageResourcesParam.packageName.equals("com.android.systemui")) {
-            XposedBridge.log("去除搜索栏");
+            //XposedBridge.log("去除搜索栏");
             paramInitPackageResourcesParam.res.setReplacement(paramInitPackageResourcesParam.packageName, "bool", "config_show_statusbar_search", false);
         }
     }

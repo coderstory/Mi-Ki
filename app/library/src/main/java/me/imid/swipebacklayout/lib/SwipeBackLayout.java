@@ -21,10 +21,10 @@ public class SwipeBackLayout extends FrameLayout {
 
 
     public static final int FULL_SCREEN_LEFT = ViewDragHelper.EDGE_LEFT;
-    public static final int FULL_SCREEN_TOP = ViewDragHelper.EDGE_TOP;
-    public static final int FULL_SCREEN_RIGHT = ViewDragHelper.EDGE_RIGHT;
-    public static final int FULL_SCREEN_BOTTOM = ViewDragHelper.EDGE_BOTTOM;
-    public static final int ORIGINAL = 0X31;
+  //  public static final int FULL_SCREEN_TOP = ViewDragHelper.EDGE_TOP;
+  //  public static final int FULL_SCREEN_RIGHT = ViewDragHelper.EDGE_RIGHT;
+  //  public static final int FULL_SCREEN_BOTTOM = ViewDragHelper.EDGE_BOTTOM;
+    private static final int ORIGINAL = 0X31;
 
     public void setSwipeMode(int mode) {
         if (mode == SwipeBackLayout.ORIGINAL) {
@@ -50,35 +50,35 @@ public class SwipeBackLayout extends FrameLayout {
     /**
      * Edge flag indicating that the right edge should be affected.
      */
-    public static final int EDGE_RIGHT = ViewDragHelper.EDGE_RIGHT;
+    private static final int EDGE_RIGHT = ViewDragHelper.EDGE_RIGHT;
 
     /**
      * Edge flag indicating that the bottom edge should be affected.
      */
-    public static final int EDGE_BOTTOM = ViewDragHelper.EDGE_BOTTOM;
+    private static final int EDGE_BOTTOM = ViewDragHelper.EDGE_BOTTOM;
 
     /**
      * Edge flag set indicating all edges should be affected.
      */
-    public static final int EDGE_ALL = EDGE_LEFT | EDGE_RIGHT | EDGE_BOTTOM;
+    private static final int EDGE_ALL = EDGE_LEFT | EDGE_RIGHT | EDGE_BOTTOM;
 
-    /**
-     * A view is not currently being dragged or animating as a result of a
-     * fling/snap.
-     */
-    public static final int STATE_IDLE = ViewDragHelper.STATE_IDLE;
+//    /**
+//     * A view is not currently being dragged or animating as a result of a
+//     * fling/snap.
+//     */
+//    private static final int STATE_IDLE = ViewDragHelper.STATE_IDLE;
 
     /**
      * A view is currently being dragged. The position is currently changing as
      * a result of user input or simulated user input.
      */
-    public static final int STATE_DRAGGING = ViewDragHelper.STATE_DRAGGING;
+    private static final int STATE_DRAGGING = ViewDragHelper.STATE_DRAGGING;
 
-    /**
-     * A view is currently settling into place as a result of a fling or
-     * predefined non-interactive motion.
-     */
-    public static final int STATE_SETTLING = ViewDragHelper.STATE_SETTLING;
+//    /**
+//     * A view is currently settling into place as a result of a fling or
+//     * predefined non-interactive motion.
+//     */
+//    private static final int STATE_SETTLING = ViewDragHelper.STATE_SETTLING;
 
     /**
      * Default threshold of scroll
@@ -126,8 +126,6 @@ public class SwipeBackLayout extends FrameLayout {
 
     private float mScrimOpacity;
 
-    private int mScrimColor = DEFAULT_SCRIM_COLOR;
-
     private boolean mInLayout;
 
     private Rect mTmpRect = new Rect();
@@ -174,21 +172,21 @@ public class SwipeBackLayout extends FrameLayout {
         mDragHelper.setMaxVelocity(minVel * 2f);
     }
 
-    /**
-     * Sets the sensitivity of the NavigationLayout.
-     *
-     * @param context     The application context.
-     * @param sensitivity value between 0 and 1, the final value for touchSlop =
-     *                    ViewConfiguration.getScaledTouchSlop * (1 / s);
-     */
-    public void setSensitivity(Context context, float sensitivity) {
-        mDragHelper.setSensitivity(context, sensitivity);
-    }
+//    /**
+//     * Sets the sensitivity of the NavigationLayout.
+//     *
+//     * @param context     The application context.
+//     * @param sensitivity value between 0 and 1, the final value for touchSlop =
+//     *                    ViewConfiguration.getScaledTouchSlop * (1 / s);
+//     */
+//    public void setSensitivity(Context context, float sensitivity) {
+//        mDragHelper.setSensitivity(context, sensitivity);
+//    }
 
     /**
      * Set up contentView which will be moved by user gesture
      *
-     * @param view
+     * @param view   View
      */
     private void setContentView(View view) {
         mContentView = view;
@@ -217,16 +215,16 @@ public class SwipeBackLayout extends FrameLayout {
         mDragHelper.setEdgeTrackingEnabled(mEdgeFlag);
     }
 
-    /**
-     * Set a color to use for the scrim that obscures primary content while a
-     * drawer is open.
-     *
-     * @param color Color to use in 0xAARRGGBB format.
-     */
-    public void setScrimColor(int color) {
-        mScrimColor = color;
-        invalidate();
-    }
+//    /**
+//     * Set a color to use for the scrim that obscures primary content while a
+//     * drawer is open.
+//     *
+//     * @param color Color to use in 0xAARRGGBB format.
+//     */
+//    public void setScrimColor(int color) {
+//        mScrimColor = color;
+//        invalidate();
+//    }
 
     /**
      * Set the size of an edge. This is the range in pixels along the edges of
@@ -235,21 +233,21 @@ public class SwipeBackLayout extends FrameLayout {
      *
      * @param size The size of an edge in pixels
      */
-    public void setEdgeSize(int size) {
+    private void setEdgeSize(int size) {
         mDragHelper.setEdgeSize(size);
     }
 
-    /**
-     * Register a callback to be invoked when a swipe event is sent to this
-     * view.
-     *
-     * @param listener the swipe listener to attach to this view
-     * @deprecated use {@link #addSwipeListener} instead
-     */
-    @Deprecated
-    public void setSwipeListener(SwipeListener listener) {
-        addSwipeListener(listener);
-    }
+//    /**
+//     * Register a callback to be invoked when a swipe event is sent to this
+//     * view.
+//     *
+//     * @param listener the swipe listener to attach to this view
+//     * @deprecated use {@link #addSwipeListener} instead
+//     */
+//    @Deprecated
+//    public void setSwipeListener(SwipeListener listener) {
+//        addSwipeListener(listener);
+//    }
 
     /**
      * Add a callback to be invoked when a swipe event is sent to this view.
@@ -258,34 +256,34 @@ public class SwipeBackLayout extends FrameLayout {
      */
     public void addSwipeListener(SwipeListener listener) {
         if (mListeners == null) {
-            mListeners = new ArrayList<SwipeListener>();
+            mListeners = new ArrayList<>();
         }
         mListeners.add(listener);
     }
 
-    /**
-     * Removes a listener from the set of listeners
-     *
-     * @param listener
-     */
-    public void removeSwipeListener(SwipeListener listener) {
-        if (mListeners == null) {
-            return;
-        }
-        mListeners.remove(listener);
-    }
+//    /**
+//     * Removes a listener from the set of listeners
+//     *
+//     * @param listener
+//     */
+//    public void removeSwipeListener(SwipeListener listener) {
+//        if (mListeners == null) {
+//            return;
+//        }
+//        mListeners.remove(listener);
+//    }
 
-    public static interface SwipeListener {
+    public interface SwipeListener {
         /**
          * Invoke when state change
          *
          * @param state         flag to describe scroll state
          * @param scrollPercent scroll percent of this view
-         * @see #STATE_IDLE
+        // * @see #STATE_IDLE
          * @see #STATE_DRAGGING
-         * @see #STATE_SETTLING
+         //* @see #STATE_SETTLING
          */
-        public void onScrollStateChange(int state, float scrollPercent);
+         void onScrollStateChange(int state, float scrollPercent);
 
         /**
          * Invoke when edge touched
@@ -295,12 +293,12 @@ public class SwipeBackLayout extends FrameLayout {
          * @see #EDGE_RIGHT
          * @see #EDGE_BOTTOM
          */
-        public void onEdgeTouch(int edgeFlag);
+         void onEdgeTouch(int edgeFlag);
 
         /**
          * Invoke when scroll percent over the threshold for the first time
          */
-        public void onScrollOverThreshold();
+        void onScrollOverThreshold();
     }
 
     /**
@@ -309,23 +307,23 @@ public class SwipeBackLayout extends FrameLayout {
      *
      * @param threshold
      */
-    public void setScrollThresHold(float threshold) {
-        if (threshold >= 1.0f || threshold <= 0) {
-            throw new IllegalArgumentException("Threshold value should be between 0 and 1.0");
-        }
-        mScrollThreshold = threshold;
-    }
+//    public void setScrollThresHold(float threshold) {
+//        if (threshold >= 1.0f || threshold <= 0) {
+//            throw new IllegalArgumentException("Threshold value should be between 0 and 1.0");
+//        }
+//        mScrollThreshold = threshold;
+//    }
 
     /**
      * Set a drawable used for edge shadow.
      *
      * @param shadow    Drawable to use
-     * @param edgeFlags Combination of edge flags describing the edge to set
+     * @param edgeFlag Combination of edge flags describing the edge to set
      * @see #EDGE_LEFT
      * @see #EDGE_RIGHT
      * @see #EDGE_BOTTOM
      */
-    public void setShadow(Drawable shadow, int edgeFlag) {
+    private void setShadow(Drawable shadow, int edgeFlag) {
         if ((edgeFlag & EDGE_LEFT) != 0) {
             mShadowLeft = shadow;
         } else if ((edgeFlag & EDGE_RIGHT) != 0) {
@@ -340,12 +338,12 @@ public class SwipeBackLayout extends FrameLayout {
      * Set a drawable used for edge shadow.
      *
      * @param resId     Resource of drawable to use
-     * @param edgeFlags Combination of edge flags describing the edge to set
+     * @param edgeFlag Combination of edge flags describing the edge to set
      * @see #EDGE_LEFT
      * @see #EDGE_RIGHT
      * @see #EDGE_BOTTOM
      */
-    public void setShadow(int resId, int edgeFlag) {
+    private void setShadow(int resId, int edgeFlag) {
         setShadow(getResources().getDrawable(resId), edgeFlag);
     }
 
@@ -426,6 +424,7 @@ public class SwipeBackLayout extends FrameLayout {
     }
 
     private void drawScrim(Canvas canvas, View child) {
+        int mScrimColor = DEFAULT_SCRIM_COLOR;
         final int baseAlpha = (mScrimColor & 0xff000000) >>> 24;
         final int alpha = (int) (baseAlpha * mScrimOpacity);
         final int color = alpha << 24 | (mScrimColor & 0xffffff);

@@ -16,7 +16,6 @@ public class AboutActivity extends Activity {
 
     //打开我的博客
     public void opneUrl(View view) {
-        //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("http://blog.coderstory.cn"));
         startActivity(intent);

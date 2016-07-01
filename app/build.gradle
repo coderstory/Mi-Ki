@@ -53,12 +53,12 @@ android {
 }
 
 dependencies {
-    provided fileTree(include: ['*.jar'], dir: 'libs')
     provided 'junit:junit:4.12'
+    provided fileTree(include: ['*.jar'], dir: 'libs')
     provided 'de.robv.android.xposed:api:82'
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
-    compile project(path: ':library')
+  //  compile project(path: ':library')
 }
 
 buildscript {

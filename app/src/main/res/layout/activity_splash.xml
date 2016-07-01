@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#ffffff">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <TextView android:id="@+id/copy_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,26 +14,21 @@
         android:textSize="11sp"/>
 
     <RelativeLayout android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true">
-            <RelativeLayout android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
-
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="194dp"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@mipmap/three"
                     android:src="@mipmap/three"/>
-            </RelativeLayout>
             <LinearLayout android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
@@ -45,13 +40,13 @@
                     android:textSize="24sp"/>
                 <TextView android:id="@+id/version_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:gravity="bottom"
                     android:text="@string/Version"
                     android:paddingBottom="6dip"
                     android:textSize="14sp"/>
             </LinearLayout>
-            <View android:layout_width="fill_parent"
+            <View android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dip"
@@ -65,4 +60,5 @@
 
         </LinearLayout>
     </RelativeLayout>
+
 </RelativeLayout>

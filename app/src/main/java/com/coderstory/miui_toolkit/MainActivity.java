@@ -25,6 +25,8 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 import com.coderstory.miui_toolkit.tools.HostsHelper;
+import com.coderstory.miui_toolkit.tools.SuHelper;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,45 +42,16 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
         }
-
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();
         loadSettings(this);
-        if (!prefs.getBoolean("getRoot", false)) {
-            showTips("echo 1", getString(R.string.Tips_Need_Root), this);
-        }
-        if (!prefs.getBoolean("IsFirst", false)) {
-            AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
-                    .setTitle(R.string.Tips_Title)
-                    .setMessage("您是第一次打开本软件，是否查询软件说明以及使用帮助？")
-                    .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            editor.putBoolean("IsFirst", true);
-                            editor.apply();
-                            Intent intent = new Intent();
-                            intent.setClass(MainActivity.this,FAQActivity.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    }).create();
-            builder.show();
-        }
-
     }
 
     /*初始化每一个布局上的按钮的状态并绑定事件
      */
     private void loadSettings(MainActivity mainActivity) {
-
         Boolean SetValue;
         Switch SwitchBtn;
-
 
         //移除搜索框
         SetValue = prefs.getBoolean("RemoveSearchBar", false);
@@ -87,27 +60,15 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "RemoveSearchBar");
-        //核心破解
-        SetValue = prefs.getBoolean("CorePatcher", false);
-        SwitchBtn = (Switch) mainActivity.findViewById(R.id.CorePatcher);
-        if (SwitchBtn != null) {
-            SwitchBtn.setChecked(SetValue);
-        }
-        initControl(SwitchBtn, "CorePatcher");
-        //禁止miui检测更新
-        SetValue = prefs.getBoolean("NoUpdate", false);
-        SwitchBtn = (Switch) mainActivity.findViewById(R.id.NoUpdate);
-        if (SwitchBtn != null) {
-            SwitchBtn.setChecked(SetValue);
-        }
-        initControl(SwitchBtn, "NoUpdate");
-        //hosts去广告
+
+        //miui去广告
         SetValue = prefs.getBoolean("RemoveAds", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.RemoveAds);
         if (SwitchBtn != null) {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "RemoveAds");
+
         //主题破解 miui7
         SetValue = prefs.getBoolean("ThemePatcher", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.ThemePatcher);
@@ -115,14 +76,8 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "ThemePatcher");
-        //主题破解 miui8 1
-        SetValue = prefs.getBoolean("ThemePatcher2", false);
-        SwitchBtn = (Switch) mainActivity.findViewById(R.id.ThemePatcher2);
-        if (SwitchBtn != null) {
-            SwitchBtn.setChecked(SetValue);
-        }
-        initControl(SwitchBtn, "ThemePatcher2");
-        //主题破解 miui8 1
+
+        //主题破解 miui8
         SetValue = prefs.getBoolean("ThemePatcher3", false);
         SwitchBtn = (Switch) mainActivity.findViewById(R.id.ThemePatcher3);
         if (SwitchBtn != null) {
@@ -144,13 +99,7 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "RemoveAdshosts");
-        //谷歌hosts  NoStore
-        SetValue = prefs.getBoolean("GoogleHosts", false);
-        SwitchBtn = (Switch) mainActivity.findViewById(R.id.GoogleHosts);
-        if (SwitchBtn != null) {
-            SwitchBtn.setChecked(SetValue);
-        }
-        initControl(SwitchBtn, "GoogleHosts");
+
 
         //屏蔽商店 音乐 视频
         SetValue = prefs.getBoolean("NoStore", false);
@@ -160,13 +109,7 @@ public class MainActivity extends AppCompatActivity {
         }
         initControl(SwitchBtn, "NoStore");
 
-        //root 25秒等待
-        SetValue = prefs.getBoolean("root", false);
-        SwitchBtn = (Switch) mainActivity.findViewById(R.id.root);
-        if (SwitchBtn != null) {
-            SwitchBtn.setChecked(SetValue);
-        }
-        initControl(SwitchBtn, "root");
+
     }
     //初始化每个按钮的事件
     private void initControl(Switch SwitchBtn, final String key) {
@@ -184,14 +127,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case "RemoveAdshosts":
-                        // changeHosts();
-                        new MyTask().execute();
-                        break;
-                    case "NoUpdate":
-                        // changeHosts();
-                        new MyTask().execute();
-                        break;
-                    case "GoogleHosts":
                         // changeHosts();
                         new MyTask().execute();
                         break;
@@ -216,14 +151,10 @@ public class MainActivity extends AppCompatActivity {
         int item_id = item.getItemId();
         switch (item_id) {
             case R.id.hotboot:
-                showTips("busybox killall system_server", getString(R.string.Tips_HotBoot), this);
+                SuHelper.showTips("busybox killall system_server", getString(R.string.Tips_HotBoot), this);
                 break;
             case R.id.reboot:
-                showTips("reboot", getString(R.string.Tips_Reboot), this);
-                break;
-            case R.id.faq:
-                Intent intent = new Intent(this, FAQActivity.class);
-                startActivity(intent);
+                SuHelper. showTips("reboot", getString(R.string.Tips_Reboot), this);
                 break;
             case R.id.about:
                 Intent intent2 = new Intent(this, AboutActivity.class);
@@ -233,40 +164,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-    /*实现弹窗确定执行某条命令*/
-    public static void showTips(final String commandText, String messageText, final Context mContext) {
-        AlertDialog builder = new AlertDialog.Builder(mContext)
-                .setTitle(R.string.Tips_Title)
-                .setMessage(messageText)
-                .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if ("echo 1".equals(commandText)) {
-                            editor.putBoolean("getRoot", true);
-                            editor.apply();
-                        }
-                        // String cmd = commandText;
-                        try {
-                            Runtime.getRuntime().exec(new String[]{"su", "-c", commandText});
-                        } catch (IOException e) {
-                            Log.d("su", e.getMessage());
-                            new AlertDialog.Builder(mContext).setTitle(R.string.Tips_Title_Error).setMessage(
-                                    e.getMessage()).setPositiveButton(R.string.Btn_Sure, null).show();
-                        }
-                    }
-                })
-                .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // 取消当前对话框
-                        if ("echo 1".equals(commandText)) {
-                            System.exit(0);
-                        }
-                        dialog.cancel();
-                    }
-                }).create();
-        builder.show();
-    }
+
     public  void  openAbout(View v){
         Intent intent=new Intent(this,AboutActivity.class);
         startActivity(intent);
@@ -293,22 +191,9 @@ public class MainActivity extends AppCompatActivity {
     }
     //修改hosts的方法
     private void changeHosts() {
-        boolean NoUpdate = prefs.getBoolean("NoUpdate", false); //1
-        // boolean RemoveAds = prefs.getBoolean("RemoveAds", false); //2
-        boolean GoogleHosts = prefs.getBoolean("GoogleHosts", false); //4
         boolean RemoveAdshosts = prefs.getBoolean("RemoveAdshosts", false); //4
         boolean NoStore = prefs.getBoolean("NoStore", false); //4
         Map<String, String> setMap = new HashMap<>();
-        if (NoUpdate) {
-            setMap.put("NoUpdate", "True");
-        } else {
-            setMap.put("NoUpdate", "False");
-        }
-        if (GoogleHosts) {
-            setMap.put("GoogleHosts", "True");
-        } else {
-            setMap.put("GoogleHosts", "False");
-        }
         if (RemoveAdshosts) {
             setMap.put("RemoveAdshosts", "True");
         } else {
@@ -332,14 +217,12 @@ public class MainActivity extends AppCompatActivity {
     class MyTask extends AsyncTask<String, Integer, String> {
         @Override
         protected void onPreExecute() {
-            setProgressBarIndeterminateVisibility(true);
+           // setProgressBarIndeterminateVisibility(true);
             showProgress();
         }
         @Override
         protected void onPostExecute(String param) {
-            //  showData();
-            setProgressBarIndeterminateVisibility(false);
-            // adapter.notifyDataSetChanged();
+            //setProgressBarIndeterminateVisibility(false);
             closeProgress();
         }
         @Override
@@ -363,8 +246,6 @@ public class MainActivity extends AppCompatActivity {
     private Dialog dialog;
     protected void showProgress() {
         if (dialog == null) {
-//		    dialog.setContentView(R.layout.progress_dialog);
-            //    dialog.getWindow().setAttributes(params);
             dialog = ProgressDialog.show(this, getString(R.string.Tips_Title), getString(R.string.Tips_Processing));
             dialog.show();
         }

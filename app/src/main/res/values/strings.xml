@@ -7,8 +7,7 @@
     <string name="Btn_Sure">确定</string>
     <string name="Tips_Title_Error">错误</string>
     <string name="Tips_Reboot">你确定要重启吗？</string>
-    <string name="Tips_HotBoot">你确定要快速重启吗？(需BusyBox)</string>
-    <string name="Tips_Need_Root">软件运行需要ROOT权限，\n点击确定开始授权.\n\n*本次更新适配到20160623发布的MIUI版本</string>
+    <string name="Tips_HotBoot">你确定要快速重启吗？</string>
     <string name="Label_Hidden_Icon">隐藏应用图标</string>
     <string name="Label_Google_Access">谷歌Hosts(能实现访问一些谷歌服务)</string>
     <string name="Label_No_MIUI_Update">屏蔽MIUI更新检测(需ROOT)</string>
@@ -16,7 +15,7 @@
     <string name="Label_NO_AD">屏蔽广告（Hosts方式 需ROOT）</string>
     <string name="Label_NO_MIUI_AD">屏蔽部分MIUI广告</string>
     <string name="Label_NO_SearchBar">移除下拉菜单搜索框</string>
-    <string name="Label_Theme_Patch">MIUI主题和谐(MIUI v7及以前版本)</string>
+    <string name="Label_Theme_Patch">MIUI主题和谐(MIUI7模式)</string>
     <string name="Menu_HotBoot">快速重启系统</string>
     <string name="Menu_Reboot">重启系统</string>
     <string name="label_Other_Settings">通用设置</string>
@@ -24,8 +23,8 @@
     <string name="Label_MIUI_Settings">MIUI相关</string>
     <string name="Label_About">关于</string>
     <string name="Label_MyName">作者:油炸包子</string>
-    <string name="Label_Version">版本:1.4.5 正式版</string>
-    <string name="Version">1.4.5</string>
+    <string name="Label_Version">版本:1.4.6 正式版</string>
+    <string name="Version">1.4.6</string>
     <string name="Label_MyBlog">我的博客:blog.coderstory.cn</string>
     <string name="tebieshuoming">特别说明</string>
     <string name="FAQ">\nMIUI主题和谐(MIUI7模式):\n支持大部分MIUI v5 v6 v7的主题破解\n\nMIUI主题和谐(MIUI8模式):\n支持大部分MIUI v8的主题破解\n\n移除下拉菜单搜索框:\n就是移除下拉菜单界面上的全局搜索框\n\n屏蔽部分MIUI广告:\n通过Xposed修改系统的APP实现屏蔽部分广告\n\n屏蔽MIUI更新检测(需ROOT):\n让MIUI检测不到有新的系统版本\n\n屏蔽商店音乐盒视频(hosts方法:\n屏蔽商店音乐和视频的在线内容\n\nandroid核心破解:\n可以安装签名异常的应用,降级安装应用以及覆盖安装不同签名的应用\n\n屏蔽广告(Hosts方式:)\n通过hosts屏蔽一些常见的广告,但可能存在误杀\n\n谷歌hosts:\n通过hosts实现访问一些谷歌脸书的服务.\n\n</string>

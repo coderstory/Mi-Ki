@@ -3,7 +3,11 @@ package com.coderstory.miui_toolkit.tools;
  * 指向su命令的帮助类
  * Created by cc on 2016/6/7.
  */
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
+import com.coderstory.miui_toolkit.R;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -49,4 +53,30 @@ public abstract class SuHelper {
         return retval;
     }
     protected abstract ArrayList<String> getCommandsToExecute() throws UnsupportedEncodingException;
+
+    /*实现弹窗确定执行某条命令*/
+    public static void showTips(final String commandText, String messageText, final Context mContext) {
+        AlertDialog builder = new AlertDialog.Builder(mContext)
+                .setTitle(R.string.Tips_Title)
+                .setMessage(messageText)
+                .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            Runtime.getRuntime().exec(new String[]{"su", "-c", commandText});
+                        } catch (IOException e) {
+                            Log.d("su", e.getMessage());
+                            new AlertDialog.Builder(mContext).setTitle(R.string.Tips_Title_Error).setMessage(
+                                    e.getMessage()).setPositiveButton(R.string.Btn_Sure, null).show();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).create();
+        builder.show();
+    }
 }

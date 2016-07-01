@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.coderstory.miui_toolkit">
-
-    <!-- <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> -->
-    <!-- <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/three"
@@ -25,34 +22,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity-alias-->
-            <!--android:name=".SplashActivity-Alias"-->
-            <!--android:enabled="true"-->
-            <!--android:targetActivity=".SplashActivity">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity-alias>-->
-
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="感谢雷布斯" />
+            android:value="不守信的雷布斯" />
         <meta-data
             android:name="xposedminversion"
             android:value="53" />
-
         <activity
             android:name=".AboutActivity"
-            android:label="关于 Mi Kit"></activity>
-        <activity
-            android:name=".FAQActivity"
-            android:label="应用说明和FQA"></activity>
-
+            android:label="关于 Mi Kit" />
     </application>
-
 </manifest>

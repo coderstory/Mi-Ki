@@ -14,21 +14,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
  */
 public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPackage {
 
-    public static Object getDrmResultSUCCESS() {
-        try {
-            Class<Enum> localString1 = (Class<Enum>) Class.forName("miui.drm.DrmManager$DrmResult");
-            if ("miui.drm.DrmManager$DrmResult" != null) {
-                return Enum.valueOf(localString1, "DRM_SUCCESS");
-            }
-        } catch (ClassNotFoundException localString2) {
 
-        } catch (NoSuchMethodError localString3) {
-
-        } catch (Throwable localString4) {
-
-        }
-        return null;
-    }
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
@@ -53,8 +39,7 @@ public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         if (!prefs.getBoolean("ThemePatcher3", false)) {
             return;
         }
-        //  XposedBridge.log("Loaded app: " + lpparam.packageName);
-        //  XposedBridge.log("miui8主题破解2");
+
         if (lpparam.packageName.equals("miui.drm") || lpparam.packageName.equals("com.miui.system") || lpparam.packageName.equals("miui.system")) {
             MIUI_DRM();
         }
@@ -90,6 +75,22 @@ public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         } catch (Throwable localString3) {
 
         }
+    }
+
+    public static Object getDrmResultSUCCESS() {
+        try {
+            Class<Enum> localString1 = (Class<Enum>) Class.forName("miui.drm.DrmManager$DrmResult");
+            if ("miui.drm.DrmManager$DrmResult" != null) {
+                return Enum.valueOf(localString1, "DRM_SUCCESS");
+            }
+        } catch (ClassNotFoundException localString2) {
+
+        } catch (NoSuchMethodError localString3) {
+
+        } catch (Throwable localString4) {
+
+        }
+        return null;
     }
 }
 

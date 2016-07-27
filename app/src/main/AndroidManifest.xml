@@ -55,9 +55,7 @@
             android:label="关于 Mi Kit" />
 
         <activity android:name=".HelperActivity" android:label="设置向导"></activity>
-        <meta-data android:value="578df8ece0f55accff0026f5" android:name="UMENG_APPKEY"></meta-data>
-        <!--<meta-data android:value="COOLAPK" android:name="UMENG_CHANNEL"/>-->
-        <meta-data android:value="I" android:name="UMENG_CHANNEL"/>
+     
 
     </application>
 

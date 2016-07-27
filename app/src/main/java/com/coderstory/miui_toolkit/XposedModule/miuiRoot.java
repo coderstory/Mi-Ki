@@ -24,7 +24,7 @@ public class MiuiRoot implements IXposedHookInitPackageResources, IXposedHookLoa
     public static Button accept;
 
     @Override
-    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
+    public void  handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
         XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
         prefs.makeWorldReadable();
         prefs.reload();

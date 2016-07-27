@@ -1,22 +1,22 @@
 <resources>
     <string name="app_name">Mi Kit</string>
     <string name="Tips_Title">温馨提示</string>
-    <string name="Tips_Processing">正在处理中...</string>
-    <string name="Tips_No_Root">未获取Root权限</string>
+    <string name="Tips_Processing">正在处理中,可能需要花费数分钟时间...</string>
+    <string name="Tips_No_Root">尚未获取Root权限,设置将无法生效！</string>
     <string name="Btn_Cancel">取消</string>
     <string name="Btn_Sure">确定</string>
     <string name="Tips_Title_Error">错误</string>
     <string name="Tips_Reboot">你确定要重启吗？</string>
-    <string name="Tips_HotBoot">你确定要快速重启吗？(需BusyBox)</string>
-    <string name="Tips_Need_Root">软件运行需要ROOT权限，\n点击确定开始授权.\n\n*本次更新适配到20160623发布的MIUI版本</string>
+    <string name="Tips_HotBoot">你确定要快速重启吗？</string>
+    <string name="Tips_Need_Root">软件运行需要ROOT权限，\n点击确定开始授权.</string>
     <string name="Label_Hidden_Icon">隐藏应用图标</string>
-    <string name="Label_Google_Access">谷歌Hosts(能实现访问一些谷歌服务)</string>
-    <string name="Label_No_MIUI_Update">屏蔽MIUI更新检测(需ROOT)</string>
+    <string name="Label_Google_Access">常见国外网站Hosts</string>
+    <string name="Label_No_MIUI_Update">屏蔽MIUI更新检测</string>
     <string name="Label_Core_Patch">Android核心校验破解</string>
-    <string name="Label_NO_AD">屏蔽广告（Hosts方式 需ROOT）</string>
-    <string name="Label_NO_MIUI_AD">屏蔽部分MIUI广告</string>
+    <string name="Label_NO_AD">屏蔽一些常见的广告</string>
+    <string name="Label_NO_MIUI_AD">屏蔽大部分MIUI广告</string>
     <string name="Label_NO_SearchBar">移除下拉菜单搜索框</string>
-    <string name="Label_Theme_Patch">MIUI主题和谐(MIUI v7及以前版本)</string>
+    <string name="Label_Theme_Patch">MIUI主题和谐(旧版本通用)</string>
     <string name="Menu_HotBoot">快速重启系统</string>
     <string name="Menu_Reboot">重启系统</string>
     <string name="label_Other_Settings">通用设置</string>
@@ -24,11 +24,11 @@
     <string name="Label_MIUI_Settings">MIUI相关</string>
     <string name="Label_About">关于</string>
     <string name="Label_MyName">作者:油炸包子</string>
-    <string name="Label_Version">版本:1.4.5 正式版</string>
-    <string name="Version">1.4.5</string>
-    <string name="Label_MyBlog">我的博客:blog.coderstory.cn</string>
+    <string name="Label_Version">版本:1.7.4 正式版</string>
+    <string name="Version">1.7.4</string>
+    <string name="Label_MyBlog">我的博客:<u>blog.coderstory.cn</u></string>
     <string name="tebieshuoming">特别说明</string>
-    <string name="FAQ">\nMIUI主题和谐(MIUI7模式):\n支持大部分MIUI v5 v6 v7的主题破解\n\nMIUI主题和谐(MIUI8模式):\n支持大部分MIUI v8的主题破解\n\n移除下拉菜单搜索框:\n就是移除下拉菜单界面上的全局搜索框\n\n屏蔽部分MIUI广告:\n通过Xposed修改系统的APP实现屏蔽部分广告\n\n屏蔽MIUI更新检测(需ROOT):\n让MIUI检测不到有新的系统版本\n\n屏蔽商店音乐盒视频(hosts方法:\n屏蔽商店音乐和视频的在线内容\n\nandroid核心破解:\n可以安装签名异常的应用,降级安装应用以及覆盖安装不同签名的应用\n\n屏蔽广告(Hosts方式:)\n通过hosts屏蔽一些常见的广告,但可能存在误杀\n\n谷歌hosts:\n通过hosts实现访问一些谷歌脸书的服务.\n\n</string>
-    <string name="bak">\nOx0.本应用是Xposed插件，需要Xposed的支持才行,并且设置的更改需要重启生效\n\nOx1.MIUI版本更新比较快,有时候更新会导致插件失效,需要重新适配,但每次适配都需要一定的时间和精力,但实际情况可能不允许我这么做.\n\nOx2.谷歌Hosts是一个很不稳定的功能，想要稳定的建议还是自己花钱吧..\n\nOx3.有人说主题无法和谐，目前来说导致这种情况有80%的概率是你自己的问题(最直观的看下下拉搜索能不能去掉),剩下的就是适配问题了，毕竟成百上千个个机型，N个android版本，N个miui版本，我无法全顾及到\n\nOx4 天气之类的APP显示广告的，尝试清空应用数据和关系信息流\n\nOx5.这是一个Xposed插件，必须要装xp并且启用重启\n \nOx6.对于MIUI Flyme系统,可能无法降级安装APP\n \nOx7.应用不要覆盖安装,出问题了别找我！</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="texts">&lt;h6>1、先决条件&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;为使模块工作所需要 &lt;a href=http://forum.xda-developers.com/xposed/unofficial-xposed-miui-t3367634>Xposed&lt;/a> 框架和安装 &lt;a href=http://repo.xposed.info/module/de.robv.android.xposed.installer>Xposed Installer&lt;/a> 应用程序. &lt;b>如果没有这个模块将无法正常工作！&lt;/b>&lt;br> 有关如何在您的设备安装Xposed框架请寻找与您的设备相关的论坛的信息。&lt;/p> &lt;h6>2、设置您的设备&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;在安装Xposed框架和Xposed应用程序后，你必须在安全中心允许Xposed开机启动,神隐模式下设置为无限制。&lt;/p> &lt;h6>3、模块的安装&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;该模块会安装为一个常规应用程序。&lt;br> &amp;emsp;&amp;emsp;该模块第一次安装后，必须在Xposed模块界面勾选激活，然后重新启动设备。&lt;br> &amp;emsp;&amp;emsp;如果执行步骤 2，你应该在Xposed看到新的模块已安装，但尚未激活的通知。&lt;/p> &lt;h6>4、更新模块&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;更新模块也发生在常规应用程序更新。&lt;br> &amp;emsp;&amp;emsp;如果你执行了步骤2,那么Xposed应该会发出新的模块已安装，需要重启你的设备的通知。&lt;br> &amp;emsp;&amp;emsp;&lt;b>如果不出现此通知，升级后模块需要手动打开Xposed，去模块选项卡，取消勾选，然后再重新勾选再重新启动设备！&lt;/b>&lt;/p> &lt;h6>5、卸载模块&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;把该模块当做是一个普通的应用程序正常卸载即可。&lt;/p></string>
+    <!--<string name="texts">ss</string>-->
 </resources>

@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.50"
-                android:text="@string/FAQ" />
+                />
             <TextView
                 android:id="@+id/textView12"
                 android:layout_below="@+id/textView9"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.50"
                 android:layout_below="@+id/textView12"
-                android:text="@string/bak" />
+                />
 
         </RelativeLayout>
     </ScrollView>

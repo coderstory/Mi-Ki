@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--标题栏-->
-    <color name="colorPrimary">#56bcf2</color>
+    <color name="colorPrimary">#3671cf</color>
     <!--状态栏-->
-    <color name="colorPrimaryDark">#56bcf2</color>
+    <color name="colorPrimaryDark">#3671cf</color>
     <!--开关按钮-->
-    <color name="colorAccent">#5ecf21</color>
+    <color name="colorAccent">#3671cf</color>
 </resources>

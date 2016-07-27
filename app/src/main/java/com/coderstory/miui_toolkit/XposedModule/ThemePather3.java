@@ -1,11 +1,14 @@
 package com.coderstory.miui_toolkit.XposedModule;
 
 import android.content.Context;
+
 import java.io.File;
+
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -32,15 +35,15 @@ public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPacka
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
-        if (!startupParam.startsSystemServer) {
-            return;
-        }
+
         XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
         prefs.makeWorldReadable();
         prefs.reload();
         if (!prefs.getBoolean("ThemePatcher3", false)) {
+            XposedBridge.log("disable DRM Patch");
             return;
         }
+        XposedBridge.log("start DRM Patch");
         MIUI_DRM();
     }
 
@@ -51,6 +54,7 @@ public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         prefs.makeWorldReadable();
         prefs.reload();
         if (!prefs.getBoolean("ThemePatcher3", false)) {
+            XposedBridge.log("disable thememanager Patch");
             return;
         }
         //  XposedBridge.log("Loaded app: " + lpparam.packageName);
@@ -59,15 +63,15 @@ public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPacka
             MIUI_DRM();
         }
         if (lpparam.packageName.equals("com.android.thememanager")) {
+            XposedBridge.log("start thememanager Patch");
             //是否试用 可以不改
-            XposedHelpers.findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader, "isTrialable", XC_MethodReplacement.returnConstant(false));
+            findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader,"isTrialable", new Object[]{XC_MethodReplacement.returnConstant(false)});
             //是否合法
-            XposedHelpers.findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader, "isLegal", XC_MethodReplacement.returnConstant(true));
+            findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler",lpparam.classLoader, "isLegal", new Object[]{XC_MethodReplacement.returnConstant(true)});
             //是否被篡改（本地导入修改的主题）
-            XposedHelpers.findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader, "isAuthorizedResource", XC_MethodReplacement.returnConstant(true));
+            findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader,"isAuthorizedResource", new Object[]{XC_MethodReplacement.returnConstant(true)});
             //判断是有权限使用
-            XposedHelpers.findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader, "isPermanentRights", XC_MethodReplacement.returnConstant(true));
-
+            findAndHookMethod("com.android.thememanager.util.ThemeOperationHandler", lpparam.classLoader,"isPermanentRights", new Object[]{XC_MethodReplacement.returnConstant(true)});
         }
     }
 
@@ -79,17 +83,33 @@ public class ThemePather3 implements IXposedHookZygoteInit, IXposedHookLoadPacka
         findAndHookMethod("miui.drm.DrmManager", "isLegal", new Object[]{"miui.drm.DrmManager$RightObject", XC_MethodReplacement.returnConstant(true)});
     }
 
+    private static void findAndHookMethod(String p1,ClassLoader lpparam ,String p2,Object... parameterTypesAndCallback) {
+        try {
+            XposedHelpers.findAndHookMethod(p1,lpparam, p2, parameterTypesAndCallback);
+            return;
+
+        } catch (NoSuchMethodError localString2) {
+            XposedBridge.log(localString2.toString());
+            return;
+        } catch (Throwable localString3) {
+            XposedBridge.log(localString3.toString());
+        }
+    }
     private static void findAndHookMethod(String p1, String p2, Object[] p3) {
         try {
             XposedHelpers.findAndHookMethod(Class.forName(p1), p2, p3);
             return;
         } catch (ClassNotFoundException localString1) {
+            XposedBridge.log(localString1.toString());
             return;
         } catch (NoSuchMethodError localString2) {
+            XposedBridge.log(localString2.toString());
             return;
         } catch (Throwable localString3) {
+            XposedBridge.log(localString3.toString());
 
         }
     }
+
 }
 

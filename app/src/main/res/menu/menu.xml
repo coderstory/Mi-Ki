@@ -12,7 +12,7 @@
         android:visible="true" />
     <item
         android:id="@+id/faq"
-        android:title="应用说明和FAQ"
+        android:title="设置向导"
         android:visible="true" />
     <item
         android:id="@+id/about"

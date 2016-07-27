@@ -1,5 +1,5 @@
 #指定代码的压缩级别
--optimizationpasses 5 
+-optimizationpasses 7
 #包明不混合大小写
 -dontusemixedcaseclassnames 
 #不去忽略非公共的库类
@@ -16,8 +16,21 @@
 -keepattributes Annotation
 #保持哪些类不被混淆
 -keep public class com.coderstory.miui_toolkit.XposedModule.**
-
-
+-keep class com.coderstory.miui_toolkit.MainActivity {
+    boolean isEnable();
+}
+-keepclassmembers class * {
+   public <init>(org.json.JSONObject);
+}
+-keep public class com.coderstory.miui_toolkit.R$*{
+public static final int *;
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep public class com.umeng.fb.ui.ThreadView {
+}
 #如果有引用v4包可以添加下面这行
 -keep public class * extends android.support.v4.app.Fragment
 -keep public class * extends android.support.v7.app.Fragment

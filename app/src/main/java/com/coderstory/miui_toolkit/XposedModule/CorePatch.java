@@ -18,7 +18,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
  */
 public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage {
     private Context PMcontext = null;
- //   private Context ctx = null;
+    //   private Context ctx = null;
 
     public void initZygote(IXposedHookZygoteInit.StartupParam paramStartupParam)
             throws Throwable {
@@ -163,20 +163,20 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                 }
             });
 
-            XposedBridge.hookAllMethods(localClass, "installPackageAsUser", new XC_MethodHook() {
-                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    prefs.reload();
-                    if (!prefs.getBoolean("CorePatcher", false)) {
-                        return;
-                    }
-                    int i = 2;
-                    int j = (Integer) paramAnonymousMethodHookParam.args[i];
-                    if ((j & 0x80) == 0) {
-                        paramAnonymousMethodHookParam.args[i] = j | 0x80;
-                    }
-                }
-            });
+//            XposedBridge.hookAllMethods(localClass, "installPackageAsUser", new XC_MethodHook() {
+//                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
+//                        throws Throwable {
+//                    prefs.reload();
+//                    if (!prefs.getBoolean("CorePatcher", false)) {
+//                        return;
+//                    }
+//                    int i = 2;
+//                    int j = (Integer) paramAnonymousMethodHookParam.args[i];
+//                    if ((j & 0x80) == 0) {
+//                        paramAnonymousMethodHookParam.args[i] = j | 0x80;
+//                    }
+//                }
+//            });
         }
         if ("com.android.settings".equals(paramLoadPackageParam.packageName)) {
             XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.settings.applications.AppOpsDetails", paramLoadPackageParam.classLoader), "isPlatformSigned", new XC_MethodHook() {

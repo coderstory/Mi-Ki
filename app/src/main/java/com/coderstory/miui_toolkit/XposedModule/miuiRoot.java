@@ -19,7 +19,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
  * 去除root25秒等待
  * Created by cc on 2016/6/17.
  */
-public class miuiRoot implements IXposedHookInitPackageResources, IXposedHookLoadPackage, IXposedHookZygoteInit{
+public class MiuiRoot implements IXposedHookInitPackageResources, IXposedHookLoadPackage, IXposedHookZygoteInit{
     public static TextView WarningText;
     public static Button accept;
 
@@ -42,20 +42,30 @@ public class miuiRoot implements IXposedHookInitPackageResources, IXposedHookLoa
                     throws Throwable
             {
                 // XposedHelpers.setIntField(paramAnonymousMethodHookParam.thisObject, "TK", 5);
-                if (miuiRoot.accept == null) {
+                if (MiuiRoot.accept == null) {
                     return;
                 }
                 //模拟用户点击确定 5次
                 int i = 0;
                 while (i < 5)
                 {
-                    miuiRoot.accept.performClick();
+                    MiuiRoot.accept.performClick();
                     i += 1;
                 }
             }
         });
         //这个方法是修改每次点击确定时显示不同的警告文字的 在miui8上找不到方法 可能不存在 或者已经改名
         XposedHelpers.findAndHookMethod("com.miui.permcenter.root.c", loadPackageParam.classLoader, "handleMessage", Message.class, new XC_MethodReplacement()
+        {
+            protected Object replaceHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
+                    throws Throwable
+            {
+                return null;
+            }
+        });
+
+        //这个方法是修改每次点击确定时显示不同的警告文字的 在miui8上找不到方法 可能不存在 或者已经改名
+        XposedHelpers.findAndHookMethod("com.miui.permcenter.root.a", loadPackageParam.classLoader, "handleMessage", Message.class, new XC_MethodReplacement()
         {
             protected Object replaceHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                     throws Throwable
@@ -83,10 +93,10 @@ public class miuiRoot implements IXposedHookInitPackageResources, IXposedHookLoa
             public void handleLayoutInflated(XC_LayoutInflated.LayoutInflatedParam paramAnonymousLayoutInflatedParam)
                     throws Throwable
             {
-                miuiRoot.accept = (Button)paramAnonymousLayoutInflatedParam.view.findViewById(paramAnonymousLayoutInflatedParam.res.getIdentifier("accept", "id", "com.miui.securitycenter"));
-                miuiRoot.WarningText = (TextView)paramAnonymousLayoutInflatedParam.view.findViewById(paramAnonymousLayoutInflatedParam.res.getIdentifier("warning_info", "id", "com.miui.securitycenter"));
-                if (miuiRoot.WarningText != null) {
-                    miuiRoot.WarningText.setLines(6);
+                MiuiRoot.accept = (Button)paramAnonymousLayoutInflatedParam.view.findViewById(paramAnonymousLayoutInflatedParam.res.getIdentifier("accept", "id", "com.miui.securitycenter"));
+                MiuiRoot.WarningText = (TextView)paramAnonymousLayoutInflatedParam.view.findViewById(paramAnonymousLayoutInflatedParam.res.getIdentifier("warning_info", "id", "com.miui.securitycenter"));
+                if (MiuiRoot.WarningText != null) {
+                    MiuiRoot.WarningText.setLines(6);
                 }
             }
         });

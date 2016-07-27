@@ -29,7 +29,7 @@ public class HostsHelper extends SuHelper {
         list.add("echo '"+content+"' > /system/etc/hosts");//清空
 
         if (HostsConfig.get("NoUpdate").equals("True")){
-             content=fh.getFromAssets("hosts_noup", mContext);
+            content=fh.getFromAssets("hosts_noup", mContext);
             list.add("echo '"+content+"' >> /system/etc/hosts");//禁止检测更新
         }
         if (HostsConfig.get("RemoveAdshosts").equals("True")){

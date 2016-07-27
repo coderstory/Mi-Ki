@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,14 +23,31 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
+
 import com.coderstory.miui_toolkit.tools.HostsHelper;
-import java.io.IOException;
+import com.coderstory.miui_toolkit.tools.SuHelper;
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.coderstory.miui_toolkit.tools.SuHelper.canRunRootCommands;
 
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor editor;
+   private  boolean isRoot=true;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,38 +56,85 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
         }
-
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();
         loadSettings(this);
-        if (!prefs.getBoolean("getRoot", false)) {
-            showTips("echo 1", getString(R.string.Tips_Need_Root), this);
-        }
-        if (!prefs.getBoolean("IsFirst", false)) {
-            AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
-                    .setTitle(R.string.Tips_Title)
-                    .setMessage("您是第一次打开本软件，是否查询软件说明以及使用帮助？")
-                    .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            editor.putBoolean("IsFirst", true);
-                            editor.apply();
-                            Intent intent = new Intent();
-                            intent.setClass(MainActivity.this,FAQActivity.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    }).create();
-            builder.show();
+
+        MobclickAgent.setScenarioType(MainActivity.this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+       // MobclickAgent.setDebugMode( true );
+
+        if (!isEnable()) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+            dialog.setTitle("警告");
+            dialog.setMessage("已检测到本模块未在Xposed中启用,功能将无法使用！");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //System.exit(0);
+                }
+            });
+            dialog.show();
         }
 
+        if (!prefs.getBoolean("getRoot", false)) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+            dialog.setTitle("提示");
+            dialog.setMessage("本软件的正常运行需要root权限,点击确定开始授权。");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (!canRunRootCommands()) {
+                        AlertDialog.Builder dialog2 = new AlertDialog.Builder(MainActivity.this);
+                        dialog2.setTitle("警告");
+                        dialog2.setMessage("已检测本软件未被ROOT授权,部分功能将无法使用！");
+                        dialog2.setCancelable(false);
+                        dialog2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                               // System.exit(0);
+                            }
+                        });
+                        dialog2.show();
+                    } else {
+                        editor.putBoolean("getRoot", true);
+                        editor.apply();
+                    }
+                }
+            });
+            dialog.show();
+
+            if (!prefs.getBoolean("First", false)) {
+                AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(R.string.Tips_Title)
+                        .setMessage("您是第一次打开本软件，是否阅读使用帮助？")
+                        .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                editor.putBoolean("First", true);
+                                editor.apply();
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, HelperActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                editor.putBoolean("First", true);
+                                editor.apply();
+                                dialog.cancel();
+                            }
+                        }).create();
+                builder.show();
+            }
+        }
     }
 
+ private static boolean isEnable(){
+        return  false;
+    }
     /*初始化每一个布局上的按钮的状态并绑定事件
      */
     private void loadSettings(MainActivity mainActivity) {
@@ -198,11 +261,13 @@ public class MainActivity extends AppCompatActivity {
                     case "NoStore":
                         // changeHosts();
                         new MyTask().execute();
+
                         break;
                 }
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // TODO Auto-generated method stub
@@ -216,13 +281,13 @@ public class MainActivity extends AppCompatActivity {
         int item_id = item.getItemId();
         switch (item_id) {
             case R.id.hotboot:
-                showTips("busybox killall system_server", getString(R.string.Tips_HotBoot), this);
+                SuHelper.showTips("busybox killall system_server", getString(R.string.Tips_HotBoot), this);
                 break;
             case R.id.reboot:
-                showTips("reboot", getString(R.string.Tips_Reboot), this);
+                SuHelper.showTips("reboot", getString(R.string.Tips_Reboot), this);
                 break;
             case R.id.faq:
-                Intent intent = new Intent(this, FAQActivity.class);
+                Intent intent = new Intent(this, HelperActivity.class);
                 startActivity(intent);
                 break;
             case R.id.about:
@@ -233,40 +298,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-    /*实现弹窗确定执行某条命令*/
-    public static void showTips(final String commandText, String messageText, final Context mContext) {
-        AlertDialog builder = new AlertDialog.Builder(mContext)
-                .setTitle(R.string.Tips_Title)
-                .setMessage(messageText)
-                .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if ("echo 1".equals(commandText)) {
-                            editor.putBoolean("getRoot", true);
-                            editor.apply();
-                        }
-                        // String cmd = commandText;
-                        try {
-                            Runtime.getRuntime().exec(new String[]{"su", "-c", commandText});
-                        } catch (IOException e) {
-                            Log.d("su", e.getMessage());
-                            new AlertDialog.Builder(mContext).setTitle(R.string.Tips_Title_Error).setMessage(
-                                    e.getMessage()).setPositiveButton(R.string.Btn_Sure, null).show();
-                        }
-                    }
-                })
-                .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // 取消当前对话框
-                        if ("echo 1".equals(commandText)) {
-                            System.exit(0);
-                        }
-                        dialog.cancel();
-                    }
-                }).create();
-        builder.show();
-    }
+  
     public  void  openAbout(View v){
         Intent intent=new Intent(this,AboutActivity.class);
         startActivity(intent);
@@ -320,27 +352,37 @@ public class MainActivity extends AppCompatActivity {
             setMap.put("NoStore", "False");
         }
         HostsHelper h = new HostsHelper(MainActivity.this, setMap);
+
         if (!h.execute()) {
-            Toast.makeText(MainActivity.this, R.string.Tips_No_Root, Toast.LENGTH_SHORT).show();
-            Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
-            if (SwitchBtn != null) {
-                SwitchBtn.setChecked(false);
-            }
+            isRoot=false;
         }
     }
     //因为hosts修改比较慢 所以改成异步的
     class MyTask extends AsyncTask<String, Integer, String> {
         @Override
         protected void onPreExecute() {
-            setProgressBarIndeterminateVisibility(true);
+            // setProgressBarIndeterminateVisibility(true);
             showProgress();
         }
         @Override
         protected void onPostExecute(String param) {
-            //  showData();
-            setProgressBarIndeterminateVisibility(false);
-            // adapter.notifyDataSetChanged();
+            //setProgressBarIndeterminateVisibility(false);
             closeProgress();
+            if (!isRoot) {
+
+                Toast.makeText(MainActivity.this, R.string.Tips_No_Root, Toast.LENGTH_SHORT).show();
+
+                Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
+                if (SwitchBtn != null) {
+                    SwitchBtn.setChecked(false);
+                }
+
+                SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.GoogleHosts);
+                if (SwitchBtn != null) {
+                    SwitchBtn.setChecked(false);
+                }
+            }
+            isRoot=true;
         }
         @Override
         protected void onCancelled() {
@@ -354,7 +396,10 @@ public class MainActivity extends AppCompatActivity {
         }
         @Override
         protected String doInBackground(String... params) {
-            Looper.prepare();
+            try {
+                Looper.prepare();
+            }catch
+                    (Exception e) { }
             //  initData();
             changeHosts();
             return null;
@@ -365,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
         if (dialog == null) {
 //		    dialog.setContentView(R.layout.progress_dialog);
             //    dialog.getWindow().setAttributes(params);
-            dialog = ProgressDialog.show(this, getString(R.string.Tips_Title), getString(R.string.Tips_Processing));
+            dialog = ProgressDialog.show(this,"正在处理中", "可能需要花费数分钟时间...");
             dialog.show();
         }
     }

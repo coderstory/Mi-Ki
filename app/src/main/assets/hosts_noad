@@ -1,6 +1,11 @@
 
-127.0.0.1 resolver.msg.xiaomi.net
 127.0.0.1 s.jpush.cn
+127.0.0.1 connect.rom.miui.com
+127.0.0.1 sis.jpush.io
+127.0.0.1 sdk.open.talk.igexin.com
+127.0.0.1 sdk.open.talk.gepush.com
+127.0.0.1 abtest.mistat.xiaomi.com
+127.0.0.1 cm066.getui.igexin.com
 127.0.0.1 idx.m.hub.sandai.net
 127.0.0.1 7xl9af.com1.z0.glb.clouddn.com
 127.0.0.1 hub5pn.wap.sandai.net

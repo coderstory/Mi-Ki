@@ -3,6 +3,7 @@ package com.coderstory.miui_toolkit.XposedModule;
 
 import java.util.List;
 import java.util.Map;
+
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -12,7 +13,9 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+
 import android.content.Context;
+
 import de.robv.android.xposed.XSharedPreferences;
 
 public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage, IXposedHookInitPackageResources {
@@ -27,13 +30,13 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage,
     public void patchcode() {
 
 
-  XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
-         prefs.makeWorldReadable();
-         prefs.reload();
-         if (!prefs.getBoolean("RemoveAds", false)) {
+        XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
+        prefs.makeWorldReadable();
+        prefs.reload();
+        if (!prefs.getBoolean("RemoveAds", false)) {
             return;
-         }
- 
+        }
+
         //垃圾清理
         if (loadPackageParam.packageName.equals("com.miui.cleanmaster")) {
 
@@ -160,6 +163,16 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage,
 //            });
             return;
         }
+
+        if (loadPackageParam.packageName.equals("com.android.quicksearchbox")) {
+                XposedHelpers.findAndHookMethod("com.android.quicksearchbox.ui.LocalListView", loadPackageParam.classLoader, "updateHotQuery", List.class,int.class, new XC_MethodReplacement()
+                {
+                    @Override
+                    protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+                        return null;
+                    }
+                });
+        }
     }
 
     public void initZygote(IXposedHookZygoteInit.StartupParam paramStartupParam)
@@ -179,18 +192,15 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage,
     }
 
 
-
-
-
     @Override
     public void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam initPackageResourcesParam) throws Throwable {
 
-           //短信
+        //短信
 //            if (initPackageResourcesParam.packageName.equals("com.android.mms")) {
 //                initPackageResourcesParam.res.setReplacement(initPackageResourcesParam.packageName, "bool", "pref_key_allow_si_sl_push", false);
 //                initPackageResourcesParam.res.setReplacement(initPackageResourcesParam.packageName, "bool", "pref_key_festival_networking", false);
 //            };
-        }
     }
+}
 
 

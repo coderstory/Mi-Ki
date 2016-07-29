@@ -12,6 +12,8 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import android.content.Context;
+import de.robv.android.xposed.XSharedPreferences;
 
 public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage, IXposedHookInitPackageResources {
     private static XC_LoadPackage.LoadPackageParam loadPackageParam;
@@ -24,6 +26,14 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage,
 
     public void patchcode() {
 
+
+  XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
+         prefs.makeWorldReadable();
+         prefs.reload();
+         if (!prefs.getBoolean("RemoveAds", false)) {
+            return;
+         }
+ 
         //垃圾清理
         if (loadPackageParam.packageName.equals("com.miui.cleanmaster")) {
 

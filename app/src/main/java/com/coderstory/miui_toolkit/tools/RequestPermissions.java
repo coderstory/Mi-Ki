@@ -13,8 +13,8 @@ public class RequestPermissions {
 
     /**
      * 申请储存权限
-     * @param activity
-     * @return
+     * @param activity context
+     * @return 权限的查询结果
      */
     public static boolean isGrantExternalRW(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity.checkSelfPermission(

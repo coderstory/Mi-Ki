@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 return 1;
             }
-        }.execute(new Void[]{});
+        }.execute();
 
 
     }

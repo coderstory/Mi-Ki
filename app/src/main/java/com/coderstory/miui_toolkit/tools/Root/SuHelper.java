@@ -3,25 +3,21 @@ package com.coderstory.miui_toolkit.tools.Root;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.util.Log;
 import com.coderstory.miui_toolkit.R;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class SuHelper {
 
     /**
      * 执行所提交的命令组
-     * @return
+     * @return 执行结果
      */
     public final boolean execute() {
         boolean retval = false;
@@ -65,14 +61,14 @@ public abstract class SuHelper {
 
     /**
      * 弹窗确认后执行root命令
-     * @param commandText
-     * @param messageText
-     * @param mContext
+     * @param commandText 命令文本
+     * @param messageText  提示信息
+     * @param mContext context
      */
     public static void showTips(final String commandText, String messageText, final Context mContext) {
 
-        SharedPreferences prefs = mContext.getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
-       final    SharedPreferences.Editor  editor = prefs.edit();
+      //  SharedPreferences prefs = mContext.getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
+      // final    SharedPreferences.Editor  editor = prefs.edit();
         AlertDialog builder = new AlertDialog.Builder(mContext)
                 .setTitle( R.string.Tips_Title)
                 .setMessage(messageText)
@@ -80,9 +76,9 @@ public abstract class SuHelper {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
-                            List<String> strList = new ArrayList();
+                            ArrayList strList = new ArrayList();
                             Process process =    Runtime.getRuntime().exec(new String[]{"su", "-c", commandText});
-                            InputStream is = process.getInputStream();
+                         //   InputStream inputStream = process.getInputStream();
                             InputStreamReader ir = new InputStreamReader(process
                                     .getInputStream());
                             LineNumberReader input = new LineNumberReader(ir);
@@ -94,9 +90,7 @@ public abstract class SuHelper {
                             }
                             Log.d("aaaa", "onClick: "+strList.toString());
 
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                        } catch (IOException e1) {
+                        } catch (InterruptedException | IOException e1) {
                             e1.printStackTrace();
                         }
                     }
@@ -112,35 +106,35 @@ public abstract class SuHelper {
 
     /**
      * 判断是否已经被授权root
-     * @return
+     * @return boolean
      */
     public static boolean canRunRootCommands() {
-        boolean retval = false;
+        boolean Result ;
         Process suProcess;
 
         try {
             suProcess = Runtime.getRuntime().exec("su");
 
             DataOutputStream os = new DataOutputStream(suProcess.getOutputStream());
-            DataInputStream osRes = new DataInputStream(suProcess.getInputStream());
+           // DataInputStream osRes = new DataInputStream(suProcess.getInputStream());
+            BufferedReader din=new BufferedReader(new InputStreamReader(suProcess.getInputStream()));
 
-            if (null != os && null != osRes) {
                 // Getting the id of the current user to check if this is root
                 os.writeBytes("id\n");
                 os.flush();
 
-                String currUid = osRes.readLine();
-                boolean exitSu = false;
+                String currUid = din.readLine();
+                boolean exitSu ;
                 if (null == currUid) {
-                    retval = false;
+                    Result = false;
                     exitSu = false;
                     Log.d("ROOT", "Can't get root access or denied by user");
-                } else if (true == currUid.contains("uid=0")) {
-                    retval = true;
+                } else if (currUid.contains("uid=0")) {
+                    Result = true;
                     exitSu = true;
                     Log.d("ROOT", "Root access granted");
                 } else {
-                    retval = false;
+                    Result = false;
                     exitSu = true;
                     Log.d("ROOT", "Root access rejected: " + currUid);
                 }
@@ -149,16 +143,16 @@ public abstract class SuHelper {
                     os.writeBytes("exit\n");
                     os.flush();
                 }
-            }
+
         } catch (Exception e) {
             // Can't get root !
             // Probably broken pipe exception on trying to write to output
             // stream after su failed, meaning that the device is not rooted
-            retval = false;
+            Result = false;
             Log.d("ROOT",
                     "Root access rejected [" + e.getClass().getName() + "] : " + e.getMessage());
         }
 
-        return retval;
+        return Result;
     }
 }

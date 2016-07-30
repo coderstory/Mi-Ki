@@ -18,17 +18,12 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.coderstory.miui_toolkit.tools.Update.UpdateConfig;
 
-/**
- * Created by CoderStory on 2016/7/30.
- */
+
 public class UpdateService extends Service {
-    // 标题
-    private int titleId = 0;
 
     // 文件存储
     private File updateDir = null;
@@ -45,12 +40,12 @@ public class UpdateService extends Service {
     /***
      * 创建通知栏
      */
-    RemoteViews contentView;
+   // RemoteViews contentView;
     // 这样的下载代码很多，我就不做过多的说明
-    int downloadCount = 0;
-    int currentSize = 0;
-    long totalSize = 0;
-    int updateTotalSize = 0;
+    private int downloadCount = 0;
+    private int currentSize = 0;
+    private long totalSize = 0;
+    private int updateTotalSize = 0;
 
     // 在onStartCommand()方法中准备相关的下载工作：
     @SuppressWarnings("deprecation")
@@ -59,7 +54,7 @@ public class UpdateService extends Service {
         // 获取传值
         updateTotalSize = 0;
         currentSize = 0;
-        titleId = intent.getIntExtra("titleId", 0);
+        int titleId = intent.getIntExtra("titleId", 0);
         // 创建文件
         if (android.os.Environment.MEDIA_MOUNTED.equals(android.os.Environment
                 .getExternalStorageState())) {
@@ -139,7 +134,7 @@ public class UpdateService extends Service {
         }
     };
 
-    public long downloadUpdateFile(String downloadUrl, File saveFile)
+    private long downloadUpdateFile(String downloadUrl, File saveFile)
             throws Exception {
         HttpURLConnection httpConnection = null;
         InputStream is = null;
@@ -162,7 +157,7 @@ public class UpdateService extends Service {
             is = httpConnection.getInputStream();
             fos = new FileOutputStream(saveFile, false);
             byte buffer[] = new byte[4096];
-            int readsize = 0;
+            int readsize;
             while ((readsize = is.read(buffer)) > 0) {
                 fos.write(buffer, 0, readsize);
                 totalSize += readsize;
@@ -205,7 +200,7 @@ public class UpdateService extends Service {
         return totalSize;
     }
 
-    class updateRunnable implements Runnable {
+    private  class updateRunnable implements Runnable {
         Message message = updateHandler.obtainMessage();
 
         public void run() {
@@ -218,13 +213,14 @@ public class UpdateService extends Service {
                 }
                 //重新创建一遍 删除之前的旧数据 比如下载失败的不完整文件
                 if (updateFile.exists()) {
-                    if (!updateFile.delete()) {
-                        new ToastMessageTask().execute(getString(R.string.Delete_OldFile_Fail));
+                   updateFile.delete();
+                       // new ToastMessageTask().execute(getString(R.string.Delete_OldFile_Fail));
                     }
-                }
-                if (updateFile.createNewFile()) {
-                    new ToastMessageTask().execute(getString(R.string.Create_DownlodFile_Fail));
-                }
+
+
+             updateFile.createNewFile();
+                  //  new ToastMessageTask().execute(getString(R.string.Create_DownlodFile_Fail));
+
 
                 // 下载函数
                 // 增加权限<USES-PERMISSION

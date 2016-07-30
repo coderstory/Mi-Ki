@@ -15,7 +15,7 @@ import java.util.Map;
 public class HostsHelper extends SuHelper {
 
     private Context mContext = null; //Context
-    Map<String,String> HostsConfig; //hosts的用户配置
+    private Map<String,String> HostsConfig; //hosts的用户配置
 
     public HostsHelper(Context mContext, Map<String,String> mMap) {
         this.mContext = mContext;
@@ -24,7 +24,7 @@ public class HostsHelper extends SuHelper {
 
     /**
      * 构造需要root下执行的命令组
-     * @return
+     * @return 构造好的命令组
      * @throws UnsupportedEncodingException
      */
     @Override

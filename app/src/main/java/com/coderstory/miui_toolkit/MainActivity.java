@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
 //处理权限申请结果
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 CheckUpdate CU = new CheckUpdate(MainActivity.this);
@@ -433,7 +434,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Looper.prepare();
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
             //  initData();
             changeHosts();
@@ -453,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void closeProgress() {
-        if (MainActivity.this!=null&&!MainActivity.this.isFinishing()) {
+        if (!MainActivity.this.isFinishing()) {
             dialog.cancel();
         }
     }

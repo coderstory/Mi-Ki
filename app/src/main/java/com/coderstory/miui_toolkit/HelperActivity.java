@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
-
 import com.umeng.analytics.MobclickAgent;
-
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 public class HelperActivity extends SwipeBackActivity {
-    private SwipeBackLayout mSwipeBackLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

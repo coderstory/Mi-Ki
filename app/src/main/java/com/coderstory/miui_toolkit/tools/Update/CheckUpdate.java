@@ -105,6 +105,11 @@ public class CheckUpdate {
             // TODO
             // 在这里进行 http request.网络请求相关操作
             try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
                 hasNew();
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -135,14 +135,11 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
             }
         }
-
         // 申请权限并开始检测更新
       if(  RequestPermissions.isGrantExternalRW(MainActivity.this)){
           CheckUpdate CU = new CheckUpdate(MainActivity.this);
           new Thread(CU.networkTask).start();
       }
-
-
     }
 
 //处理权限申请结果

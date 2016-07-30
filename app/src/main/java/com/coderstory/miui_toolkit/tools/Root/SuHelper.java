@@ -1,13 +1,11 @@
-package com.coderstory.miui_toolkit.tools;
+package com.coderstory.miui_toolkit.tools.Root;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.Log;
-
 import com.coderstory.miui_toolkit.R;
-
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -20,6 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SuHelper {
+
+    /**
+     * 执行所提交的命令组
+     * @return
+     */
     public final boolean execute() {
         boolean retval = false;
         try {
@@ -59,6 +62,13 @@ public abstract class SuHelper {
     }
     protected abstract ArrayList<String> getCommandsToExecute() throws UnsupportedEncodingException;
 
+
+    /**
+     * 弹窗确认后执行root命令
+     * @param commandText
+     * @param messageText
+     * @param mContext
+     */
     public static void showTips(final String commandText, String messageText, final Context mContext) {
 
         SharedPreferences prefs = mContext.getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
@@ -100,6 +110,10 @@ public abstract class SuHelper {
         builder.show();
     }
 
+    /**
+     * 判断是否已经被授权root
+     * @return
+     */
     public static boolean canRunRootCommands() {
         boolean retval = false;
         Process suProcess;
@@ -140,7 +154,6 @@ public abstract class SuHelper {
             // Can't get root !
             // Probably broken pipe exception on trying to write to output
             // stream after su failed, meaning that the device is not rooted
-
             retval = false;
             Log.d("ROOT",
                     "Root access rejected [" + e.getClass().getName() + "] : " + e.getMessage());

@@ -2,6 +2,8 @@ package com.coderstory.miui_toolkit.tools;
 
 import android.content.Context;
 
+import com.coderstory.miui_toolkit.tools.Root.SuHelper;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -19,7 +21,12 @@ public class HostsHelper extends SuHelper {
         this.mContext = mContext;
         this.HostsConfig = mMap;
     }
-    //构造命令组
+
+    /**
+     * 构造需要root下执行的命令组
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     @Override
     protected ArrayList<String> getCommandsToExecute() throws UnsupportedEncodingException {
         ArrayList<String> list = new ArrayList<>();

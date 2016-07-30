@@ -33,7 +33,7 @@ public class AboutActivity extends SwipeBackActivity {
     public void alipay(View view) {
         //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("https://qr.alipay.com/aex087445gnaa6gawjaohe8"));
+        intent.setData(Uri.parse("https://qr.qr_alipay.com/aex087445gnaa6gawjaohe8"));
         startActivity(intent);
     }
 

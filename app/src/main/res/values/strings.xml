@@ -30,5 +30,5 @@
     <string name="tebieshuoming">特别说明</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="texts">&lt;h6>1、先决条件&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;为使模块工作所需要 &lt;a href=http://forum.xda-developers.com/xposed/unofficial-xposed-miui-t3367634>Xposed&lt;/a> 框架和安装 &lt;a href=http://repo.xposed.info/module/de.robv.android.xposed.installer>Xposed Installer&lt;/a> 应用程序. &lt;b>如果没有这个模块将无法正常工作！&lt;/b>&lt;br> 有关如何在您的设备安装Xposed框架请寻找与您的设备相关的论坛的信息。&lt;/p> &lt;h6>2、设置您的设备&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;在安装Xposed框架和Xposed应用程序后，你必须在安全中心允许Xposed开机启动,神隐模式下设置为无限制。&lt;/p> &lt;h6>3、模块的安装&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;该模块会安装为一个常规应用程序。&lt;br> &amp;emsp;&amp;emsp;该模块第一次安装后，必须在Xposed模块界面勾选激活，然后重新启动设备。&lt;br> &amp;emsp;&amp;emsp;如果执行步骤 2，你应该在Xposed看到新的模块已安装，但尚未激活的通知。&lt;/p> &lt;h6>4、更新模块&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;更新模块也发生在常规应用程序更新。&lt;br> &amp;emsp;&amp;emsp;如果你执行了步骤2,那么Xposed应该会发出新的模块已安装，需要重启你的设备的通知。&lt;br> &amp;emsp;&amp;emsp;&lt;b>如果不出现此通知，升级后模块需要手动打开Xposed，去模块选项卡，取消勾选，然后再重新勾选再重新启动设备！&lt;/b>&lt;/p> &lt;h6>5、卸载模块&lt;/h6> &lt;p>&amp;emsp;&amp;emsp;把该模块当做是一个普通的应用程序正常卸载即可。&lt;/p></string>
-    <!--<string name="texts">ss</string>-->
+    <string name="UpdateServer">http://coderstory.picp.io/info</string>
 </resources>

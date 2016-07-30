@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -12,11 +13,16 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.widget.RemoteViews;
+import android.widget.Toast;
+
+import com.coderstory.miui_toolkit.tools.Update.UpdateConfig;
+
 /**
  * Created by CoderStory on 2016/7/30.
  */
@@ -51,14 +57,14 @@ public class UpdateServcie extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 获取传值
-        updateTotalSize=0;
-        currentSize=0;
+        updateTotalSize = 0;
+        currentSize = 0;
         titleId = intent.getIntExtra("titleId", 0);
         // 创建文件
         if (android.os.Environment.MEDIA_MOUNTED.equals(android.os.Environment
                 .getExternalStorageState())) {
             updateDir = new File(Environment.getExternalStorageDirectory(),
-                    config.saveFileName);
+                    UpdateConfig.saveFileName);
             updateFile = new File(updateDir.getPath(), getResources()
                     .getString(titleId) + ".apk");
 
@@ -74,7 +80,7 @@ public class UpdateServcie extends Service {
                 .setContentTitle("Mi Kit")
                 .setContentText("正在下载。。")
                 .setContentIntent(updatePendingIntent)
-                .setSmallIcon(R.mipmap.newlogo128b)
+                .setSmallIcon(R.mipmap.launcher)
                 .setWhen(System.currentTimeMillis())
                 .build();
         // public void setLatestEventInfo(Context context, CharSequence contentTitle, CharSequence contentText, PendingIntent contentIntent)
@@ -84,11 +90,13 @@ public class UpdateServcie extends Service {
         new Thread(new updateRunnable()).start();// 这个是下载的重点，是下载的过程
         return super.onStartCommand(intent, flags, startId);
     }
+
     @Override
     public IBinder onBind(Intent arg0) {
         // TODO Auto-generated method stub
         return null;
     }
+
     @SuppressLint("HandlerLeak")
     private Handler updateHandler = new Handler() {
         @Override
@@ -109,7 +117,7 @@ public class UpdateServcie extends Service {
                             .setContentTitle("Mi Kit")
                             .setContentText("下载完成,点击安装。")
                             .setContentIntent(updatePendingIntent)
-                            .setSmallIcon(R.mipmap.newlogo128b)
+                            .setSmallIcon(R.mipmap.launcher)
                             .setWhen(System.currentTimeMillis())
                             .build();
                     updateNotificationManager.notify(0, updateNotification);
@@ -121,7 +129,7 @@ public class UpdateServcie extends Service {
                             .setContentTitle("Mi Kit")
                             .setContentText("下载失败，请重试。")
                             .setContentIntent(updatePendingIntent)
-                            .setSmallIcon(R.mipmap.newlogo128b)
+                            .setSmallIcon(R.mipmap.launcher)
                             .setWhen(System.currentTimeMillis())
                             .build();
                     updateNotificationManager.notify(0, updateNotification);
@@ -168,14 +176,14 @@ public class UpdateServcie extends Service {
                             .setContentText((int) totalSize * 100 / updateTotalSize
                                     + "%")
                             .setContentIntent(updatePendingIntent)
-                            .setSmallIcon(R.mipmap.newlogo128b)
+                            .setSmallIcon(R.mipmap.launcher)
                             .setWhen(System.currentTimeMillis())
                             .build();
                     /***
                      * 在这里我们用自定的view来显示Notification
                      */
-                 //   updateNotification.contentView = new RemoteViews(
-                 //           getPackageName(), R.layout.notification_item);
+                    //   updateNotification.contentView = new RemoteViews(
+                    //           getPackageName(), R.layout.notification_item);
 //                    updateNotification.contentView.setTextViewText(
 //                            R.id.notificationTitle, "正在下载");
 //                    updateNotification.contentView.setProgressBar(
@@ -196,8 +204,10 @@ public class UpdateServcie extends Service {
         }
         return totalSize;
     }
+
     class updateRunnable implements Runnable {
         Message message = updateHandler.obtainMessage();
+
         public void run() {
             message.what = DOWNLOAD_COMPLETE;
             try {
@@ -207,15 +217,20 @@ public class UpdateServcie extends Service {
                     updateDir.mkdirs();
                 }
                 //重新创建一遍 删除之前的旧数据 比如下载失败的不完整文件
+                if (updateFile.exists()) {
+                    if (!updateFile.delete()) {
+                        new ToastMessageTask().execute("旧数据删除失败!");
+                    }
+                }
+                if (updateFile.createNewFile()) {
+                    new ToastMessageTask().execute("下载文件创建失败!");
+                }
 
-                updateFile.delete();
-                updateFile.createNewFile();
-
-                // 下载函数，以QQ为例子
+                // 下载函数
                 // 增加权限<USES-PERMISSION
                 // android:name="android.permission.INTERNET">;
                 long downloadSize = downloadUpdateFile(
-                       config.URL,
+                        UpdateConfig.URL,
                         updateFile);
                 if (downloadSize > 0) {
                     // 下载成功
@@ -229,4 +244,28 @@ public class UpdateServcie extends Service {
             }
         }
     }
+
+
+    // A class that will run Toast messages in the main GUI context
+    private class ToastMessageTask extends AsyncTask<String, String, String> {
+        String toastMessage;
+
+        @Override
+        protected String doInBackground(String... params) {
+            toastMessage = params[0];
+            return toastMessage;
+        }
+
+        protected void OnProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+        }
+
+        // This is executed in the context of the main GUI thread
+        protected void onPostExecute(String result) {
+            Toast toast = Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+
 }

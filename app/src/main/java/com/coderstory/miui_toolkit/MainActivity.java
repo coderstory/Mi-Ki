@@ -13,12 +13,9 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,31 +23,28 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
-
 import com.coderstory.miui_toolkit.tools.HostsHelper;
-import com.coderstory.miui_toolkit.tools.SuHelper;
+import com.coderstory.miui_toolkit.tools.RequestPermissions;
+import com.coderstory.miui_toolkit.tools.Root.SuHelper;
+import com.coderstory.miui_toolkit.tools.Update.CheckUpdate;
 import com.umeng.analytics.MobclickAgent;
-
 import java.util.HashMap;
 import java.util.Map;
+import static com.coderstory.miui_toolkit.tools.Root.SuHelper.canRunRootCommands;
 
-import static com.coderstory.miui_toolkit.tools.SuHelper.canRunRootCommands;
-import static com.coderstory.miui_toolkit.tools.checkUpdate.checkUpdate2;
-
-
-
-import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor editor;
-   private  boolean isRoot=true;
+    private boolean isRoot = true;
+    private boolean isGrantExternalRW = true;
 
     @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -69,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         loadSettings(this);
 
         MobclickAgent.setScenarioType(MainActivity.this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-       // MobclickAgent.setDebugMode( true );
+
 
         if (!isEnable()) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
@@ -101,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         dialog2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                               // System.exit(0);
+                                // System.exit(0);
                             }
                         });
                         dialog2.show();
@@ -114,10 +108,6 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
 
             if (!prefs.getBoolean("First", false)) {
-
-                editor.putString("Version", getString(R.string.Version) );
-                editor.apply();
-
                 AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
                         .setTitle(R.string.Tips_Title)
                         .setMessage("您是第一次打开本软件，是否阅读使用帮助？")
@@ -142,90 +132,23 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
             }
         }
-        new Thread(networkTask).start();
-    }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Bundle data = msg.getData();
-            String val = data.getString("value");
-            Log.i("mylog", "请求结果为-->" + val);
-            if(!config.Msg.equals("")){
-                Toast.makeText(MainActivity.this,config.Msg,Toast.LENGTH_LONG).show();
-            }
-
-
-                try {
-                    config.localVersion = getPackageManager().getPackageInfo(
-                            getPackageName(), 0).versionCode; // 设置本地版本号
-                    config.serverVersion =Integer.parseInt(config.Version)  ;
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
-                if (config.localVersion < config.serverVersion) {
-                    Log.i("hgncxzy", "==============================");
-                    // 发现新版本，提示用户更新
-                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                    alert.setTitle("软件升级")
-                            .setMessage(config.Info)
-                            .setPositiveButton("更新",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog,
-                                                            int which) {
-                                            // 开启更新服务UpdateService
-                                            // 这里为了把update更好模块化，可以传一些updateService依赖的值
-                                            // 如布局ID，资源ID，动态获取的标题,这里以app_name为例
-                                            Intent updateIntent = new Intent(
-                                                    MainActivity.this,
-                                                    UpdateServcie.class);
-                                            updateIntent.putExtra("titleId",
-                                                    R.string.app_name);
-                                            startService(updateIntent);
-                                        }
-                                    })
-                            .setNegativeButton("取消",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog,
-                                                            int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                    alert.create().show();
-                } else {
-                    // 清理工作，略去
-                    // cheanUpdateFile()
-                }
-            }
-       // }
-    };
-
-    /**
-     * 网络操作相关的子线程
-     */
-    Runnable networkTask = new Runnable() {
-
-        @Override
-        public void run() {
-            // TODO
-            // 在这里进行 http request.网络请求相关操作
-            try {
-                checkUpdate2();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Message msg = new Message();
-            Bundle data = new Bundle();
-            data.putString("value", "OK");
-            handler.sendMessage(msg);
+        //开始检测更新
+        if (isGrantExternalRW) {
+            CheckUpdate  CU=new   CheckUpdate(MainActivity.this);
+            new Thread(CU.networkTask).start();
         }
-    };
 
-    private static boolean isEnable(){
-        return  false;
+        if (RequestPermissions.isGrantExternalRW(MainActivity.this)) {
+            Toast.makeText(MainActivity.this, "尚未获得存储卡的读写权限，App在线功能已被禁用！", Toast.LENGTH_LONG).show();
+        }
     }
+
+
+    private static boolean isEnable() {
+        return false;
+    }
+
     /*初始化每一个布局上的按钮的状态并绑定事件
      */
     private void loadSettings(MainActivity mainActivity) {
@@ -322,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
         }
         initControl(SwitchBtn, "root");
     }
+
     //初始化每个按钮的事件
     private void initControl(Switch SwitchBtn, final String key) {
         SwitchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -366,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
@@ -389,14 +314,15 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-  
-    public  void  openAbout(View v){
-        Intent intent=new Intent(this,AboutActivity.class);
+
+    public void openAbout(View v) {
+        Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
     }
+
     //隐藏图标
     private void HideIcon() {
-        ComponentName localComponentName = new ComponentName(this,"com.coderstory.miui_toolkit.SplashActivity");
+        ComponentName localComponentName = new ComponentName(this, "com.coderstory.miui_toolkit.SplashActivity");
         PackageManager localPackageManager = getPackageManager();
         localPackageManager.getComponentEnabledSetting(localComponentName);
         PackageManager packageManager = getPackageManager();
@@ -404,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
     }
+
     //显示图标
     private void showIcon() {
         ComponentName localComponentName = new ComponentName(this, "com.coderstory.miui_toolkit.SplashActivity");
@@ -414,6 +341,7 @@ public class MainActivity extends AppCompatActivity {
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
                 PackageManager.DONT_KILL_APP);
     }
+
     //修改hosts的方法
     private void changeHosts() {
         boolean NoUpdate = prefs.getBoolean("NoUpdate", false); //1
@@ -445,9 +373,10 @@ public class MainActivity extends AppCompatActivity {
         HostsHelper h = new HostsHelper(MainActivity.this, setMap);
 
         if (!h.execute()) {
-            isRoot=false;
+            isRoot = false;
         }
     }
+
     //因为hosts修改比较慢 所以改成异步的
     class MyTask extends AsyncTask<String, Integer, String> {
         @Override
@@ -455,6 +384,7 @@ public class MainActivity extends AppCompatActivity {
             // setProgressBarIndeterminateVisibility(true);
             showProgress();
         }
+
         @Override
         protected void onPostExecute(String param) {
             //setProgressBarIndeterminateVisibility(false);
@@ -473,38 +403,45 @@ public class MainActivity extends AppCompatActivity {
                     SwitchBtn.setChecked(false);
                 }
             }
-            isRoot=true;
+            isRoot = true;
         }
+
         @Override
         protected void onCancelled() {
             // TODO Auto-generated method stub
             super.onCancelled();
         }
+
         @Override
         protected void onProgressUpdate(Integer... values) {
             // TODO Auto-generated method stub
             super.onProgressUpdate(values);
         }
+
         @Override
         protected String doInBackground(String... params) {
             try {
                 Looper.prepare();
-            }catch
-                    (Exception e) { }
+            } catch
+                    (Exception e) {
+            }
             //  initData();
             changeHosts();
             return null;
         }
     }
+
     private Dialog dialog;
+
     protected void showProgress() {
         if (dialog == null) {
 //		    dialog.setContentView(R.layout.progress_dialog);
             //    dialog.getWindow().setAttributes(params);
-            dialog = ProgressDialog.show(this,"正在处理中", "可能需要花费数分钟时间...");
+            dialog = ProgressDialog.show(this, "正在处理中", "可能需要花费数分钟时间...");
             dialog.show();
         }
     }
+
     protected void closeProgress() {
         if (dialog != null) {
             dialog.cancel();

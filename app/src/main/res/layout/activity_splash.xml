@@ -66,7 +66,7 @@
         <ImageView
             android:layout_width="125dp"
             android:layout_height="wrap_content"
-            android:src="@mipmap/bg"
+            android:src="@drawable/launcher_background"
 
             android:id="@+id/imageView3"
             android:layout_above="@+id/linearLayout"

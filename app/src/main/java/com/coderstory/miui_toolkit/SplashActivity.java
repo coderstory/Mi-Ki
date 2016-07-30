@@ -13,8 +13,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        //倒计时返回主界面
         new AsyncTask<Void, Void, Integer>() {
-
             @Override
             protected void onPostExecute(Integer result) {
                 Intent intent = new Intent(SplashActivity.this,MainActivity.class);

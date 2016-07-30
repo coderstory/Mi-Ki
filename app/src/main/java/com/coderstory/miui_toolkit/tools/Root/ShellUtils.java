@@ -1,4 +1,4 @@
-package com.coderstory.miui_toolkit.tools;
+package com.coderstory.miui_toolkit.tools.Root;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

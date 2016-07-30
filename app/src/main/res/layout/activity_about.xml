@@ -13,7 +13,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/imageView"
-        android:src="@mipmap/bg"
+        android:src="@drawable/launcher_background"
         android:layout_marginTop="20dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
@@ -77,7 +77,7 @@
         android:layout_below="@+id/textView16"
         android:layout_marginTop="55dp"
         android:onClick="alipay"
-        android:src="@mipmap/alipay"
+        android:src="@drawable/qr_alipay"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
 

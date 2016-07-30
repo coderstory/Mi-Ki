@@ -12,6 +12,7 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 public class HelperActivity extends SwipeBackActivity {
     private SwipeBackLayout mSwipeBackLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,8 +22,6 @@ public class HelperActivity extends SwipeBackActivity {
         TextView tv  =(TextView)findViewById(R.id.helptext);
         tv.setMovementMethod(LinkMovementMethod.getInstance());
         tv.setText(Html.fromHtml(getString(R.string.texts)));
-
-
     }
 
     @Override

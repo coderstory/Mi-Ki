@@ -26,7 +26,7 @@ import com.coderstory.miui_toolkit.tools.Update.UpdateConfig;
 /**
  * Created by CoderStory on 2016/7/30.
  */
-public class UpdateServcie extends Service {
+public class UpdateService extends Service {
     // 标题
     private int titleId = 0;
 
@@ -77,8 +77,8 @@ public class UpdateServcie extends Service {
         // 设置通知栏显示内容
         updateNotification = new Notification.Builder(this)
                 .setAutoCancel(true)
-                .setContentTitle("Mi Kit")
-                .setContentText("正在下载。。")
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.Downloading))
                 .setContentIntent(updatePendingIntent)
                 .setSmallIcon(R.mipmap.launcher)
                 .setWhen(System.currentTimeMillis())
@@ -109,13 +109,13 @@ public class UpdateServcie extends Service {
                     installIntent.setDataAndType(uri,
                             "application/vnd.android.package-archive");
                     updatePendingIntent = PendingIntent.getActivity(
-                            UpdateServcie.this, 0, installIntent, 0);
+                            UpdateService.this, 0, installIntent, 0);
                     updateNotification.defaults = Notification.DEFAULT_SOUND;// 铃声提醒
                     // 设置通知栏显示内容
-                    updateNotification = new Notification.Builder(UpdateServcie.this)
+                    updateNotification = new Notification.Builder(UpdateService.this)
                             .setAutoCancel(true)
-                            .setContentTitle("Mi Kit")
-                            .setContentText("下载完成,点击安装。")
+                            .setContentTitle(getString(R.string.app_name))
+                            .setContentText(getString(R.string.Download_Success))
                             .setContentIntent(updatePendingIntent)
                             .setSmallIcon(R.mipmap.launcher)
                             .setWhen(System.currentTimeMillis())
@@ -124,10 +124,10 @@ public class UpdateServcie extends Service {
                     break;
                 case DOWNLOAD_FAIL:
                     // 下载失败
-                    updateNotification = new Notification.Builder(UpdateServcie.this)
+                    updateNotification = new Notification.Builder(UpdateService.this)
                             .setAutoCancel(true)
-                            .setContentTitle("Mi Kit")
-                            .setContentText("下载失败，请重试。")
+                            .setContentTitle(getString(R.string.app_name))
+                            .setContentText(getString(R.string.Download_Fail))
                             .setContentIntent(updatePendingIntent)
                             .setSmallIcon(R.mipmap.launcher)
                             .setWhen(System.currentTimeMillis())
@@ -170,9 +170,9 @@ public class UpdateServcie extends Service {
                 if ((downloadCount == 0)
                         || (int) (totalSize * 100 / updateTotalSize) - 10 > downloadCount) {
                     downloadCount += 10;
-                    updateNotification = new Notification.Builder(UpdateServcie.this)
+                    updateNotification = new Notification.Builder(UpdateService.this)
                             .setAutoCancel(true)
-                            .setContentTitle("正在下载")
+                            .setContentTitle(getString(R.string.Downloading))
                             .setContentText((int) totalSize * 100 / updateTotalSize
                                     + "%")
                             .setContentIntent(updatePendingIntent)
@@ -219,11 +219,11 @@ public class UpdateServcie extends Service {
                 //重新创建一遍 删除之前的旧数据 比如下载失败的不完整文件
                 if (updateFile.exists()) {
                     if (!updateFile.delete()) {
-                        new ToastMessageTask().execute("旧数据删除失败!");
+                        new ToastMessageTask().execute(getString(R.string.Delete_OldFile_Fail));
                     }
                 }
                 if (updateFile.createNewFile()) {
-                    new ToastMessageTask().execute("下载文件创建失败!");
+                    new ToastMessageTask().execute(getString(R.string.Create_DownlodFile_Fail));
                 }
 
                 // 下载函数
@@ -256,9 +256,6 @@ public class UpdateServcie extends Service {
             return toastMessage;
         }
 
-        protected void OnProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-        }
 
         // This is executed in the context of the main GUI thread
         protected void onPostExecute(String result) {

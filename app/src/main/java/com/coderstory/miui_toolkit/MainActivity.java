@@ -23,13 +23,16 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
+
 import com.coderstory.miui_toolkit.tools.HostsHelper;
 import com.coderstory.miui_toolkit.tools.RequestPermissions;
 import com.coderstory.miui_toolkit.tools.Root.SuHelper;
 import com.coderstory.miui_toolkit.tools.Update.CheckUpdate;
 import com.umeng.analytics.MobclickAgent;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import static com.coderstory.miui_toolkit.tools.Root.SuHelper.canRunRootCommands;
 
 
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor editor;
     private boolean isRoot = true;
-    private boolean isGrantExternalRW = true;
+
 
     @Override
     protected void onResume() {
@@ -67,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (!isEnable()) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-            dialog.setTitle("警告");
-            dialog.setMessage("已检测到本模块未在Xposed中启用,功能将无法使用！");
+            dialog.setTitle(R.string.Label_Waring);
+            dialog.setMessage(R.string.Tips_No_XP_Enable);
             dialog.setCancelable(false);
-            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            dialog.setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     //System.exit(0);
@@ -81,18 +84,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (!prefs.getBoolean("getRoot", false)) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-            dialog.setTitle("提示");
-            dialog.setMessage("本软件的正常运行需要root权限,点击确定开始授权。");
+            dialog.setTitle(R.string.Tips_Title);
+            dialog.setMessage(R.string.Tips_Start_Get_Root);
             dialog.setCancelable(false);
-            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            dialog.setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if (!canRunRootCommands()) {
                         AlertDialog.Builder dialog2 = new AlertDialog.Builder(MainActivity.this);
-                        dialog2.setTitle("警告");
-                        dialog2.setMessage("已检测本软件未被ROOT授权,部分功能将无法使用！");
+                        dialog2.setTitle(R.string.Label_Waring);
+                        dialog2.setMessage(R.string.Tips_No_Root);
                         dialog2.setCancelable(false);
-                        dialog2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        dialog2.setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // System.exit(0);
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             if (!prefs.getBoolean("First", false)) {
                 AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
                         .setTitle(R.string.Tips_Title)
-                        .setMessage("您是第一次打开本软件，是否阅读使用帮助？")
+                        .setMessage(R.string.Tips_FirstOpen)
                         .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -133,16 +136,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //开始检测更新
-        if (isGrantExternalRW) {
-            CheckUpdate  CU=new   CheckUpdate(MainActivity.this);
-            new Thread(CU.networkTask).start();
-        }
+        // 申请权限并开始检测更新
+      if(  RequestPermissions.isGrantExternalRW(MainActivity.this)){
+          CheckUpdate CU = new CheckUpdate(MainActivity.this);
+          new Thread(CU.networkTask).start();
+      }
 
-        if (RequestPermissions.isGrantExternalRW(MainActivity.this)) {
-            Toast.makeText(MainActivity.this, "尚未获得存储卡的读写权限，App在线功能已被禁用！", Toast.LENGTH_LONG).show();
-        }
+
     }
+
+//处理权限申请结果
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                CheckUpdate CU = new CheckUpdate(MainActivity.this);
+                new Thread(CU.networkTask).start();
+            } else {
+                Toast.makeText(MainActivity.this, R.string.Tips_NO_SDCARD_Permission, Toast.LENGTH_LONG).show();
+            }
+
+    }
+
+
 
 
     private static boolean isEnable() {
@@ -378,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //因为hosts修改比较慢 所以改成异步的
-    class MyTask extends AsyncTask<String, Integer, String> {
+    private class MyTask extends AsyncTask<String, Integer, String> {
         @Override
         protected void onPreExecute() {
             // setProgressBarIndeterminateVisibility(true);
@@ -390,14 +406,11 @@ public class MainActivity extends AppCompatActivity {
             //setProgressBarIndeterminateVisibility(false);
             closeProgress();
             if (!isRoot) {
-
                 Toast.makeText(MainActivity.this, R.string.Tips_No_Root, Toast.LENGTH_SHORT).show();
-
                 Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
                 if (SwitchBtn != null) {
                     SwitchBtn.setChecked(false);
                 }
-
                 SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.GoogleHosts);
                 if (SwitchBtn != null) {
                     SwitchBtn.setChecked(false);
@@ -422,8 +435,8 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
                 Looper.prepare();
-            } catch
-                    (Exception e) {
+            } catch (Exception e) {
+
             }
             //  initData();
             changeHosts();
@@ -433,19 +446,18 @@ public class MainActivity extends AppCompatActivity {
 
     private Dialog dialog;
 
-    protected void showProgress() {
+    private void showProgress() {
         if (dialog == null) {
 //		    dialog.setContentView(R.layout.progress_dialog);
             //    dialog.getWindow().setAttributes(params);
-            dialog = ProgressDialog.show(this, "正在处理中", "可能需要花费数分钟时间...");
+            dialog = ProgressDialog.show(this, getString(R.string.Working), getString(R.string.Waiting));
             dialog.show();
         }
     }
 
-    protected void closeProgress() {
-        if (dialog != null) {
+    private void closeProgress() {
+        if (MainActivity.this!=null&&!MainActivity.this.isFinishing()) {
             dialog.cancel();
-            dialog = null;
         }
     }
 }

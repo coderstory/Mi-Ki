@@ -42,7 +42,7 @@
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
         <!-- </activity-alias> -->
-        <service android:name="com.coderstory.miui_toolkit.UpdateServcie" >
+        <service android:name="com.coderstory.miui_toolkit.UpdateService" >
         </service>
         <meta-data
             android:name="xposedmodule"
@@ -60,7 +60,11 @@
         <activity
             android:name=".HelperActivity"
             android:label="设置向导" />
-        <activity android:name=".UpdateActivity"></activity>
+        <service android:name=".UpdateService" />
+
+        <meta-data android:value="578df8ece0f55accff0026f5" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="I" android:name="UMENG_CHANNEL"/>
+
     </application>
 
 </manifest>

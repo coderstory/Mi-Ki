@@ -1,5 +1,9 @@
 package com.coderstory.miui_toolkit.tools.Update;
 
+import android.content.res.Resources;
+
+import com.coderstory.miui_toolkit.R;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,7 +65,7 @@ public class HttpHelper {
             // 按照指定的编码进行转换成字符串(此编码要与服务端的编码一致就不会出现乱码问题了，android默认的编码为UTF-8)
             return new String(data, "UTF-8");
         } catch (IOException e) {
-            UpdateConfig.Msg="更新服务器访问失败，请稍后再试。。。";
+            UpdateConfig.Msg= Resources.getSystem().getString(R.string.Access_Server_Fail);
             e.printStackTrace();
             return null;
         }

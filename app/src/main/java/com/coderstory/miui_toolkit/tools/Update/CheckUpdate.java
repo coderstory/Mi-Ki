@@ -10,17 +10,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.coderstory.miui_toolkit.MainActivity;
 import com.coderstory.miui_toolkit.R;
-import com.coderstory.miui_toolkit.UpdateServcie;
+import com.coderstory.miui_toolkit.UpdateService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by CoderStory on 2016/7/30.
- */
+
 
 public class CheckUpdate {
 
@@ -35,17 +31,17 @@ public class CheckUpdate {
      * 检测app的更新信息并保存到UpdateConfig中
      * @throws JSONException
      */
-    public static void hasNew() throws JSONException {
+    private static void hasNew() throws JSONException {
         HttpHelper HH=new  HttpHelper();
-        String result = HH.RequestUrl(Resources.getSystem().getString(R.string.UpdateServer));
+        String result = HH.RequestUrl("http://coderstory.picp.io/info");
         JSONObject JsonString = new JSONObject(result);//转换为JSONObject
-        UpdateConfig.URL = JsonString.getString("URL").toString();
-        UpdateConfig.Version = JsonString.getString("Version").toString();
-        UpdateConfig.Info = JsonString.getString("info").toString();
+        UpdateConfig.URL = JsonString.getString("URL");
+        UpdateConfig.Version = JsonString.getString("Version");
+        UpdateConfig.Info = JsonString.getString("info");
     }
 
 
-    Handler handler = new Handler() {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -69,9 +65,9 @@ public class CheckUpdate {
 
                 // 发现新版本，提示用户更新
                 AlertDialog.Builder alert = new AlertDialog.Builder(mcontext);
-                alert.setTitle("软件升级")
+                alert.setTitle(R.string.App_Update)
                         .setMessage(UpdateConfig.Info)
-                        .setPositiveButton("更新",
+                        .setPositiveButton(R.string.Update,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,
                                                         int which) {
@@ -80,13 +76,13 @@ public class CheckUpdate {
                                         // 如布局ID，资源ID，动态获取的标题,这里以app_name为例
                                         Intent updateIntent = new Intent(
                                                 mcontext,
-                                                UpdateServcie.class);
+                                                UpdateService.class);
                                         updateIntent.putExtra("titleId",
                                                 R.string.app_name);
                                         mcontext.startService(updateIntent);
                                     }
                                 })
-                        .setNegativeButton("取消",
+                        .setNegativeButton(R.string.Btn_Cancel,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,
                                                         int which) {
@@ -94,12 +90,9 @@ public class CheckUpdate {
                                     }
                                 });
                 alert.create().show();
-            } else {
-                // 清理工作，略去
-                // cheanUpdateFile()
             }
         }
-        // }
+
     };
 
     /**

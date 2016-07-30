@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-
 import com.umeng.analytics.MobclickAgent;
-
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 public class AboutActivity extends SwipeBackActivity {
-    private SwipeBackLayout mSwipeBackLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +23,7 @@ public class AboutActivity extends SwipeBackActivity {
     public void opneUrl(View view) {
         //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("http://blog.coderstory.cn"));
+        intent.setData(Uri.parse(getString(R.string.myblog_url)));
         startActivity(intent);
 
     }
@@ -33,7 +31,7 @@ public class AboutActivity extends SwipeBackActivity {
     public void alipay(View view) {
         //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("https://qr.qr_alipay.com/aex087445gnaa6gawjaohe8"));
+        intent.setData(Uri.parse(getString(R.string.alipay_url)));
         startActivity(intent);
     }
 

@@ -37,7 +37,7 @@ import java.util.Map;
 import static com.coderstory.miui_toolkit.tools.SuHelper.canRunRootCommands;
 import static com.coderstory.miui_toolkit.tools.checkUpdate.checkUpdate2;
 
-import  com.coderstory.miui_toolkit.tools.checkUpdate;
+
 
 import org.json.JSONException;
 
@@ -152,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
             Bundle data = msg.getData();
             String val = data.getString("value");
             Log.i("mylog", "请求结果为-->" + val);
+            if(!config.Msg.equals("")){
+                Toast.makeText(MainActivity.this,config.Msg,Toast.LENGTH_LONG).show();
+            }
 
 
                 try {

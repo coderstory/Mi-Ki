@@ -77,6 +77,7 @@ public class checkUpdate {
             // 按照指定的编码进行转换成字符串(此编码要与服务端的编码一致就不会出现乱码问题了，android默认的编码为UTF-8)
             return new String(data, "UTF-8");
         } catch (IOException e) {
+            config.Msg="更新服务器访问失败，请稍后再试。。。";
             e.printStackTrace();
             return null;
         }

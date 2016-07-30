@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -18,11 +17,9 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.widget.RemoteViews;
-
 /**
  * Created by CoderStory on 2016/7/30.
  */
-
 public class UpdateServcie extends Service {
     // 标题
     private int titleId = 0;
@@ -54,6 +51,8 @@ public class UpdateServcie extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 获取传值
+        updateTotalSize=0;
+        currentSize=0;
         titleId = intent.getIntExtra("titleId", 0);
         // 创建文件
         if (android.os.Environment.MEDIA_MOUNTED.equals(android.os.Environment
@@ -62,16 +61,13 @@ public class UpdateServcie extends Service {
                     config.saveFileName);
             updateFile = new File(updateDir.getPath(), getResources()
                     .getString(titleId) + ".apk");
+
         }
-
         this.updateNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-
         // 设置下载过程中，点击通知栏，回到主界面
         updateIntent = new Intent(this, MainActivity.class);
         updatePendingIntent = PendingIntent.getActivity(this, 0, updateIntent,
                 0);
-
         // 设置通知栏显示内容
         updateNotification = new Notification.Builder(this)
                 .setAutoCancel(true)
@@ -81,34 +77,23 @@ public class UpdateServcie extends Service {
                 .setSmallIcon(R.mipmap.newlogo128b)
                 .setWhen(System.currentTimeMillis())
                 .build();
-
         // public void setLatestEventInfo(Context context, CharSequence contentTitle, CharSequence contentText, PendingIntent contentIntent)
         // 发出通知
-
         updateNotificationManager.notify(0, updateNotification);
-
         // 开启一个新的线程下载，如果使用Service同步下载，会导致ANR问题，Service本身也会阻塞
         new Thread(new updateRunnable()).start();// 这个是下载的重点，是下载的过程
-
         return super.onStartCommand(intent, flags, startId);
     }
-
     @Override
     public IBinder onBind(Intent arg0) {
         // TODO Auto-generated method stub
         return null;
     }
-
     @SuppressLint("HandlerLeak")
     private Handler updateHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-
-
-
-
             switch (msg.what) {
-
                 case DOWNLOAD_COMPLETE:
                     // 点击安装PendingIntent
                     Uri uri = Uri.fromFile(updateFile);
@@ -148,11 +133,9 @@ public class UpdateServcie extends Service {
 
     public long downloadUpdateFile(String downloadUrl, File saveFile)
             throws Exception {
-
         HttpURLConnection httpConnection = null;
         InputStream is = null;
         FileOutputStream fos = null;
-
         try {
             URL url = new URL(downloadUrl);
             httpConnection = (HttpURLConnection) url.openConnection();
@@ -179,9 +162,6 @@ public class UpdateServcie extends Service {
                 if ((downloadCount == 0)
                         || (int) (totalSize * 100 / updateTotalSize) - 10 > downloadCount) {
                     downloadCount += 10;
-
-
-
                     updateNotification = new Notification.Builder(UpdateServcie.this)
                             .setAutoCancel(true)
                             .setContentTitle("正在下载")
@@ -200,7 +180,6 @@ public class UpdateServcie extends Service {
 //                            R.id.notificationTitle, "正在下载");
 //                    updateNotification.contentView.setProgressBar(
 //                            R.id.notificationProgress, 100, downloadCount, false);
-
                     updateNotificationManager.notify(0, updateNotification);
                 }
             }
@@ -217,23 +196,21 @@ public class UpdateServcie extends Service {
         }
         return totalSize;
     }
-
     class updateRunnable implements Runnable {
         Message message = updateHandler.obtainMessage();
-
         public void run() {
             message.what = DOWNLOAD_COMPLETE;
-
-
             try {
                 // 增加权限<USES-PERMISSION
                 // android:name="android.permission.WRITE_EXTERNAL_STORAGE">;
                 if (!updateDir.exists()) {
                     updateDir.mkdirs();
                 }
-                if (!updateFile.exists()) {
-                    updateFile.createNewFile();
-                }
+                //重新创建一遍 删除之前的旧数据 比如下载失败的不完整文件
+
+                updateFile.delete();
+                updateFile.createNewFile();
+
                 // 下载函数，以QQ为例子
                 // 增加权限<USES-PERMISSION
                 // android:name="android.permission.INTERNET">;

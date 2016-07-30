@@ -14,5 +14,6 @@ public  class config {
     public static String  URL="";
     public static String Version="";
     public static  String Info="";
+    public  static String Msg="";
 
 }

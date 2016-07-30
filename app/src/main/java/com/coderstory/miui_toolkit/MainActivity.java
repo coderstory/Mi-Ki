@@ -13,9 +13,12 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,6 +35,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.coderstory.miui_toolkit.tools.SuHelper.canRunRootCommands;
+import static com.coderstory.miui_toolkit.tools.checkUpdate.checkUpdate2;
+
+import  com.coderstory.miui_toolkit.tools.checkUpdate;
+
+import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
@@ -106,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
 
             if (!prefs.getBoolean("First", false)) {
+
+                editor.putString("Version", getString(R.string.Version) );
+                editor.apply();
+
                 AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
                         .setTitle(R.string.Tips_Title)
                         .setMessage("您是第一次打开本软件，是否阅读使用帮助？")
@@ -130,9 +142,85 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
             }
         }
+        new Thread(networkTask).start();
     }
 
- private static boolean isEnable(){
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            Log.i("mylog", "请求结果为-->" + val);
+
+
+                try {
+                    config.localVersion = getPackageManager().getPackageInfo(
+                            getPackageName(), 0).versionCode; // 设置本地版本号
+                    config.serverVersion =Integer.parseInt(config.Version)  ;
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                if (config.localVersion < config.serverVersion) {
+                    Log.i("hgncxzy", "==============================");
+                    // 发现新版本，提示用户更新
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                    alert.setTitle("软件升级")
+                            .setMessage(config.Info)
+                            .setPositiveButton("更新",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,
+                                                            int which) {
+                                            // 开启更新服务UpdateService
+                                            // 这里为了把update更好模块化，可以传一些updateService依赖的值
+                                            // 如布局ID，资源ID，动态获取的标题,这里以app_name为例
+                                            Intent updateIntent = new Intent(
+                                                    MainActivity.this,
+                                                    UpdateServcie.class);
+                                            updateIntent.putExtra("titleId",
+                                                    R.string.app_name);
+                                            startService(updateIntent);
+                                        }
+                                    })
+                            .setNegativeButton("取消",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,
+                                                            int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                    alert.create().show();
+                } else {
+                    // 清理工作，略去
+                    // cheanUpdateFile()
+                }
+            }
+       // }
+    };
+
+    /**
+     * 网络操作相关的子线程
+     */
+    Runnable networkTask = new Runnable() {
+
+        @Override
+        public void run() {
+            // TODO
+            // 在这里进行 http request.网络请求相关操作
+            try {
+                checkUpdate2();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Message msg = new Message();
+            Bundle data = new Bundle();
+            data.putString("value", "OK");
+            handler.sendMessage(msg);
+        }
+    };
+
+    private static boolean isEnable(){
         return  false;
     }
     /*初始化每一个布局上的按钮的状态并绑定事件

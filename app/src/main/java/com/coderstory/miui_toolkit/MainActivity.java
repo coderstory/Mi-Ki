@@ -1,6 +1,7 @@
 package com.coderstory.miui_toolkit;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -16,7 +17,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,12 +37,11 @@ import java.util.Map;
 import static com.coderstory.miui_toolkit.tools.Root.SuHelper.canRunRootCommands;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor editor;
     private boolean isRoot = true;
-
-
+    String a;
     @Override
     protected void onResume() {
         super.onResume();
@@ -65,9 +64,13 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();
         loadSettings(this);
-
+       // MobclickAgent.setCatchUncaughtExceptions(false);
         MobclickAgent.setScenarioType(MainActivity.this, MobclickAgent.EScenarioType.E_UM_NORMAL);
 
+
+        if (a.equals("aa")){
+            a="cc";
+        }
 
         if (!isEnable()) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);

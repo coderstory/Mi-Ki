@@ -3,7 +3,7 @@ package com.coderstory.miui_toolkit.tools.Update;
  * APP在线功能的检测配置信息
  */
 
-public  class UpdateConfig {
+public  class   UpdateConfig {
     //版本信息
     public static int localVersion = 0;
     public static int serverVersion = 0;

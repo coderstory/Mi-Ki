@@ -46,7 +46,7 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage,
                     paramAnonymousMethodHookParam.setResult("");
                 }
             });
-            findAndHookMethod("com.miui.optimizecenter.UpdateConfig.MiStat", loadPackageParam.classLoader, "getChannel", new XC_MethodHook() {
+            findAndHookMethod("com.miui.optimizecenter.config.MiStat", loadPackageParam.classLoader, "getChannel", new XC_MethodHook() {
                 protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
                     paramAnonymousMethodHookParam.setResult("international");
@@ -132,7 +132,7 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage,
         //下载管理
         if (loadPackageParam.packageName.equals("com.android.providers.downloads.ui")) {
 
-            findAndHookMethod("com.android.providers.downloads.ui.recommend.UpdateConfig.ADConfig", loadPackageParam.classLoader, "OSSupportAD", new XC_MethodHook() {
+            findAndHookMethod("com.android.providers.downloads.ui.recommend.config.ADConfig", loadPackageParam.classLoader, "OSSupportAD", new XC_MethodHook() {
                 protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
                     paramAnonymousMethodHookParam.setResult(false);

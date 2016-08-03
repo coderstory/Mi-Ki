@@ -12,5 +12,5 @@ public  class   UpdateConfig {
     public static String  URL="";//app的下载地址
     public static String Version="";//最新版的versionCode
     public static  String Info=""; //更新内容
-    public  static String Msg=""; //错误提示
+    public  static String errorMsg =""; //错误提示
 }

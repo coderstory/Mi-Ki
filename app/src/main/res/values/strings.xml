@@ -34,7 +34,7 @@
     <string name="myblog_url">http://blog.coderstory.cn</string>
     <string name="App_Update">软件升级</string>
     <string name="Update">更新</string>
-    <string name="Access_Server_Fail">更新服务器访问失败，请稍后再试。。。</string>
+    <!--<string name="Access_Server_Fail">Oops...软件更新服务器似乎挂掉了..</string>-->
     <string name="Create_DownlodFile_Fail">创建下载文件失败!</string>
     <string name="Delete_OldFile_Fail">旧数据删除失败!</string>
     <string name="Downloading">正在下载</string>

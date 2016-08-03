@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Mi Kit</string>
     <string name="Tips_Title">温馨提示</string>
-    <string name="Tips_Processing">正在处理中,可能需要花费数分钟时间...</string>
-    <string name="Tips_No_Root">尚未获取Root权限,设置将无法生效！</string>
+    <!--<string name="Tips_Processing">正在处理中,可能需要花费数分钟时间...</string>-->
+    <string name="Tips_No_Root">尚未获取Root权限,部分功能将被禁用！</string>
     <string name="Btn_Cancel">取消</string>
     <string name="Btn_Sure">确定</string>
     <string name="Tips_Title_Error">错误</string>
@@ -46,5 +46,5 @@
     <string name="Tips_FirstOpen">您是第一次打开本软件，是否阅读使用帮助？</string>
     <string name="Label_Waring">警告</string>
     <string name="Tips_Start_Get_Root">本软件的正常运行需要root权限,点击确定开始授权。</string>
-    <string name="Tips_No_XP_Enable">已检测到本模块未在Xposed中启用,功能将无法使用！</string>
+    <string name="Tips_No_XP_Enable">检测到本模块未在Xposed框架中激活,部分功能将无法使用！</string>
 </resources>

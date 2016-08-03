@@ -13,6 +13,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -20,6 +23,7 @@ import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +37,7 @@ import static com.umeng.analytics.MobclickAgent.reportError;
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
-    public static final String CrashFilePath = "/sdcard/xiaomai/crashlog/";
+    public static final String CrashFilePath = "/sdcard/Mi Kit/crashlog/";
     public static final int LogFileLimit = 10;
 
     public static final String TAG = "CrashHandler";
@@ -151,14 +155,29 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         sb.append(result); //将写入的结果
 
         //构造文件名
-//        long timestamp = System.currentTimeMillis();
-//        String time = formatter.format(new Date());
-//        String fileName = "crash-" + time + "-" + timestamp + ".log";
-//
-//        //写文件和限制数量
-//        FileUtils.writeFile2SDCard( CrashFilePath,fileName, sb.toString());
-//        cleanLogFileToN(CrashFilePath);
+        long timestamp = System.currentTimeMillis();
+        String time = formatter.format(new Date());
+        String fileName = "crash-" + time + "-" + timestamp + ".log";
+
+
+        File dir = new File(CrashFilePath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(CrashFilePath + fileName);
+            fos.write(sb.toString().getBytes());
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        cleanLogFileToN(CrashFilePath);
         //上传日志到Umeng
+       //reportError(mContext,sb.toString());
         reportError(mContext,sb.toString());
         Log.d(TAG, "saveCrashInfo2File: "+sb.toString());
 
@@ -189,7 +208,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 }
             }
         }
-
         return 1;
     }
 

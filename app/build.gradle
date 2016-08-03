@@ -69,7 +69,7 @@ dependencies {
     compile project(path: ':library')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
+   // provided  'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
     compile 'com.umeng.analytics:analytics:latest.integration'
     provided 'junit:junit:4.12'
     provided 'de.robv.android.xposed:api:82'

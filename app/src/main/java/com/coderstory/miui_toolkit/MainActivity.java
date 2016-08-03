@@ -41,7 +41,9 @@ public class MainActivity extends Activity {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor editor;
     private boolean isRoot = true;
-    String a;
+    private Boolean SetValue;
+    private Switch SwitchBtn;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -64,13 +66,10 @@ public class MainActivity extends Activity {
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();
         loadSettings(this);
-       // MobclickAgent.setCatchUncaughtExceptions(false);
+        // MobclickAgent.setCatchUncaughtExceptions(false);
         MobclickAgent.setScenarioType(MainActivity.this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        MobclickAgent.setDebugMode(true);
 
-
-        if (a.equals("aa")){
-            a="cc";
-        }
 
         if (!isEnable()) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
@@ -103,6 +102,14 @@ public class MainActivity extends Activity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // System.exit(0);
+                                //去除广告
+                                ((Switch) findViewById(R.id.RemoveAdshosts)).setEnabled(false);
+                                //谷歌hosts  NoStore
+                                ((Switch) findViewById(R.id.GoogleHosts)).setEnabled(false);
+                                //屏蔽商店 音乐 视频
+                                ((Switch) findViewById(R.id.NoStore)).setEnabled(false);
+                                //禁止miui检测更新
+                                ((Switch) findViewById(R.id.NoUpdate)).setEnabled(false);
                             }
                         });
                         dialog2.show();
@@ -140,26 +147,24 @@ public class MainActivity extends Activity {
             }
         }
         // 申请权限并开始检测更新
-      if(  RequestPermissions.isGrantExternalRW(MainActivity.this)){
-          CheckUpdate CU = new CheckUpdate(MainActivity.this);
-          new Thread(CU.networkTask).start();
-      }
+        if (RequestPermissions.isGrantExternalRW(MainActivity.this)) {
+            CheckUpdate CU = new CheckUpdate(MainActivity.this);
+            new Thread(CU.networkTask).start();
+        }
     }
 
-//处理权限申请结果
+    //处理权限申请结果
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                CheckUpdate CU = new CheckUpdate(MainActivity.this);
-                new Thread(CU.networkTask).start();
-            } else {
-                Toast.makeText(MainActivity.this, R.string.Tips_NO_SDCARD_Permission, Toast.LENGTH_LONG).show();
-            }
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            CheckUpdate CU = new CheckUpdate(MainActivity.this);
+            new Thread(CU.networkTask).start();
+        } else {
+            Toast.makeText(MainActivity.this, R.string.Tips_NO_SDCARD_Permission, Toast.LENGTH_LONG).show();
+        }
 
     }
-
-
 
 
     private static boolean isEnable() {
@@ -268,6 +273,8 @@ public class MainActivity extends Activity {
         SwitchBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
                 editor.putBoolean(key, isChecked);
                 editor.apply();
                 switch (key) {
@@ -406,18 +413,10 @@ public class MainActivity extends Activity {
         protected void onPostExecute(String param) {
             //setProgressBarIndeterminateVisibility(false);
             closeProgress();
-            if (!isRoot) {
-                Toast.makeText(MainActivity.this, R.string.Tips_No_Root, Toast.LENGTH_SHORT).show();
-                Switch SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.RemoveAdshosts);
-                if (SwitchBtn != null) {
-                    SwitchBtn.setChecked(false);
-                }
-                SwitchBtn = (Switch) MainActivity.this.findViewById(R.id.GoogleHosts);
-                if (SwitchBtn != null) {
-                    SwitchBtn.setChecked(false);
-                }
-            }
-            isRoot = true;
+//            if (!isRoot) {
+//                Toast.makeText(MainActivity.this, R.string.Tips_No_Root, Toast.LENGTH_SHORT).show();
+//            }
+//            isRoot = true;
         }
 
         @Override
@@ -448,7 +447,7 @@ public class MainActivity extends Activity {
     private Dialog dialog;
 
     private void showProgress() {
-        if (dialog == null) {
+        if (dialog == null || (dialog != null && !dialog.isShowing())) { //dialog未实例化 或者实例化了但没显示
 //		    dialog.setContentView(R.layout.progress_dialog);
             //    dialog.getWindow().setAttributes(params);
             dialog = ProgressDialog.show(this, getString(R.string.Working), getString(R.string.Waiting));

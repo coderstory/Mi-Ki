@@ -33,7 +33,7 @@ public class CheckUpdate {
      */
     private static void initUpdateInfo() {
         HttpHelper HH = new HttpHelper();
-        String result = HH.RequestUrl("http://coderstory.picp.io/info");
+        String result = HH.RequestUrl(UpdateConfig.UpdateServer);
 
         if (!result.equals("")) {
 

@@ -1,7 +1,6 @@
 package com.coderstory.miui_toolkit;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -17,6 +16,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,7 +37,7 @@ import java.util.Map;
 import static com.coderstory.miui_toolkit.tools.Root.SuHelper.canRunRootCommands;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor editor;
     private boolean isRoot = true;

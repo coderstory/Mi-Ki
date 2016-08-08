@@ -46,6 +46,8 @@ public class HostsHelper extends SuHelper {
         if (HostsConfig.get("GoogleHosts").equals("True")){
             content=fh.getFromAssets("google", mContext);
             list.add("echo '"+content+"' >> /system/etc/hosts");//谷歌hosts
+            content=fh.getFromAssets("hosts", mContext);
+            list.add("echo '"+content+"' >> /system/etc/hosts");//谷歌hosts
         }
         if (HostsConfig.get("NoStore").equals("True")){
             content=fh.getFromAssets("hosts_nostore", mContext);

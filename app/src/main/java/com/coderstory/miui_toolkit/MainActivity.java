@@ -25,7 +25,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.coderstory.miui_toolkit.tools.HostsHelper;
+import com.coderstory.miui_toolkit.tools.Hosts.HostsHelper;
 import com.coderstory.miui_toolkit.tools.RequestPermissions;
 import com.coderstory.miui_toolkit.tools.Root.SuHelper;
 import com.coderstory.miui_toolkit.tools.Update.CheckUpdate;

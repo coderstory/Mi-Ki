@@ -88,7 +88,31 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
         }
 
-        if (!prefs.getBoolean("getRoot", false)) {
+        //第一次运行
+        if (!prefs.getBoolean("First", false)) {
+            AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.Tips_Title)
+                    .setMessage(R.string.Tips_FirstOpen)
+                    .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            editor.putBoolean("First", true);
+                            editor.apply();
+                            Intent intent = new Intent();
+                            intent.setClass(MainActivity.this, HelperActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            editor.putBoolean("First", true);
+                            editor.apply();
+                            dialog.cancel();
+                        }
+                    }).create();
+            builder.show();
+
             AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
             dialog.setTitle(R.string.Tips_Title);
             dialog.setMessage(R.string.Tips_Start_Get_Root);
@@ -104,55 +128,73 @@ public class MainActivity extends AppCompatActivity {
                         dialog2.setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // System.exit(0);
-                                //去除广告
-                                ((Switch) findViewById(R.id.RemoveAdshosts)).setEnabled(false);
-                                //谷歌hosts  NoStore
-                                ((Switch) findViewById(R.id.GoogleHosts)).setEnabled(false);
-                                //屏蔽商店 音乐 视频
-                                ((Switch) findViewById(R.id.NoStore)).setEnabled(false);
-                                //禁止miui检测更新
-                                ((Switch) findViewById(R.id.NoUpdate)).setEnabled(false);
+                                editor.putBoolean("getRoot", true);
+                                editor.apply();
                             }
                         });
                         dialog2.show();
                     } else {
+                        processRoot();
                         editor.putBoolean("getRoot", true);
                         editor.apply();
                     }
                 }
             });
             dialog.show();
+            editor.putBoolean("First", true);
+            editor.apply();
 
-            if (!prefs.getBoolean("First", false)) {
-                AlertDialog builder = new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(R.string.Tips_Title)
-                        .setMessage(R.string.Tips_FirstOpen)
-                        .setPositiveButton(R.string.Btn_Sure, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                editor.putBoolean("First", true);
-                                editor.apply();
-                                Intent intent = new Intent();
-                                intent.setClass(MainActivity.this, HelperActivity.class);
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(R.string.Btn_Cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                editor.putBoolean("First", true);
-                                editor.apply();
-                                dialog.cancel();
-                            }
-                        }).create();
-                builder.show();
-            }
+        }else{
+            processRoot();
         }
+
         // 申请权限并开始检测更新
         if (RequestPermissions.isGrantExternalRW(MainActivity.this)) {
             CheckUpdate CU = new CheckUpdate(MainActivity.this);
             new Thread(CU.networkTask).start();
+        }
+
+
+    }
+
+    /**
+     * 根据root授权情况 启用或者禁用某些功能
+     */
+    private void processRoot() {
+        if (canRunRootCommands()) {
+            //绑定打开冻结APP页面事件
+            TextView tv = (TextView) findViewById(R.id.DisableApp);
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, DisableAppActivity.class);
+                    startActivity(intent);
+                }
+            });
+            tv = (TextView) findViewById(R.id.textView8);
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, DisableAppActivity.class);
+                    startActivity(intent);
+                }
+            });
+        } else {
+
+            // System.exit(0);
+            //去除广告
+            ((Switch) findViewById(R.id.RemoveAdshosts)).setEnabled(false);
+            //谷歌hosts  NoStore
+            ((Switch) findViewById(R.id.GoogleHosts)).setEnabled(false);
+            //屏蔽商店 音乐 视频
+            ((Switch) findViewById(R.id.NoStore)).setEnabled(false);
+            //禁止miui检测更新
+            ((Switch) findViewById(R.id.NoUpdate)).setEnabled(false);
+
+            TextView tv = (TextView) findViewById(R.id.DisableApp);
+            tv.setTextColor(getResources().getColor(R.color.disablefunction));
+            // tv = (TextView) findViewById(R.id.textView8);
+            // tv.setTextColor(getResources().getColor(R.color.disablefunction));
         }
     }
 
@@ -269,24 +311,6 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "root");
-
-        //绑定打开冻结APP页面事件
-        TextView tv= (TextView) findViewById(R.id.DisableApp);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,DisableAppActivity.class);
-                startActivity(intent);
-            }
-        });
-        tv= (TextView) findViewById(R.id.textView8);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,DisableAppActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
     }

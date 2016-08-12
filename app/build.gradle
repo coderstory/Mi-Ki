@@ -23,7 +23,7 @@ android {
         applicationId "com.coderstory.miui_toolkit"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 70
+        versionCode 73
         versionName '1.7.6'
 //        jackOptions {
 //            enabled true
@@ -67,8 +67,8 @@ dependencies {
     provided fileTree(include: ['*.jar'], dir: 'libs')
     //  compile project(path: ':library')
     compile project(path: ':library')
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
     // provided  'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
     compile 'com.umeng.analytics:analytics:latest.integration'
     provided 'junit:junit:4.12'

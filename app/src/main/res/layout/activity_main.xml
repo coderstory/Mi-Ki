@@ -335,7 +335,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView6"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:checked="false"
                 android:text="冻结应用"
                 android:textColor="@android:color/black" />

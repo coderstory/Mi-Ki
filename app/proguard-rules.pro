@@ -15,14 +15,14 @@
 #保护注解
 -keepattributes Annotation
 #保持哪些类不被混淆
--keep public class miui_toolkit.XposedModule.**
--keep class miuimod.MainActivity {
+-keep public class com.coderstory.miui_toolkit.XposedModule.**
+-keep class com.coderstory.miui_toolkit.MainActivity {
     boolean isEnable();
 }
 -keepclassmembers class * {
    public <init>(org.json.JSONObject);
 }
--keep public class miui_toolkit.R$*{
+-keep public class com.coderstory.miui_toolkit.R$*{
 public static final int *;
 }
 -keepclassmembers enum * {

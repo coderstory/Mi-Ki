@@ -46,6 +46,9 @@ public class DisableAppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_disable_app);
         // mContext = DisableAppActivity.this;
         Toast.makeText(this, R.string.disableapptips,Toast.LENGTH_LONG).show();
+
+
+
         new MyTask().execute();
 
         mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);

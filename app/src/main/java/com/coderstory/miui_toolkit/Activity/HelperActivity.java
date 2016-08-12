@@ -1,9 +1,11 @@
-package com.coderstory.miui_toolkit;
+package com.coderstory.miui_toolkit.Activity;
 
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
+
+import com.coderstory.miui_toolkit.R;
 import com.umeng.analytics.MobclickAgent;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;

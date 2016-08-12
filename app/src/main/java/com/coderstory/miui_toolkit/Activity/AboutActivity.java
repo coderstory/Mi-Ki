@@ -1,10 +1,12 @@
-package com.coderstory.miui_toolkit;
+package com.coderstory.miui_toolkit.Activity;
 
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+
+import com.coderstory.miui_toolkit.R;
 import com.umeng.analytics.MobclickAgent;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;

@@ -1,5 +1,6 @@
 package com.coderstory.miui_toolkit.tools.Update;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,7 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.coderstory.miui_toolkit.R;
-import com.coderstory.miui_toolkit.UpdateService;
+import com.coderstory.miui_toolkit.service.UpdateService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,7 +99,9 @@ public class CheckUpdate {
                                             dialog.dismiss();
                                         }
                                     });
-                    alert.create().show();
+                    if (!((Activity) mcontext).isDestroyed() && ((Activity) mcontext).isFinishing()) {
+                        alert.create().show();
+                    }
                 }
             }
         }

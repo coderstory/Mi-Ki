@@ -18,7 +18,7 @@ public class isEnable implements IXposedHookZygoteInit, IXposedHookLoadPackage {
             try {
 
                 XposedBridge.log("插件已激活");
-                XposedHelpers. findAndHookMethod("com.coderstory.miui_toolkit.MainActivity", lpparam.classLoader, "isEnable",   XC_MethodReplacement.returnConstant(true));
+                XposedHelpers. findAndHookMethod("com.coderstory.miui_toolkit.Activity.MainActivity", lpparam.classLoader, "isEnable",   XC_MethodReplacement.returnConstant(true));
             } catch (Throwable p1) {
                 XposedBridge.log(p1);
             }

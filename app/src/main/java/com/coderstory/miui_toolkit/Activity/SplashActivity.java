@@ -1,9 +1,11 @@
-package com.coderstory.miui_toolkit;
+package com.coderstory.miui_toolkit.Activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.coderstory.miui_toolkit.R;
 
 
 public class SplashActivity extends AppCompatActivity {

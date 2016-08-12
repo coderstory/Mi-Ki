@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.coderstory.miui_toolkit">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,13 +10,14 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <application android:name="com.coderstory.miui_toolkit.tools.CrashHelper.CrashApplication"
+    <application
+        android:name=".tools.CrashHelper.CrashApplication"
         android:allowBackup="true"
         android:icon="@mipmap/launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".Activity.SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -42,8 +44,8 @@
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
         <!-- </activity-alias> -->
-        <service android:name="com.coderstory.miui_toolkit.UpdateService" >
-        </service>
+        <service android:name=".service.UpdateService"></service>
+
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
@@ -55,16 +57,22 @@
             android:value="53" />
 
         <activity
-            android:name=".AboutActivity"
+            android:name=".Activity.AboutActivity"
             android:label="关于 Mi Kit" />
         <activity
-            android:name=".HelperActivity"
+            android:name=".Activity.HelperActivity"
             android:label="设置向导" />
-        <service android:name=".UpdateService" />
 
-        <meta-data android:value="578df8ece0f55accff0026f5" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="I" android:name="UMENG_CHANNEL"/>
+        <service android:name=".service.UpdateService" />
 
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="578df8ece0f55accff0026f5" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="I" />
+
+        <activity android:name=".Activity.DisableAppActivity"></activity>
     </application>
 
 </manifest>

@@ -24,8 +24,8 @@
     <string name="Label_MIUI_Settings">MIUI相关</string>
     <string name="Label_About">关于</string>
     <string name="Label_MyName">作者:油炸包子</string>
-    <string name="Label_Version">版本:1.7.5 正式版</string>
-    <string name="Version">1.7.5</string>
+    <string name="Label_Version">版本:1.7.6 正式版</string>
+    <string name="Version">1.7.6</string>
     <string name="Label_MyBlog">我的博客:<u>blog.coderstory.cn</u></string>
     <string name="tebieshuoming">特别说明</string>
     <string name="title_activity_splash">SplashActivity</string>
@@ -34,7 +34,6 @@
     <string name="myblog_url">http://blog.coderstory.cn</string>
     <string name="App_Update">软件升级</string>
     <string name="Update">更新</string>
-    <!--<string name="Access_Server_Fail">Oops...软件更新服务器似乎挂掉了..</string>-->
     <string name="Create_DownlodFile_Fail">创建下载文件失败!</string>
     <string name="Delete_OldFile_Fail">旧数据删除失败!</string>
     <string name="Downloading">正在下载</string>
@@ -45,6 +44,17 @@
     <string name="Tips_NO_SDCARD_Permission">尚未获得存储卡的读写权限，App在线功能已被禁用！</string>
     <string name="Tips_FirstOpen">您是第一次打开本软件，是否阅读使用帮助？</string>
     <string name="Label_Waring">警告</string>
-    <string name="Tips_Start_Get_Root">本软件的正常运行需要root权限,点击确定开始授权。</string>
-    <string name="Tips_No_XP_Enable">检测到本模块未在Xposed框架中激活,部分功能将无法使用！</string>
+    <string name="Tips_Start_Get_Root">本软件的正常运行需要root权限,点击确定开始授权。\r\n\r\nPS:点击确定后无反应基本是禁止supersu自启导致的</string>
+    <string name="Tips_No_XP_Enable">检测到本模块未在Xposed框架中激活,部分功能将无法使用！\r\n\r\n请在Xposed中勾选本模块并重启系统，如还是出现提示则请卸载后重新安装.</string>
+    <string name="DisableAppBtn">&#160;&#160;冻结应用&#160;&#160;</string>
+    <string name="DisabeAppLable">冻结应用</string>
+    <string name="disableapptips">提示：点击应用名可切换冻结状态</string>
+    <string name="isloading">正在加载，请稍后。。。</string>
+    <string name="loadappinfo">正在加载应用信息。。。</string>
+    <string name="sureAntiDisable">你确定要解除 &#160;</string>
+    <string name="sureDisable">你确定要冻结&#160; </string>
+    <string name="btnUnDisable">解冻</string>
+    <string name="btnDissable">冻结</string>
+    <string name="sureDisableAfter"> &#160;吗？</string>
+    <string name="sureAntiDisableAfter"> &#160;的冻结状态吗？</string>
 </resources>

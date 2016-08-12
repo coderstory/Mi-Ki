@@ -25,17 +25,17 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
         final XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
         prefs.makeWorldReadable();
 
-        XposedHelpers.findClass("android.content.pm.PackageParser", null);
-        XposedHelpers.findClass("java.util.jar.JarVerifier$VerifierEntry", null);
+        //XposedHelpers.findClass("android.content.pm.PackageParser", null);
+       // XposedHelpers.findClass("java.util.jar.JarVerifier$VerifierEntry", null);
 
         XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.org.conscrypt.OpenSSLSignature", null), "engineVerify", new XC_MethodHook() {
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
                     throws Throwable {
                 prefs.reload();
-                if (!prefs.getBoolean("CorePatcher", false)) {
-                    return;
+                if (prefs.getBoolean("CorePatcher", false)) {
+                    paramAnonymousMethodHookParam.setResult(true);
                 }
-                paramAnonymousMethodHookParam.setResult(true);
+
             }
         });
 
@@ -43,10 +43,10 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
             protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                     throws Throwable {
                 prefs.reload();
-                if (!prefs.getBoolean("CorePatcher", false)) {
-                    return;
+                if (prefs.getBoolean("CorePatcher", false)) {
+                    paramAnonymousMethodHookParam.setResult(true);
                 }
-                paramAnonymousMethodHookParam.setResult(true);
+
             }
         });
 
@@ -54,12 +54,12 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
             protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                     throws Throwable {
                 prefs.reload();
-                if (!prefs.getBoolean("CorePatcher", false)) {
-                    return;
+                if (prefs.getBoolean("CorePatcher", false)) {
+                    if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) &&( XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state") == 3)) {
+                        paramAnonymousMethodHookParam.setResult(true);
+                    }
                 }
-                if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) &&( XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state") == 3)) {
-                    paramAnonymousMethodHookParam.setResult(true);
-                }
+
             }
         });
 
@@ -67,12 +67,12 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
             protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                     throws Throwable {
                 prefs.reload();
-                if (!prefs.getBoolean("CorePatcher", false)) {
-                    return;
+                if (prefs.getBoolean("CorePatcher", false)) {
+                    if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) && (XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state") == 3)) {
+                        paramAnonymousMethodHookParam.setResult(true);
+                    }
                 }
-                if (((((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("sha1withrsa")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("rsa-sha1")) || (((java.security.Signature) paramAnonymousMethodHookParam.thisObject).getAlgorithm().toLowerCase().equals("1.3.14.3.2.26with1.2.840.113549.1.1.1"))) && (XposedHelpers.getIntField(paramAnonymousMethodHookParam.thisObject, "state") == 3)) {
-                    paramAnonymousMethodHookParam.setResult(true);
-                }
+
             }
         });
     }
@@ -85,9 +85,14 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
         if (("android".equals(paramLoadPackageParam.packageName)) && (paramLoadPackageParam.processName.equals("android"))) {
 
             Class localClass = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", paramLoadPackageParam.classLoader);
+
             XposedBridge.hookAllConstructors(XposedHelpers.findClass("com.android.server.pm.PackageManagerService", paramLoadPackageParam.classLoader), new XC_MethodHook() {
                 protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
+                    prefs.reload();
+                    if (!prefs.getBoolean("CorePatcher", false)) {
+                        return;
+                    }
                     PMcontext = ((Context) paramAnonymousMethodHookParam.args[0]);
                 }
             });
@@ -182,7 +187,10 @@ public class CorePatch implements IXposedHookZygoteInit, IXposedHookLoadPackage 
             XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.settings.applications.AppOpsDetails", paramLoadPackageParam.classLoader), "isPlatformSigned", new XC_MethodHook() {
                 protected void beforeHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
+                    prefs.reload();
+                    if (prefs.getBoolean("CorePatcher", false)) {
+                        paramAnonymousMethodHookParam.setResult(false);
+                    }
                 }
             });
         }

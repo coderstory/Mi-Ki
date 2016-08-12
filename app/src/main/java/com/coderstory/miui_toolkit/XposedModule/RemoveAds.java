@@ -1,6 +1,8 @@
 package com.coderstory.miui_toolkit.XposedModule;
 
 
+import android.content.Context;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,14 +11,11 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
-
-import android.content.Context;
-
-import de.robv.android.xposed.XSharedPreferences;
 
 public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage, IXposedHookInitPackageResources {
     private static XC_LoadPackage.LoadPackageParam loadPackageParam;

@@ -1,10 +1,4 @@
-package com.coderstory.miui_toolkit;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+package com.coderstory.miui_toolkit.service;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -20,7 +14,15 @@ import android.os.IBinder;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.coderstory.miui_toolkit.Activity.MainActivity;
+import com.coderstory.miui_toolkit.R;
 import com.coderstory.miui_toolkit.tools.Update.UpdateConfig;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class UpdateService extends Service {

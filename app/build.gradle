@@ -5,8 +5,8 @@ def releaseTime() {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '24'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.1'
 
 //    allprojects {
 //        repositories {
@@ -23,8 +23,8 @@ android {
         applicationId "com.coderstory.miui_toolkit"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 61
-        versionName '1.7.5'
+        versionCode 70
+        versionName '1.7.6'
 //        jackOptions {
 //            enabled true
 //        }
@@ -69,15 +69,16 @@ dependencies {
     compile project(path: ':library')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-   // provided  'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
+    // provided  'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
     compile 'com.umeng.analytics:analytics:latest.integration'
     provided 'junit:junit:4.12'
     provided 'de.robv.android.xposed:api:82'
+    compile project(':drop')
 }
 
 buildscript {
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0-alpha7'
+        classpath 'com.android.tools.build:gradle:2.2.0-beta1'
     }
     repositories {
         jcenter()

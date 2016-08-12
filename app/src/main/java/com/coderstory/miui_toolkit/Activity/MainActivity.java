@@ -1,4 +1,4 @@
-package com.coderstory.miui_toolkit;
+package com.coderstory.miui_toolkit.Activity;
 
 
 import android.app.AlertDialog;
@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,8 +24,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.coderstory.miui_toolkit.R;
 import com.coderstory.miui_toolkit.tools.Hosts.HostsHelper;
 import com.coderstory.miui_toolkit.tools.RequestPermissions;
 import com.coderstory.miui_toolkit.tools.Root.SuHelper;
@@ -266,6 +269,26 @@ public class MainActivity extends AppCompatActivity {
             SwitchBtn.setChecked(SetValue);
         }
         initControl(SwitchBtn, "root");
+
+        //绑定打开冻结APP页面事件
+        TextView tv= (TextView) findViewById(R.id.DisableApp);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,DisableAppActivity.class);
+                startActivity(intent);
+            }
+        });
+        tv= (TextView) findViewById(R.id.textView8);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,DisableAppActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     //初始化每个按钮的事件
@@ -344,24 +367,33 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //打开我的博客
+    public void opneHelp(View view) {
+        //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://blog.coderstory.cn/2016/07/20/mi-kit-feedback/"));
+        startActivity(intent);
+
+    }
+
     //隐藏图标
     private void HideIcon() {
-        ComponentName localComponentName = new ComponentName(this, "com.coderstory.miui_toolkit.SplashActivity");
+        ComponentName localComponentName = new ComponentName(this, "com.coderstory.miui_toolkit.Activity.SplashActivity");
         PackageManager localPackageManager = getPackageManager();
         localPackageManager.getComponentEnabledSetting(localComponentName);
         PackageManager packageManager = getPackageManager();
-        ComponentName componentName = new ComponentName(this, "com.coderstory.miui_toolkit.SplashActivity");
+        ComponentName componentName = new ComponentName(this, "com.coderstory.miui_toolkit.Activity.SplashActivity");
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
     }
 
     //显示图标
     private void showIcon() {
-        ComponentName localComponentName = new ComponentName(this, "com.coderstory.miui_toolkit.SplashActivity");
+        ComponentName localComponentName = new ComponentName(this, "com.coderstory.miui_toolkit.Activity.SplashActivity");
         PackageManager localPackageManager = getPackageManager();
         localPackageManager.getComponentEnabledSetting(localComponentName);
         PackageManager packageManager = getPackageManager();
-        ComponentName componentName = new ComponentName(this, "com.coderstory.miui_toolkit.SplashActivity");
+        ComponentName componentName = new ComponentName(this, "com.coderstory.miui_toolkit.Activity.SplashActivity");
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
                 PackageManager.DONT_KILL_APP);
     }

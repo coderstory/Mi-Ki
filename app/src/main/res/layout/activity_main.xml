@@ -214,6 +214,29 @@
 
 
             <TextView
+                android:id="@+id/textView85"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/exp5"
+                android:layout_marginTop="30dp"
+                android:text="@string/Label_Common_Settings" />
+
+
+            <View
+                android:id="@+id/view144"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView5"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#dc676969" />
+
+
+            <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -303,15 +326,44 @@
                 android:textColor="#696666"
                 android:text="不要滥用,仅含常用域名" />
 
+
+
+            <TextView
+                android:id="@+id/DisableApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView6"
+                android:layout_marginTop="10dp"
+                android:checked="false"
+                android:text="冻结应用"
+                android:textColor="@android:color/black" />
+
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/DisableApp"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                android:textColor="#696666"
+                android:text="可选冻结任意系统App,别手贱乱点哦~" />
+
+
+
             <TextView
                 android:id="@+id/textView55"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView6"
+                android:layout_below="@+id/textView8"
                 android:layout_marginTop="30dp"
-                android:text="其他设置" />
+                android:text="额外设置" />
 
             <View
                 android:id="@+id/line5"
@@ -329,8 +381,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView6"
-                android:layout_marginTop="60dp"
+                android:layout_below="@+id/line5"
+                android:layout_marginTop="10dp"
                 android:checked="false"
                 android:text="@string/Label_Hidden_Icon" />
 
@@ -342,7 +394,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/switchIcon"
                 android:layout_marginTop="20dp"
-                android:text="关于" />
+                android:text="其他" />
             <View
                 android:id="@+id/view7"
                 android:layout_width="match_parent"
@@ -365,6 +417,24 @@
                 android:text="关于应用"
                 android:onClick="openAbout"
                 android:textColor="#000000" />
+
+
+            <TextView
+                android:id="@+id/textView0889"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView889"
+                android:layout_marginBottom="20dp"
+                android:text="使用帮助和问题反馈"
+                android:onClick="opneHelp"
+                android:textColor="#000000" />
+
+
+
+
+
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

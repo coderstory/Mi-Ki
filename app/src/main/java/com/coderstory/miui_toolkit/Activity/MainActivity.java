@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
-    int a;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        a=a+a;
+
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();
         loadSettings(this);
@@ -394,9 +394,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     //隐藏图标
     private void HideIcon() {
-        ComponentName localComponentName = new ComponentName(this, "com.coderstory.miui_toolkit.Activity.SplashActivity");
+        ComponentName localComponentName = new ComponentName(this,"com.coderstory.miui_toolkit.Activity.SplashActivity");
         PackageManager localPackageManager = getPackageManager();
         localPackageManager.getComponentEnabledSetting(localComponentName);
         PackageManager packageManager = getPackageManager();
@@ -404,7 +406,6 @@ public class MainActivity extends AppCompatActivity {
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
     }
-
     //显示图标
     private void showIcon() {
         ComponentName localComponentName = new ComponentName(this, "com.coderstory.miui_toolkit.Activity.SplashActivity");
@@ -415,6 +416,7 @@ public class MainActivity extends AppCompatActivity {
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
                 PackageManager.DONT_KILL_APP);
     }
+
 
     //修改hosts的方法
     private void changeHosts() {

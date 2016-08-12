@@ -19,7 +19,7 @@ import java.util.List;
 public class AppInfoAdapter extends ArrayAdapter {
     private int resourceId;
 
-    public AppInfoAdapter(Context context, int textViewResourceId, int disable, List<AppInfo> objects)
+    public AppInfoAdapter(Context context, int textViewResourceId, List<AppInfo> objects)
     {
         super(context,textViewResourceId,objects);
         resourceId=textViewResourceId;

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.umeng.analytics.MobclickAgent.reportError;
@@ -37,7 +39,8 @@ import static com.umeng.analytics.MobclickAgent.reportError;
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
-    public static final String CrashFilePath = "/sdcard/Mi Kit/crashlog/";
+    public static  String CrashFilePath ;
+
     public static final int LogFileLimit = 10;
 
     public static final String TAG = "CrashHandler";
@@ -49,31 +52,32 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     //程序的Context对象
     private Context mContext;
     //用来存储设备信息和异常信息
-    private Map<String, String> infos = new HashMap<String, String>();
+    private Map<String, String> infos = new HashMap<>();
 
     //用于格式化日期,作为日志文件名的一部分
-    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.CHINESE);
 
     /** 保证只有一个CrashHandler实例 */
     private CrashHandler() {
     }
 
     /** 获取CrashHandler实例 ,单例模式 */
-    public static CrashHandler getInstance() {
+    static CrashHandler getInstance() {
         return INSTANCE;
     }
 
     /**
      * 初始化
      *
-     * @param context
+     * @param context context
      */
-    public void init(Context context) {
+    void init(Context context) {
         mContext = context;
         //获取系统默认的UncaughtException处理器
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         //设置该CrashHandler为程序的默认处理器
         Thread.setDefaultUncaughtExceptionHandler(this);
+        CrashFilePath= Environment.getExternalStorageDirectory().getPath()+"/Mi Kit/crashlog/";
     }
 
     /**
@@ -101,7 +105,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * 收集设备参数信息
      * @param ctx
      */
-    public void collectDeviceInfo(Context ctx) {
+    private void collectDeviceInfo(Context ctx) {
         try {
             PackageManager pm = ctx.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(), PackageManager.GET_ACTIVITIES);
@@ -128,17 +132,17 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     /**
      * 保存错误信息到文件中
      *
-     * @param ex
+     * @param ex  Throwable
      * @return  返回文件名称,便于将文件传送到服务器
      */
     private int saveCrashInfo2File(Throwable ex) {
 
         //将设备信息变成string
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> entry : infos.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            sb.append(key + "=" + value + "\n");
+            sb.append(key).append("=").append(value).append("\n");
         }
 
         //递归获取全部的exception信息
@@ -161,6 +165,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
 
         File dir = new File(CrashFilePath);
+
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -169,8 +174,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             fos = new FileOutputStream(CrashFilePath + fileName);
             fos.write(sb.toString().getBytes());
             fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -184,7 +187,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         return 1;
     }
 
-    Comparator<File> newfileFinder = new Comparator<File>(){
+    private Comparator<File> newfileFinder = new Comparator<File>(){
 
         @Override
         public int compare(File x, File y) {

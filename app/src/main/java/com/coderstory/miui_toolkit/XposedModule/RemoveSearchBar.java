@@ -15,7 +15,7 @@ public class RemoveSearchBar implements IXposedHookInitPackageResources {
         if (prefs.getBoolean("RemoveSearchBar", false)) {
             if (paramInitPackageResourcesParam.packageName.equals("com.android.systemui")) {
                 paramInitPackageResourcesParam.res.setReplacement(paramInitPackageResourcesParam.packageName, "bool", "config_show_statusbar_search", false);
-            };
+            }
         }
     }
 }

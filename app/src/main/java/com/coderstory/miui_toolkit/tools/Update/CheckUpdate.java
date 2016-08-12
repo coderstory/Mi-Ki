@@ -30,7 +30,6 @@ public class CheckUpdate {
     /**
      * 检测app的更新信息并保存到UpdateConfig中
      *
-     * @throws JSONException
      */
     private static void initUpdateInfo() {
         HttpHelper HH = new HttpHelper();
@@ -38,7 +37,7 @@ public class CheckUpdate {
 
         if (!result.equals("")) {
 
-            JSONObject JsonString = null;//转换为JSONObject
+            JSONObject JsonString ;//转换为JSONObject
             try {
                 JsonString = new JSONObject(result);
                 UpdateConfig.URL = JsonString.getString("URL");

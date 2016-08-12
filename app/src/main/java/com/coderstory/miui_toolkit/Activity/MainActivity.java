@@ -26,14 +26,12 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.coderstory.miui_toolkit.R;
 import com.coderstory.miui_toolkit.tools.Hosts.HostsHelper;
 import com.coderstory.miui_toolkit.tools.RequestPermissions;
 import com.coderstory.miui_toolkit.tools.Root.SuHelper;
 import com.coderstory.miui_toolkit.tools.Update.CheckUpdate;
 import com.umeng.analytics.MobclickAgent;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,9 +41,6 @@ import static com.coderstory.miui_toolkit.tools.Root.SuHelper.canRunRootCommands
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
     private static SharedPreferences.Editor editor;
-    private boolean isRoot = true;
-    private Boolean SetValue;
-    private Switch SwitchBtn;
 
     @Override
     protected void onResume() {
@@ -58,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
-
+    int a;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
         }
+
+
+        a=a+a;
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();
         loadSettings(this);
@@ -153,8 +151,6 @@ public class MainActivity extends AppCompatActivity {
             CheckUpdate CU = new CheckUpdate(MainActivity.this);
             new Thread(CU.networkTask).start();
         }
-
-
     }
 
     /**
@@ -183,16 +179,17 @@ public class MainActivity extends AppCompatActivity {
 
             // System.exit(0);
             //去除广告
-            ((Switch) findViewById(R.id.RemoveAdshosts)).setEnabled(false);
+            findViewById(R.id.RemoveAdshosts).setEnabled(false);
             //谷歌hosts  NoStore
-            ((Switch) findViewById(R.id.GoogleHosts)).setEnabled(false);
+            findViewById(R.id.GoogleHosts).setEnabled(false);
             //屏蔽商店 音乐 视频
-            ((Switch) findViewById(R.id.NoStore)).setEnabled(false);
+            findViewById(R.id.NoStore).setEnabled(false);
             //禁止miui检测更新
-            ((Switch) findViewById(R.id.NoUpdate)).setEnabled(false);
+            findViewById(R.id.NoUpdate).setEnabled(false);
 
             TextView tv = (TextView) findViewById(R.id.DisableApp);
-            tv.setTextColor(getResources().getColor(R.color.disablefunction));
+           // tv.setTextColor(getResources().getColor(R.color.disablefunction));
+            tv.setTextColor( ContextCompat.getColor(MainActivity.this, R.color.disablefunction));
             // tv = (TextView) findViewById(R.id.textView8);
             // tv.setTextColor(getResources().getColor(R.color.disablefunction));
         }
@@ -208,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(MainActivity.this, R.string.Tips_NO_SDCARD_Permission, Toast.LENGTH_LONG).show();
         }
-
     }
 
 
@@ -222,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
 
         Boolean SetValue;
         Switch SwitchBtn;
-
 
         //移除搜索框
         SetValue = prefs.getBoolean("RemoveSearchBar", false);
@@ -321,7 +316,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-
                 editor.putBoolean(key, isChecked);
                 editor.apply();
                 switch (key) {
@@ -333,19 +327,19 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case "RemoveAdshosts":
-                        // changeHosts();
+
                         new MyTask().execute();
                         break;
                     case "NoUpdate":
-                        // changeHosts();
+
                         new MyTask().execute();
                         break;
                     case "GoogleHosts":
-                        // changeHosts();
+
                         new MyTask().execute();
                         break;
                     case "NoStore":
-                        // changeHosts();
+
                         new MyTask().execute();
 
                         break;
@@ -386,6 +380,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //打开关于
     public void openAbout(View v) {
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
@@ -393,7 +388,6 @@ public class MainActivity extends AppCompatActivity {
 
     //打开我的博客
     public void opneHelp(View view) {
-        //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("http://blog.coderstory.cn/2016/07/20/mi-kit-feedback/"));
         startActivity(intent);
@@ -452,9 +446,8 @@ public class MainActivity extends AppCompatActivity {
         }
         HostsHelper h = new HostsHelper(MainActivity.this, setMap);
 
-        if (!h.execute()) {
-            isRoot = false;
-        }
+        h.execute();
+
     }
 
     //因为hosts修改比较慢 所以改成异步的
@@ -469,10 +462,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String param) {
             //setProgressBarIndeterminateVisibility(false);
             closeProgress();
-//            if (!isRoot) {
-//                Toast.makeText(MainActivity.this, R.string.Tips_No_Root, Toast.LENGTH_SHORT).show();
-//            }
-//            isRoot = true;
         }
 
         @Override
@@ -494,7 +483,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //  initData();
             changeHosts();
             return null;
         }
@@ -503,9 +491,7 @@ public class MainActivity extends AppCompatActivity {
     private Dialog dialog;
 
     private void showProgress() {
-        if (dialog == null || (dialog != null && !dialog.isShowing())) { //dialog未实例化 或者实例化了但没显示
-//		    dialog.setContentView(R.layout.progress_dialog);
-            //    dialog.getWindow().setAttributes(params);
+        if (dialog == null || ( !dialog.isShowing())) { //dialog未实例化 或者实例化了但没显示
             dialog = ProgressDialog.show(this, getString(R.string.Working), getString(R.string.Waiting));
             dialog.show();
         }

@@ -245,22 +245,22 @@ public class UpdateService extends Service {
 
 
     // A class that will run Toast messages in the main GUI context
-    private class ToastMessageTask extends AsyncTask<String, String, String> {
-        String toastMessage;
-
-        @Override
-        protected String doInBackground(String... params) {
-            toastMessage = params[0];
-            return toastMessage;
-        }
-
-
-        // This is executed in the context of the main GUI thread
-        protected void onPostExecute(String result) {
-            Toast toast = Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
+//    private class ToastMessageTask extends AsyncTask<String, String, String> {
+//        String toastMessage;
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//            toastMessage = params[0];
+//            return toastMessage;
+//        }
+//
+//
+//        // This is executed in the context of the main GUI thread
+//        protected void onPostExecute(String result) {
+//            Toast toast = Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
+//    }
 
 
 }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.coderstory.miui_toolkit.Adapter.AppInfo;
 import com.coderstory.miui_toolkit.Adapter.AppInfoAdapter;
 import com.coderstory.miui_toolkit.R;
+import com.umeng.analytics.MobclickAgent;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.io.DataOutputStream;
@@ -78,10 +79,10 @@ public class DisableAppActivity extends AppCompatActivity {
             PackageInfo packageInfo = packages.get(i);
             if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0) {
                 if (packageInfo.applicationInfo.enabled) {
-                    AppInfo appInfo = new AppInfo(packageInfo.applicationInfo.loadLabel(getPackageManager()).toString(), packageInfo.applicationInfo.loadIcon(getPackageManager()), packageInfo.packageName, false, packageInfo.applicationInfo.sourceDir, String.valueOf(packageInfo.versionName));
+                    AppInfo appInfo = new AppInfo(packageInfo.applicationInfo.loadLabel(getPackageManager()).toString(), packageInfo.applicationInfo.loadIcon(getPackageManager()), packageInfo.packageName, false,  String.valueOf(packageInfo.versionName));
                     appInfoList.add(appInfo);
                 } else {
-                    AppInfo appInfo = new AppInfo(packageInfo.applicationInfo.loadLabel(getPackageManager()).toString(), packageInfo.applicationInfo.loadIcon(getPackageManager()), packageInfo.packageName, true, packageInfo.applicationInfo.sourceDir, String.valueOf(packageInfo.versionName));
+                    AppInfo appInfo = new AppInfo(packageInfo.applicationInfo.loadLabel(getPackageManager()).toString(), packageInfo.applicationInfo.loadIcon(getPackageManager()), packageInfo.packageName, true, String.valueOf(packageInfo.versionName));
                     appInfoList2.add(appInfo);
                 }
             }
@@ -98,7 +99,7 @@ public class DisableAppActivity extends AppCompatActivity {
 
     private  void  showData()
     {
-        adapter = new AppInfoAdapter(this, R.layout.app_info_item, R.color.disableApp,appInfoList);
+        adapter = new AppInfoAdapter(this, R.layout.app_info_item,appInfoList);
         listView = (ListView) findViewById(R.id.listView);
         assert listView != null;
         listView.setAdapter(adapter);
@@ -178,29 +179,19 @@ public class DisableAppActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            setProgressBarIndeterminateVisibility(true);
+           // setProgressBarIndeterminateVisibility(true);
             showProgress();
         }
 
         @Override
         protected void onPostExecute(String param) {
             showData();
-            setProgressBarIndeterminateVisibility(false);
+            //setProgressBarIndeterminateVisibility(false);
             adapter.notifyDataSetChanged();
             closeProgress();
         }
 
-        @Override
-        protected void onCancelled() {
-            // TODO Auto-generated method stub
-            super.onCancelled();
-        }
 
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            // TODO Auto-generated method stub
-            super.onProgressUpdate(values);
-        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -226,5 +217,17 @@ public class DisableAppActivity extends AppCompatActivity {
             dialog.cancel();
             dialog = null;
         }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

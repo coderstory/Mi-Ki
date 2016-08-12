@@ -22,15 +22,14 @@ public class AboutActivity extends SwipeBackActivity {
     }
 
     //打开我的博客
-    public void opneUrl(View view) {
-        //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
+    public void openMyBlog(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(getString(R.string.myblog_url)));
         startActivity(intent);
 
     }
     //打开支付宝
-    public void alipay(View view) {
+    public void openAlipay(View view) {
         //  Toast.makeText(this, "",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(getString(R.string.alipay_url)));

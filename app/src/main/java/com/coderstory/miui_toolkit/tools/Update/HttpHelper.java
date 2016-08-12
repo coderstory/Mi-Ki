@@ -8,10 +8,10 @@ import java.net.URL;
 /**
  * app更新
  */
-public class HttpHelper {
+class HttpHelper {
     /**
      * 调用接口
-     * @param UpdateUrl
+     * @param UpdateUrl 更新url地址
      * @return
      */
 
@@ -38,15 +38,14 @@ public class HttpHelper {
 
     /**
      * 把流对象转换成字符串对象
-     * @param is
-     * @return
+
      */
-    public  String streamToStr(InputStream is) {
+    private String streamToStr(InputStream is) {
         try {
             // 定义字节数组输出流对象
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             // 定义读取的长度
-            int len = 0;
+            int len ;
             // 定义读取的缓冲区
             byte buffer[] = new byte[1024];
             // 按照定义的缓冲区进行循环读取，直到读取完毕为止

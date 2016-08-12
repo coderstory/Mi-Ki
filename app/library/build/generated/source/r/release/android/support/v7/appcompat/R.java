@@ -1066,6 +1066,14 @@ public final class R {
 		public static int AppCompatSeekBar_tickMark = 1;
 		public static int AppCompatSeekBar_tickMarkTint = 2;
 		public static int AppCompatSeekBar_tickMarkTintMode = 3;
+		public static int[] AppCompatTextHelper = { 0x01010034, 0x0101016d, 0x0101016e, 0x0101016f, 0x01010170, 0x01010392, 0x01010393 };
+		public static int AppCompatTextHelper_android_drawableBottom = 2;
+		public static int AppCompatTextHelper_android_drawableEnd = 6;
+		public static int AppCompatTextHelper_android_drawableLeft = 3;
+		public static int AppCompatTextHelper_android_drawableRight = 4;
+		public static int AppCompatTextHelper_android_drawableStart = 5;
+		public static int AppCompatTextHelper_android_drawableTop = 1;
+		public static int AppCompatTextHelper_android_textAppearance = 0;
 		public static int[] AppCompatTextView = { 0x01010034, 0x7f01002b };
 		public static int AppCompatTextView_android_textAppearance = 0;
 		public static int AppCompatTextView_textAllCaps = 1;

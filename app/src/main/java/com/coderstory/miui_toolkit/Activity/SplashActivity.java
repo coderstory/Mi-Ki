@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.coderstory.miui_toolkit.R;
+import com.umeng.analytics.MobclickAgent;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -23,7 +24,6 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-
             @Override
             protected Integer doInBackground(Void... params) {
                 long startTime = System.currentTimeMillis();
@@ -38,7 +38,16 @@ public class SplashActivity extends AppCompatActivity {
                 return 1;
             }
         }.execute();
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

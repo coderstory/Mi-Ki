@@ -20,7 +20,6 @@
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
             </intent-filter>
         </activity>
@@ -30,21 +29,43 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
             </intent-filter>
         </activity>
-        <!-- <activity-alias -->
-        <!-- android:name=".SplashActivity-Alias" -->
-        <!-- android:enabled="true" -->
-        <!-- android:targetActivity=".SplashActivity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- &lt;!&ndash;<category android:name="android.intent.category.LAUNCHER" />&ndash;&gt; -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity-alias> -->
+
+        <activity-alias
+            android:name=".SplashActivity-Alias"
+            android:enabled="true"
+            android:targetActivity=".Activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity android:name=".Activity.DisableAppActivity"></activity>
+
+        <activity
+            android:name=".Activity.AboutActivity"
+            android:label="关于 Mi Kit" />
+        <activity
+            android:name=".Activity.HelperActivity"
+            android:label="设置向导" />
+
         <service android:name=".service.UpdateService"></service>
+
+        <!--开始有盟设置-->
+
+        <service android:name=".service.UpdateService" />
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="578df8ece0f55accff0026f5" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="I" />
+
+        <!--开始Xposed设置-->
 
         <meta-data
             android:name="xposedmodule"
@@ -56,23 +77,6 @@
             android:name="xposedminversion"
             android:value="53" />
 
-        <activity
-            android:name=".Activity.AboutActivity"
-            android:label="关于 Mi Kit" />
-        <activity
-            android:name=".Activity.HelperActivity"
-            android:label="设置向导" />
-
-        <service android:name=".service.UpdateService" />
-
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="578df8ece0f55accff0026f5" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="I" />
-
-        <activity android:name=".Activity.DisableAppActivity"></activity>
     </application>
 
 </manifest>

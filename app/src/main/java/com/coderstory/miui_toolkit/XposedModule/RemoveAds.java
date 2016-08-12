@@ -26,7 +26,7 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage,
         patchcode();
     }
 
-    public void patchcode() {
+    private void patchcode() {
 
 
         XSharedPreferences prefs = new XSharedPreferences("com.coderstory.miui_toolkit", "UserSettings");
@@ -181,10 +181,7 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage,
     private static void findAndHookMethod(String p1, ClassLoader lpparam, String p2, Object... parameterTypesAndCallback) {
         try {
             XposedHelpers.findAndHookMethod(p1, lpparam, p2, parameterTypesAndCallback);
-            return;
-        } catch (NoSuchMethodError localString2) {
-            XposedBridge.log(localString2.toString());
-            return;
+
         } catch (Throwable localString3) {
             XposedBridge.log(localString3.toString());
         }

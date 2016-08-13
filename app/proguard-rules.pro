@@ -16,7 +16,7 @@
 -keepattributes Annotation
 #保持哪些类不被混淆
 -keep public class com.coderstory.miui_toolkit.XposedModule.**
--keep class com.coderstory.miui_toolkit.MainActivity {
+-keep class com.coderstory.miui_toolkit.Activity.MainActivity {
     boolean isEnable();
 }
 -keepclassmembers class * {

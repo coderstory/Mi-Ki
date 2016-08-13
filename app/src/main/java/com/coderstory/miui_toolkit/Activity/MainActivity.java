@@ -1,6 +1,5 @@
 package com.coderstory.miui_toolkit.Activity;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -34,9 +33,7 @@ import com.coderstory.miui_toolkit.tools.Update.CheckUpdate;
 import com.umeng.analytics.MobclickAgent;
 import java.util.HashMap;
 import java.util.Map;
-
 import static com.coderstory.miui_toolkit.tools.Root.SuHelper.canRunRootCommands;
-
 
 public class MainActivity extends AppCompatActivity {
     private static SharedPreferences prefs;
@@ -61,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
         }
-
-
 
         prefs = getSharedPreferences("UserSettings", Context.MODE_WORLD_READABLE);
         editor = prefs.edit();

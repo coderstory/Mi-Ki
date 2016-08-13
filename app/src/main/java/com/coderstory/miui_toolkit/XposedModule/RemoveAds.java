@@ -99,6 +99,8 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
         //音乐
         if (loadPackageParam.packageName.equals("com.miui.player")) {
             findAndHookMethod("com.miui.player.util.AdUtils", loadPackageParam.classLoader, "isAdEnable", XC_MethodReplacement.returnConstant(false));
+            findAndHookMethod("com.miui.player.util.AdUtils", loadPackageParam.classLoader, "getPlayAd", XC_MethodReplacement.returnConstant(null));
+            findAndHookMethod("com.miui.player.util.ExperimentsHelper", loadPackageParam.classLoader, "isAdEnable", XC_MethodReplacement.returnConstant(false));
         }
 
         //核心模块
@@ -133,7 +135,6 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                 e.printStackTrace();
             }
 
-
             return;
         }
 
@@ -163,12 +164,6 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
 
             findAndHookMethod("com.miui.weather2.tools.ToolUtils", loadPackageParam.classLoader, "canRequestCommercialInfo", Context.class, XC_MethodReplacement.returnConstant(false));
             findAndHookMethod("com.miui.weather2.tools.ToolUtils", loadPackageParam.classLoader, "checkCommericalStatue", Context.class, XC_MethodReplacement.returnConstant(false));
-//            findAndHookMethod("com.miui.weather2.tools.ToolUtils", loadPackageParam.classLoader, "isCurrentlyUsingSimplifiedChinese", Context.class, new XC_MethodHook() {
-//                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-//                        throws Throwable {
-//                    paramAnonymousMethodHookParam.setResult(false);
-//                }
-//            });
             return;
         }
 
@@ -189,70 +184,23 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
 
             XposedBridge.log("开始短信mod");
 
-                      findAndHookMethod("com.android.mms.ui.MessageUtils", loadPackageParam.classLoader, "isYpRecommendEnabled", Context.class,new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-
-                }
-            });
-
-            try {
-                XposedHelpers.setStaticBooleanField(Class.forName("com.android.mms.util.MiStatSdkHelper"),"sEnable",false);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            findAndHookMethod("com.android.mms.data.Contact", loadPackageParam.classLoader, "isB2cNumber", new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-
-                }
-            });
-
-            findAndHookMethod("com.android.mms.data.Contact", loadPackageParam.classLoader, "isB2cNumber", new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-
-                }
-            });
-
-            findAndHookMethod("com.xiaomi.mms.utils.B2cMessageUtils", loadPackageParam.classLoader, "isB2cNumber","com.android.mms.data.Contact", new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-
-                }
-            });
-            findAndHookMethod("com.xiaomi.mms.utils.B2cMessageUtils", loadPackageParam.classLoader, "isB2cNumber", String.class,new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-
-                }
-            });
-
-
             findAndHookMethod("com.android.mms.ui.MessageUtils", loadPackageParam.classLoader, "isMessagingTemplateAllowed", Context.class,new XC_MethodHook() {
                 protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-
+                    Context mc = (  Context) paramAnonymousMethodHookParam.args[0];
+                    XposedBridge.log("短信 当前类："+ mc.getClass().getName().toLowerCase());
+                    if (mc.getClass().getName().toLowerCase().contains("app")) {
+                        paramAnonymousMethodHookParam.setResult(false);
+                        XposedBridge.log("返回false");
+                    } else {
+                        paramAnonymousMethodHookParam.setResult(true);
+                        XposedBridge.log("返回true");
+                    }
                 }
             });
 
 
-            findAndHookMethod("com.android.mms.ui.MessageUtils", loadPackageParam.classLoader, "shouldShowFestival", Context.class, new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-
-                }
-            });
-
-
+           //显示短信功能按钮
             findAndHookMethod("com.android.mms.ui.SingleRecipientConversationActivity", loadPackageParam.classLoader, "showMenuMode",  new XC_MethodReplacement() {
                 @Override
                 protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
@@ -260,52 +208,11 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                 }
             });
 
-
+           //显示短信推荐信息
             findAndHookMethod("com.android.mms.util.MiStatSdkHelper", loadPackageParam.classLoader, "recordBottomMenuShown", String.class, new XC_MethodReplacement() {
                 @Override
                 protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
                     return null;
-                }
-            });
-
-                        try {
-                XposedHelpers.setStaticObjectField(Class.forName("com.android.mms.util.MiStatSdkHelper"),"UNDERSTAND","global");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-                        findAndHookMethod("com.android.mms.ui.MessageUtils", loadPackageParam.classLoader, "isZhCnLanguage", new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-
-                }
-            });
-            findAndHookMethod("com.android.mms.ui.AttachmentProcessor", loadPackageParam.classLoader, "shouldShowSmiley", new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(true);
-                }
-            });
-
-            findAndHookMethod("com.xiaomi.mms.transaction.MxActivateService", loadPackageParam.classLoader, "isMxEnabled", Context.class,  new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-                }
-            });
-
-            findAndHookMethod("com.xiaomi.mms.transaction.MxActivateService", loadPackageParam.classLoader, "isMxEnabled", Context.class, int.class, new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
-                }
-            });
-
-            findAndHookMethod("com.xiaomi.mms.transaction.MxActivateService", loadPackageParam.classLoader, "isMxEnabled", Context.class, int.class,boolean.class, new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
-                        throws Throwable {
-                    paramAnonymousMethodHookParam.setResult(false);
                 }
             });
 

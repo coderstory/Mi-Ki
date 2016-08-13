@@ -23,8 +23,8 @@ android {
         applicationId "com.coderstory.miui_toolkit"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 73
-        versionName '1.7.6'
+        versionCode 75
+        versionName '1.7.7'
 //        jackOptions {
 //            enabled true
 //        }

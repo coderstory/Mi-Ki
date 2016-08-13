@@ -244,8 +244,6 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
             });
 
 
-
-
             findAndHookMethod("com.android.mms.ui.MessageUtils", loadPackageParam.classLoader, "shouldShowFestival", Context.class, new XC_MethodHook() {
                 protected void beforeHookedMethod(MethodHookParam paramAnonymousMethodHookParam)
                         throws Throwable {
@@ -310,10 +308,6 @@ public class RemoveAds implements IXposedHookZygoteInit, IXposedHookLoadPackage 
                     paramAnonymousMethodHookParam.setResult(false);
                 }
             });
-
-
-
-
 
         }
     }

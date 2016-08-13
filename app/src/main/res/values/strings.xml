@@ -24,8 +24,8 @@
     <string name="Label_MIUI_Settings">MIUI相关</string>
     <string name="Label_About">关于</string>
     <string name="Label_MyName">作者:油炸包子</string>
-    <string name="Label_Version">版本:1.7.6 正式版</string>
-    <string name="Version">1.7.6</string>
+    <string name="Label_Version">版本:1.7.7正式版</string>
+    <string name="Version">1.7.7</string>
     <string name="Label_MyBlog">我的博客:<u>blog.coderstory.cn</u></string>
     <string name="tebieshuoming">特别说明</string>
     <string name="title_activity_splash">SplashActivity</string>
